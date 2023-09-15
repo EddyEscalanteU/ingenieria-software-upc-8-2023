@@ -41,9 +41,13 @@ export class Tab3Page {
         this.getByIDFromBackend(id);
     }
 */
+
+
     public  getById(){
         this.getByIDFromBackend(this.id);
     }
+
+    // Metodo para obtener Producto desde la API
     private getByIDFromBackend(id: number) {
         this.productoService.GetById(id).subscribe({
             next: (response: HttpResponse<any>) => {
@@ -64,6 +68,7 @@ export class Tab3Page {
     public addProducto(){
     this.AddProductoFromBackend(this.nombre, this.idCategoria)
     }
+   // Este método agrega un nuevo producto a la API.
     private AddProductoFromBackend(nombre: string, idCategoria:number){
         var productoEntidad = new Producto();
         productoEntidad.nombre = nombre;
@@ -88,10 +93,11 @@ export class Tab3Page {
             },
         });
     }
-
+  // metodo para actualizar un Producto
     public updateProducto(id: number, nombre: string, idCategoria: number){
         this.updateProductoFromBackend(id, nombre, idCategoria)
-    }    
+    } 
+// este método actualiza una categoría de producto en la API.   
     private updateProductoFromBackend(id: number, nombre: string, idCategoria: number){
         var productoEntidad = new Producto();
         productoEntidad.id = id;
@@ -119,11 +125,11 @@ export class Tab3Page {
         });
     }
 
-// Metodo public Eliminar Producto por ID
+  // Metodo public Eliminar Producto por ID
     public deleteProducto(id: number) {
         this.deleteProductoFromBackend(id);
     }
-  // Eliminar Producto por ID
+   // Este método elimina un  producto de la API.
     private deleteProductoFromBackend(id: number) {
         this.productoService.Delete(id).subscribe({
             next: (response: HttpResponse<any>) => {

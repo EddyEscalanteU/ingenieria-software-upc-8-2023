@@ -19,13 +19,12 @@ namespace backend.servicios
             return result.FirstOrDefault();
         }
 
-
-        //
-        public static int changeUserPassword(Usuarios usuarios, string pass)
+        //Cambia la contrasenia segun mandes un Usuario y contrasenia nueva
+        public static int changeUserPassword(Usuarios usuario, string pass)
         {
             const string storedProcedureName = "changeUserPasswordDB";
             var parameter = new DynamicParameters();
-            parameter.Add("@UserID", usuarios.Id, DbType.String);
+            parameter.Add("@UserID", usuario.Id, DbType.String);
             parameter.Add("@NewPassword", pass, DbType.String);
             var result = BDManager.GetInstance.SPSetData(storedProcedureName, parameter);
 

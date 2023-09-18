@@ -40,7 +40,6 @@ export class Tab8Page {
   }
 
   public agregarFuncionalidad() {
-    // Implementa la lógica para agregar una nueva funcionalidad aquí.
   }
 
   public guardarFuncionalidad() {
@@ -58,7 +57,6 @@ export class Tab8Page {
   }
 
   public eliminarFuncionalidad() {
-    // Implementa la lógica para eliminar una funcionalidad aquí.
   }
 
   private cargarFuncionalidades() {
@@ -74,7 +72,6 @@ export class Tab8Page {
   }
 
   private editarFuncionalidadExistente() {
-    // Implementa la lógica para editar una funcionalidad existente aquí.
   }
 
   // Métodos para Roles Usuarios
@@ -84,7 +81,6 @@ export class Tab8Page {
   }
 
   public agregarRolUsuario() {
-    // Implementa la lógica para agregar un nuevo rol de usuario aquí.
   }
 
   public guardarRolUsuario() {
@@ -102,7 +98,6 @@ export class Tab8Page {
   }
 
   public eliminarRolUsuario() {
-    // Implementa la lógica para eliminar un rol de usuario aquí.
   }
 
   private cargarRolesUsuarios() {
@@ -118,6 +113,5 @@ export class Tab8Page {
   }
 
   private editarRolUsuarioExistente() {
-    // Implementa la lógica para editar un rol de usuario existente aquí.
   }
 }

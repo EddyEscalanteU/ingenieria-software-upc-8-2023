@@ -1,0 +1,33 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>iniciaSecion</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">iniciaSecion</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-list>
+    <ion-list>
+      <ion-item>
+        <ion-input label="Nombre" placeholder [(ngModel)]="nombre" ></ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-input label="Passsword: " placeholder [(ngModel)]="contresenia" ></ion-input>
+      </ion-item>
+
+  
+      <ion-item>
+        <!-- <ion-input label="Sexo: " placeholder [(ngModel)]="sexo"></ion-input> -->
+      </ion-item>
+    </ion-list>
+    <ion-button (click)="inicoSesion()" color="primary"  size="small" >Aceptar</ion-button>
+  </ion-list>
+
+
+</ion-content>

@@ -3,6 +3,8 @@ import { Usuarios } from '../entidades/usuarios';
 import { UsuariosService } from '../servicios-backend/usuarios/usuarios.service';
 import { HttpResponse } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
+import { ModalController } from '@ionic/angular';
+import { IniciaSecionPage } from '../loginUser/inicia-secion/inicia-secion.page';
 
 @Component({
   selector: 'app-tab1',
@@ -10,7 +12,7 @@ import { FormBuilder } from '@angular/forms';
   styleUrls: ['tab1.page.scss']
 
 })
-export class Tab1Page {
+export class Tab1Page implements OnInit{
 
   public nombreCompleto = ""
   public userName = ""
@@ -18,9 +20,27 @@ export class Tab1Page {
 
   public listaUsuarios: Usuarios[] = []
 
-  constructor(private usuariosService: UsuariosService) {
+  constructor(private usuariosService: UsuariosService, private modalCtrl: ModalController) {
     this.getUsuariosFromBackend();
  
+  }
+  ngOnInit() {
+
+  }
+
+  async modalIniciaSecion(){
+    const modal = this.modalCtrl.create({
+      component: IniciaSecionPage,
+      componentProps:{
+        // idNinio: id
+      }
+    });
+
+    (await modal).present();
+     // Llama a la función para obtener los datos actualizados
+    const ddd = (await (await modal).onDidDismiss()).data;
+    console.log(ddd);
+    // this.getNinios();
   }
 
   private getUsuariosFromBackend(){

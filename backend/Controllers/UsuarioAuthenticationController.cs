@@ -90,17 +90,16 @@ public class UsuarioAuthenticationController : ControllerBase
 
     [HttpPost]
     [Route("CambiarContrasenia")]
-    public IActionResult cambiarContrasenia(Usuarios usuarios, [FromQuery] string oldPass, [FromQuery] string newPass, [FromQuery] string Intoken)
+    public IActionResult cambiarContrasenia(Usuarios usuarios, [FromQuery] string oldPass, [FromQuery] string newPass)
     {
-        var tokenHandler = new JwtSecurityTokenHandler();
-        var token = tokenHandler.ReadJwtToken(Intoken);
-
-        var claimsIdentity = new ClaimsIdentity(token.Claims);
-        var idtoken = claimsIdentity.FindFirst("id")?.Value;
-
+        var identity = HttpContext.User.Identity as ClaimsIdentity;
+        var rToken = Jwt.validarToken(identity);
 
         if (usuarios.Password == oldPass.ToString())
         {
+            if(!rToken.success){
+                return StatusCode(401,"Error de autenticacion");
+            }
             try
             {
                 var result = UsuarioLoginServicios.changeUserPassword(usuarios, newPass);
@@ -111,37 +110,30 @@ public class UsuarioAuthenticationController : ControllerBase
                 return StatusCode(500, ex.Message);
             }
         }
-        else {
-            return StatusCode(500, "Pass incorrecto: ");;
+        else
+        {
+            return StatusCode(500, "Contrasenia no midificada");
         };
+
     }
     
-
-    [HttpPost]
-    [Route("Pruebadetoken")]
+    [HttpGet]
+    [Route("pruebadetoken")]
     public IActionResult pruebaDeToken([FromQuery] string Intoken)
     {
         // var identity = HttpContext.User.Identity as ClaimsIdentity;
-        var tokenHandler = new JwtSecurityTokenHandler();
-        var token = tokenHandler.ReadJwtToken(Intoken);
+        var identity = HttpContext.User.Identity as ClaimsIdentity;
+        var rToken = Jwt.validarToken(identity);
 
-        var claimsIdentity = new ClaimsIdentity(token.Claims);
-        if (true)
-        {
-            try
-            {
-                // var result = UsuarioLoginServicios.changeUserPassword(usuarios, newPass);
-                return Ok(claimsIdentity.FindFirst("id")?.Value+" "+claimsIdentity.FindFirst("usuario")?.Value);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, ex.Message);
-            }
-        }
-        else
-        {
-            return StatusCode(500, "Pass incorrecto: ");
-        };
+        // Usuarios us = rToken.result;
+        // var tokenHandler = new JwtSecurityTokenHandler();
+        // var token = tokenHandler.ReadJwtToken(Intoken);
+
+        // var claimsIdentity = new ClaimsIdentity(token.Claims);
+        // if (!rToken.success) 
+        // return Ok(rToken.result);
+
+        return Ok(rToken.message);
 
     }
 }

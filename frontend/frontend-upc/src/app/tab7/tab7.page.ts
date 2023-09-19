@@ -11,7 +11,7 @@ import { ConfiguracionService } from '../servicios-backend/configuracion/configu
 
 })
 export class Tab7Page {
-  fontSize!: number;
+/*   fontSize!: number;
 
   constructor(private confiuracionService: ConfiguracionService) {}
 
@@ -23,7 +23,14 @@ export class Tab7Page {
 
   saveSettings() {
     this.confiuracionService.setFontSize(this.fontSize);
-  }
+  } */
 
+/*   fontFamily: string = 'Arial, sans-serif'; // Estilo de fuente predeterminado
 
+  constructor(private storage: Storage) {}
+
+// En el método donde el usuario selecciona el estilo de fuente
+saveFontFamilyPreference() {
+  this.storage.set('fontFamily', this.fontFamily);
+} */
 }

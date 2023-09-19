@@ -1,7 +1,6 @@
-
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title [style.fontSize.px]="fontSize">
+    <ion-title>
       Configuración
     </ion-title>
   </ion-toolbar>
@@ -13,27 +12,26 @@
       <ion-title size="large">Configuración</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-item>
-    <ion-label>Tamaño de Fuente</ion-label>
-    <ion-range  min="12" max="24" step="2" >
-      <ion-icon size="small" slot="start">small</ion-icon>
-      <ion-icon size="large" slot="end">large</ion-icon>
-    </ion-range>
-    <ion-button expand="full" >Guardar</ion-button>
-
-  </ion-item>
-
-</ion-content>
-
-<ion-content>
+  <ion-text color="primary">
+    <h2 class="ion-text-center">Apariencia</h2>
+  </ion-text>
   <ion-list>
     <ion-item>
-      <ion-label>Tamaño de Letra</ion-label>
-      <ion-range min="10" max="32" step="2" [(ngModel)]="fontSize">
+      <ion-label>Tamaño de Letra:</ion-label>
+      <ion-range min="10" max="32" step="2">
         <ion-icon slot="start" size="small" name="text"></ion-icon>
         <ion-icon slot="end" name="text"></ion-icon>
       </ion-range>
-      <ion-button expand="full" (click)="saveSettings()">Guardar</ion-button>
+      <ion-button expand="full">Guardar</ion-button>
     </ion-item>
   </ion-list>
+
+  <ion-item>
+    <ion-label>Estilo de Fuente:</ion-label>
+    <ion-select label="Estilo de Fuente:">
+      <ion-select-option value="'Arial, sans-serif'">Arial</ion-select-option>
+      <ion-select-option value="'Times New Roman, serif'">Times New Roman</ion-select-option>
+      <!-- Agrega más opciones de fuente según tus necesidades -->
+    </ion-select>
+  </ion-item>
 </ion-content>

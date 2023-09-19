@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { CategoriaProducto } from '../entidades/categoria-producto';
 import { CategoriaProductoService } from '../servicios-backend/categoria-producto/categoria-producto.service';
 import { HttpResponse } from '@angular/common/http';
+import * as Notiflix from 'notiflix'; // Importar Notiflix
+
 
 @Component({
   selector: 'app-tab2',
@@ -29,6 +31,7 @@ export class Tab2Page {
         },
         error: (error: any) => {
             console.log(error);
+            Notiflix.Notify.failure("Error al obtener CATEGORIA PRODUCTO")
         },
         complete: () => {
             //console.log('complete - this.getCategoria()');
@@ -51,11 +54,12 @@ export class Tab2Page {
       next: (response: HttpResponse<any>) => {
         // Asignar la categoriaProducto obtenido a la propiedad categoriaProducto
         this.categoriaProducto = response.body;
-        console.log(this.categoriaProducto)
-        // console.log(response.body);
+        console.log(response.body);
+        console.log(this.categoriaProducto);
       },
       error: (error: any) => {
         console.log(error);
+        Notiflix.Notify.failure("Error al obtener Categoría de Producto");
       },
       complete: () => {
         //console.log('complete - this.getByIDFromBackend()');
@@ -77,15 +81,16 @@ export class Tab2Page {
       next: (response: HttpResponse<any>) => {
           console.log(response.body)//1
           if(response.body == 1){
-              alert("Se agrego el CATEGORIA con exito :)");
+            Notiflix.Notify.success("Se agrego el CATEGORIA con exito :)");
               this.getCategoriaFromBackend();//Se actualize el listado
               this.nombre = "";
           }else{
-              alert("Al agregar al CATEGORIA fallo :(");
+            Notiflix.Notify.failure("Fallo al agregar al CATEGORIA  :(");
           }
       },
       error: (error: any) => {
           console.log(error);
+          Notiflix.Notify.failure("Error al agregar Catergoria Pruducto")
       },
       complete: () => {
           //console.log('complete - this.addCategoria()');
@@ -113,16 +118,17 @@ export class Tab2Page {
        next: (response:  HttpResponse<any>) => {
            console.log(response.body)//1
            if(response.body == 1){
-               alert("se actualizó el categoria producto con exito :)");
+            Notiflix.Notify.success("Se actualizó el categoria producto con exito :)");
                this.getCategoriaFromBackend();//se actualize el listado
                this.nombre = "";
 
            }else{
-               alert("fallo al agregar al categoria producto :(");
+            Notiflix.Notify.failure("Fallo al agregar al CATEGORIA PRODUCTO :(");
            }
        },
        error: (error: any) => {
            console.log(error);
+           Notiflix.Notify.failure("Error al actualizar Categoria Producto")
        },
        complete: () => {
            //console.log('complete - this.addusuario()');
@@ -140,14 +146,15 @@ export class Tab2Page {
     this.categoriaProductoService.Delete(id).subscribe({
       next: (response: HttpResponse<any>) => {
         if (response.body == 1) {
-          alert("Se eliminó el Producto con éxito :)");
+          Notiflix.Notify.success("Se eliminó el Categoria Producto con éxito :)");
           this.getCategoriaFromBackend(); // Se actualiza el listado
         } else {
-          alert("Al eliminar el Producto falló :(");
+          Notiflix.Notify.failure("Fallo al eliminar el Categoria Producto:(");
         }
       },
       error: (error: any) => {
         console.log(error);
+        Notiflix.Notify.failure("Error al eliminar Categoria Producto");
       },
       complete: () => {
         //console.log('complete - this.deleteProducto()');

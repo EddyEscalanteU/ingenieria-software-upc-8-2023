@@ -54,24 +54,41 @@
     <ion-card-content>
       <ion-item>
         <ion-label position="floating">ID del Producto</ion-label>
-        <ion-input type="number" [(ngModel)]="id"></ion-input>
+        <ion-input id="idGet" type="number" [(ngModel)]="id" ></ion-input>
       </ion-item>
+
+      <!-- Boton para obtener producto -->
       <ion-button expand="full" color="primary" (click)="getById()">Obtener Producto</ion-button>
       <ion-button expand="full" color="danger" (click)="deleteProducto(id)">Eliminar Producto</ion-button>
     </ion-card-content>
   </ion-card>
 
-  <!-- Mostrar Detalles del Producto -->
+  <!-- Mostrar Detalles del Producto  Por ID -->
   <ion-card *ngIf="producto">
     <ion-card-header>
       <ion-card-title class="ion-text-center">Detalles del Producto</ion-card-title>
     </ion-card-header>
-    <ion-card-content>
-      <p><strong>ID:</strong> {{ producto.id }}</p>
-      <p><strong>Nombre:</strong> {{ producto.nombre }}</p>
-      <p><strong>ID Categoría:</strong> {{ producto.idCategoria }}</p>
+    <ion-card-content>      
+        <!-- ID del Producto -->
+        <ion-item>
+          <ion-label position="floating">ID del Producto</ion-label>
+          <ion-input id="id"  type="number" value="{{producto.id}}" name="id" ></ion-input>
+        </ion-item>
+        
+        <!-- Nombre del Producto -->
+        <ion-item>
+          <ion-label id="nombre" position="floating">Nombre del Producto</ion-label>
+          <ion-input  type="text" value="{{producto.nombre}}" name="nombre" ></ion-input>
+        </ion-item>
+        
+        <!-- ID de la Categoría -->
+        <ion-item>
+          <ion-label position="floating">ID de la Categoría</ion-label>
+          <ion-input id="idCategoria" type="number" value="{{producto.idCategoria}}" name="idCategoria" ></ion-input>
+        </ion-item>  
     </ion-card-content>
   </ion-card>
+  
 
 
 <!-- Mostrar Lista de Producto -->

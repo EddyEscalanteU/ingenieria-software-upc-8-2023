@@ -1,7 +1,11 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { Producto } from '../entidades/producto';
 import { ProductoService } from '../servicios-backend/producto/producto.service';
 import { HttpClient, HttpResponse } from '@angular/common/http'
+import * as Notiflix from 'notiflix'; // Importar Notiflix
+
+
+
 
 @Component({
   selector: 'app-tab3',
@@ -9,6 +13,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http'
   styleUrls: ['tab3.page.scss']
 })
 export class Tab3Page {
+
 
     public id = 0;
     public nombre = ""
@@ -42,7 +47,6 @@ export class Tab3Page {
     }
 */
 
-
     public  getById(){
         this.getByIDFromBackend(this.id);
     }
@@ -51,13 +55,20 @@ export class Tab3Page {
     private getByIDFromBackend(id: number) {
         this.productoService.GetById(id).subscribe({
             next: (response: HttpResponse<any>) => {
+                if(response.status == 200){
                 // Asignar el Producto obtenido a la propiedadProducto
                 this.producto = response.body;
                 console.log(this.producto)
                 // console.log(response.body);
+                }else{
+                   Notiflix.Notify.failure("Fallo al Obtener PRODUCTO :(");
+                }
             },
             error: (error: any) => {
                 console.log(error);
+                // Mostrar un mensaje de error
+                Notiflix.Notify.failure('Error al obtener el PRODUCTO');
+
             },
             complete: () => {
                 //console.log('complete - this.getByIDFromBackend()');
@@ -77,16 +88,17 @@ export class Tab3Page {
             next: (response: HttpResponse<any>) => {
                 console.log(response.body)//1
                 if(response.body == 1){
-                    alert("Se agrego el PRODUCTO con exito :)");
+                    Notiflix.Notify.success("Se agrego el PRODUCTO con exito :)");
                     this.getProductoFromBackend();//Se actualize el listado
                     this.nombre = "";
                     this.idCategoria=0;
                 }else{
-                    alert("Al agregar al PRODUCTO fallo :(");
+                    Notiflix.Notify.failure("Fallo al agregar el PRODUCTO  :(");
                 }
             },
             error: (error: any) => {
                 console.log(error);
+                Notiflix.Notify.failure("Error al agregar Producto");
             },
             complete: () => {
                 //console.log('complete - this.PRODUCTO()');
@@ -108,16 +120,17 @@ export class Tab3Page {
         next: (response: HttpResponse<any>) => {
             console.log(response.body)//1
             if(response.body == 1){
-                alert("Se Actualizó el PRODUCTO con exito :)");
+                Notiflix.Notify.success("Se Actualizó el PRODUCTO con exito :)");
                 this.getProductoFromBackend();//Se actualize el listado
                 this.nombre = "";
                 this.idCategoria = 0;
             }else{
-                alert("Al agregar al PRODUCTO fallo :(");
+                Notiflix.Notify.failure("Fallo al actualizar al PRODUCTO :(");
             }
             },
             error: (error: any) => {
                 console.log(error);
+                Notiflix.Notify.failure("Error al actualizar Producto")
             },
             complete: () => {
                 //console.log('complete - this.AddUsuario()');
@@ -134,15 +147,16 @@ export class Tab3Page {
         this.productoService.Delete(id).subscribe({
             next: (response: HttpResponse<any>) => {
                 if (response.body == 1) {
-                alert("Se eliminó el PRODUCTO con éxito :)");
+                    Notiflix.Notify.success("Se eliminó el PRODUCTO con éxito :)");
                 this.getProductoFromBackend(); // Se actualiza el listado
                 
                 } else {
-                alert("Al eliminar el PRODUCTO falló :(");
+                    Notiflix.Notify.failure("Fallo al eliminar el PRODUCTO :(");
                 }
             },
             error: (error: any) => {
                 console.log(error);
+                Notiflix.Notify.failure("Error al eliminar Producto");
             },
             complete: () => {
                 //console.log('complete - this.deleteProducto()');

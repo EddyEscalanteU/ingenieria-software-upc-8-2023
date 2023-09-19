@@ -2,6 +2,7 @@
   <ion-toolbar color="primary">
     <ion-title class="ion-text-center">Categoría Producto</ion-title>
   </ion-toolbar>
+  
   <style>
     .styled-table {
       width: 100%;
@@ -41,8 +42,7 @@
           <ion-input name="nombre" type="text" placeholder="Ingrese el Nombre de Categoría"
             [(ngModel)]="nombre"></ion-input>
         </ion-item>
-        <ion-button expand="full" color="primary" type="submit" id="addCategoria"
-          (click)="addCategoria()">Agregar</ion-button>
+        <ion-button expand="full" color="primary" type="submit" id="addCategoria" (click)="addCategoria()">Agregar</ion-button>
         <ion-button  expand="full" color="primary" type="submit" id="updateCategoriaProducto" (click)="updateCategoriaProducto()">Actualizar</ion-button>
       </form>
     </ion-card-content>
@@ -56,12 +56,11 @@
     <ion-card-content>
       <form>
         <ion-item>
-          <ion-label position="floating">ID Categoría</ion-label>
-          <ion-input name="id" type="number" placeholder="Ingrese Id Categoría" [(ngModel)]="id"></ion-input>
+          <ion-label position="floating" >ID Categoría</ion-label>
+          <ion-input name="id" type="number"  placeholder="Ingrese Id Categoría" [(ngModel)]="id" ></ion-input>
         </ion-item>
         <ion-button expand="full" color="primary" type="submit" id="getById" (click)="getById()">Obtener</ion-button>
-        <ion-button expand="full" color="danger" type="submit" id="deleteCategoriaProducto"
-          (click)="deleteCategoriaProducto()">Eliminar</ion-button>
+        <ion-button expand="full" color="danger" type="submit" id="deleteCategoriaProducto" (click)="deleteCategoriaProducto()">Eliminar</ion-button>
       </form>
       <div *ngIf="categoriaProducto">
         <ion-item>

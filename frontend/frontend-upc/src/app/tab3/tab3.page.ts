@@ -35,6 +35,7 @@ export class Tab3Page {
         },
         error: (error: any) => {
             console.log(error);
+            Notiflix.Notify.failure("Error al obtener Productos  :(");
         },
         complete: () => {
             //console.log('complete - this.getProducto()');

@@ -52,10 +52,13 @@ export class Tab2Page {
   private getByIDFromBackend(id: number) {
     this.categoriaProductoService.GetById(id).subscribe({
       next: (response: HttpResponse<any>) => {
-        // Asignar la categoriaProducto obtenido a la propiedad categoriaProducto
-        this.categoriaProducto = response.body;
-        console.log(response.body);
-        console.log(this.categoriaProducto);
+        if(response.status == 200){
+          // Asignar la categoriaProducto obtenido a la propiedad categoriaProducto
+          this.categoriaProducto = response.body;
+          console.log(this.categoriaProducto);
+        }else{
+          Notiflix.Notify.failure("Fallo al Obtener PRODUCTO :(");
+        }
       },
       error: (error: any) => {
         console.log(error);
@@ -69,11 +72,11 @@ export class Tab2Page {
 
 
   public addCategoria(){
-    this.AddUsuarioFromBackend(this.nombre)
+    this.AddCategoriaFromBackend(this.nombre)
   }
   
   // Este método agrega una nueva categoría de producto a la API.
-  private AddUsuarioFromBackend(nombre: string){
+  private AddCategoriaFromBackend(nombre: string){
     var categoriaEntidad = new CategoriaProducto();
     categoriaEntidad.nombre = nombre;
 
@@ -162,6 +165,8 @@ export class Tab2Page {
     });
   }
   
+
+ 
 
    
 

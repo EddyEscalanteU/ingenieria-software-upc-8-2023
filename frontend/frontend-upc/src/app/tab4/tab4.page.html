@@ -52,7 +52,7 @@
     <ion-card-content>
       <ion-item>
         <ion-label position="floating">ID del Carrito</ion-label>
-        <ion-input type="number" [(ngModel)]="id"></ion-input>
+        <ion-input type="number" [(ngModel)]="id" ></ion-input>
       </ion-item>
       <ion-button expand="full" color="primary" (click)="getCarritoById()">Obtener Carrito</ion-button>
       <ion-button expand="full" color="danger" (click)="deleteCarrito(id)">Eliminar Carrito</ion-button>
@@ -104,7 +104,7 @@
     <ion-card-content>
       <ion-item>
         <ion-label position="floating">ID del Detalle</ion-label>
-        <ion-input type="number" [(ngModel)]="idDetalle"></ion-input>
+        <ion-input type="number" [(ngModel)]="idDetalle" ></ion-input>
       </ion-item>
       <ion-button expand="full" color="primary" (click)="getDetalleById()">Obtener Detalle</ion-button>
       <ion-button expand="full" color="danger" (click)="deleteDetalle(idDetalle)">Eliminar Detalle</ion-button>

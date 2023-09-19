@@ -4,6 +4,7 @@ import { DetalleCarrito } from '../entidades/detalle-carrito';
 import { CarritoCompraService } from '../servicios-backend/carrito-compra/carrito-compra.service';
 import { HttpResponse } from '@angular/common/http';
 import { DetalleCarritoService } from '../servicios-backend/detalle-carrito/detalle-carrito.service';
+import * as Notiflix from 'notiflix'; // Importar Notiflix
 
 @Component({
   selector: 'app-tab4',
@@ -59,13 +60,18 @@ export class Tab4Page {
     private getCarritoByIDFromBackend(id: number) {
     this.carritoService.GetById(id).subscribe({
         next: (response: HttpResponse<any>) => {
+            if(response.status == 200){
             // Asignar el Carrito obtenido a la propiedad carrito
             this.carritoCompra = response.body;
             console.log(this.carritoCompra)
             // console.log(response.body);
+            }else{
+                Notiflix.Notify.failure("Fallo al Obtener DETALLE :(");
+            }
         },
         error: (error: any) => {
             console.log(error);
+            Notiflix.Notify.failure("Error al obtener Carrito");
         },
         complete: () => {
             //console.log('complete - this.getByIDFromBackend()');
@@ -85,16 +91,17 @@ export class Tab4Page {
       next: (response: HttpResponse<any>) => {
           console.log(response.body)//1
           if(response.body == 1){
-              alert("Se agrego el CARRITO con exito :)");
+              Notiflix.Notify.success("Se agrego el CARRITO con exito :)");
               this.getCarritoFromBackend();//Se actualize el listado
               this.fecha = new Date();
               this.idUsuario = 1;
           }else{
-              alert("Al agregar al CARRITO fallo exito :(");
+            Notiflix.Notify.failure("Fallo al agregar CARRITO  :(");
           }
       },
       error: (error: any) => {
           console.log(error);
+          Notiflix.Notify.failure("Error al agregar carrito  :(");
       },
       complete: () => {
           //console.log('complete - this.Add()');
@@ -116,17 +123,18 @@ export class Tab4Page {
       next: (response: HttpResponse<any>) => {
           console.log(response.body)//1
           if(response.body == 1){
-              alert("Se Actualizó el CARRITO con exito :)");
+            Notiflix.Notify.success("Se Actualizó el CARRITO con exito :)");
               this.getCarritoFromBackend();//Se actualize el listado
               this.id = 0;
               this.fecha = new Date();
               this.idUsuario = 0;
           }else{
-              alert("Error Al actualizar al CARRITO:(");
+            Notiflix.Notify.failure("Fallo Al actualizar al CARRITO:(");
           }
           },
           error: (error: any) => {
               console.log(error);
+              Notiflix.Notify.failure("Error al actualizar al carrito:(");
           },
           complete: () => {
               //console.log('complete - this.AddUsuario()');
@@ -144,14 +152,15 @@ private deleteCarritoFromBackend(id: number) {
     this.carritoService.Delete(id).subscribe({
         next: (response: HttpResponse<any>) => {
             if (response.body == 1) {
-            alert("Se eliminó el CARRITO con éxito :)");
+                Notiflix.Notify.success("Se eliminó el CARRITO con éxito :)");
             this.getCarritoFromBackend(); // Se actualiza el listado            
             } else {
-            alert("Al eliminar el CARRITO falló :(");
+                Notiflix.Notify.failure("Fallo al eliminar el CARRITO  :(");
             }
         },
         error: (error: any) => {
             console.log(error);
+            Notiflix.Notify.failure("Error al eliminar el carrito  :(");
         },
         complete: () => {
             //console.log('complete - this.deleteCarrito()');
@@ -184,13 +193,18 @@ private deleteCarritoFromBackend(id: number) {
   private getDetalleByIDFromBackend(idDetalle: number) {
     this.detalleService.GetById(idDetalle).subscribe({
         next: (response: HttpResponse<any>) => {
-            // Asignar el Carrito obtenido a la propiedad carrito
-            this.detalleCarrito = response.body;
-            console.log(this.detalleCarrito)
-            // console.log(response.body);
+            if(response.status == 200){
+                // Asignar el Carrito obtenido a la propiedad carrito
+                this.detalleCarrito = response.body;
+                console.log(this.detalleCarrito)
+                // console.log(response.body);
+            }else{
+                 Notiflix.Notify.failure("Fallo al Obtener DETALLE :(");
+            }
         },
         error: (error: any) => {
             console.log(error);
+            Notiflix.Notify.failure("Error al obtener detalle  :(");
         },
         complete: () => {
             //console.log('complete - this.getByIDFromBackend()');
@@ -213,17 +227,18 @@ private deleteCarritoFromBackend(id: number) {
     next: (response: HttpResponse<any>) => {
       console.log(response.body)//1
       if(response.body == 1){
-          alert("Se agrego el DETALLE con exito :)");
+          Notiflix.Notify.success("Se agrego el DETALLE con exito :)");
           this.getDetalleFromBackend();//Se actualize el listado
           this.cantidad = 0;
           this.idProducto= 0;
           this.idCarritoCompra = 0;
       }else{
-          alert("Al agregar al DETALLE fallo exito :(");
+          Notiflix.Notify.failure("Fallo al Agregar DETALLE :(");
       }
     },
     error: (error: any) => {
         console.log(error);
+        Notiflix.Notify.failure("Error al Eliminar Detalle");
     },
     complete: () => {
         //console.log('complete - this.AddUsuario()');
@@ -248,13 +263,13 @@ private deleteCarritoFromBackend(id: number) {
     next: (response: HttpResponse<any>) => {
         console.log(response.body)//1
         if(response.body == 1){
-            alert("Se Actualizó el Detalle de Carrito con exito :)");
+            Notiflix.Notify.success("Se actualizó el Detalle de Carrito con exito :)");
             this.getDetalleFromBackend();//Se actualize el listado
             this.cantidad = 0;
             this.idProducto= 0;
             this.idCarritoCompra = 0;
         }else{
-            alert("Error Al actualizar el Detalle de Carrito:(");
+            Notiflix.Notify.failure("Fallo al actualizar el Detalle de Carrito:(");
         }
         },
         error: (error: any) => {
@@ -267,7 +282,7 @@ private deleteCarritoFromBackend(id: number) {
   }
 
     // Metodo public Eliminar Carrito por ID
-    public deleteDetalle(id: number) {
+  public deleteDetalle(id: number) {
       this.deleteDetalleFromBackend(id);
   }
   
@@ -276,14 +291,15 @@ private deleteCarritoFromBackend(id: number) {
       this.detalleService.Delete(id).subscribe({
           next: (response: HttpResponse<any>) => {
               if (response.body == 1) {
-              alert("Se eliminó el DETALLE con éxito :)");
+                Notiflix.Notify.success("Se eliminó el DETALLE con éxito :)");
               this.getDetalleFromBackend(); // Se actualiza el listado            
               } else {
-              alert("Al eliminar el DETALLE falló :(");
+                Notiflix.Notify.failure("Fallo al eliminar el DETALLE :(");
               }
           },
           error: (error: any) => {
               console.log(error);
+              Notiflix.Notify.failure("Error al eliminar el DETALLE :(");
           },
           complete: () => {
               //console.log('complete - this.deleteDetalle()');

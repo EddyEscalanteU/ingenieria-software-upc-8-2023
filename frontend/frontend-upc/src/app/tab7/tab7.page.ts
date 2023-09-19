@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
-import { Storage } from '@ionic/storage-angular';
+import { Storage } from '@ionic/storage';
 import { ConfiguracionService } from '../servicios-backend/configuracion/configuracion.service';
 
 @Component({
@@ -11,26 +11,40 @@ import { ConfiguracionService } from '../servicios-backend/configuracion/configu
 
 })
 export class Tab7Page {
-/*   fontSize!: number;
+  
+  darkMode= false;
+  fontFamily: string = 'Arial, sans-serif';
+  constructor() {
 
-  constructor(private confiuracionService: ConfiguracionService) {}
-
-  ionViewWillEnter() {
-    this.confiuracionService.getFontSize().then((fontSize) => {
-      this.fontSize = fontSize;
-    });
+    const savedFontFamily = localStorage.getItem('fontFamily');
+    if (savedFontFamily) {
+      this.fontFamily = savedFontFamily;
+    }
   }
 
-  saveSettings() {
-    this.confiuracionService.setFontSize(this.fontSize);
-  } */
+  // Método para guardar la preferencia del usuario
+  saveFontFamilyPreference() {
+    localStorage.setItem('fontFamily', this.fontFamily);
+  }
+  ngOnInit():void{
+    this.checkAppMode();
+  }
 
-/*   fontFamily: string = 'Arial, sans-serif'; // Estilo de fuente predeterminado
+  checkAppMode(){
+    const checkIsDarkMode= localStorage.getItem('darkMOdeActivaded');
+    checkIsDarkMode=='true'
+      ?(this.darkMode = true)
+      :(this.darkMode=false)
+      document.body.classList.toggle('dark', this.darkMode);
+  }
 
-  constructor(private storage: Storage) {}
-
-// En el método donde el usuario selecciona el estilo de fuente
-saveFontFamilyPreference() {
-  this.storage.set('fontFamily', this.fontFamily);
-} */
+  toggleDarkMode(){
+    this.darkMode= !this.darkMode;
+    document.body.classList.toggle('dark', this.darkMode);
+    if (this.darkMode) {
+      localStorage.setItem('darkModeActivaded', 'true');
+    }else{
+      localStorage.setItem('darkModeActivaded', 'false');
+    }
+  }
 }

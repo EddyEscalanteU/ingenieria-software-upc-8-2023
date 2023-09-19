@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
+    <ion-title [style.fontFamily]="fontFamily">
       Configuración
     </ion-title>
   </ion-toolbar>
@@ -13,8 +13,14 @@
     </ion-toolbar>
   </ion-header>
   <ion-text color="primary">
-    <h2 class="ion-text-center">Apariencia</h2>
+    <h2 class="ion-text-center">Apariencia</h2>      
   </ion-text>
+  <ion-item>
+    <ion-toggle slot="end" [checked]="darkMode" (ionChange)="toggleDarkMode()">
+      Modo Oscuro
+    </ion-toggle>
+  </ion-item>
+ 
   <ion-list>
     <ion-item>
       <ion-label>Tamaño de Letra:</ion-label>
@@ -27,11 +33,13 @@
   </ion-list>
 
   <ion-item>
-    <ion-label>Estilo de Fuente:</ion-label>
-    <ion-select label="Estilo de Fuente:">
+    <ion-label>Estilo de Fuente</ion-label>
+    <ion-select [(ngModel)]="fontFamily">
       <ion-select-option value="'Arial, sans-serif'">Arial</ion-select-option>
       <ion-select-option value="'Times New Roman, serif'">Times New Roman</ion-select-option>
-      <!-- Agrega más opciones de fuente según tus necesidades -->
+      <ion-select-option value="'Verdana, sans-serif'">Verdana </ion-select-option>
     </ion-select>
+    <ion-button (click)="saveFontFamilyPreference()">Guardar Preferencia</ion-button>
   </ion-item>
 </ion-content>
+

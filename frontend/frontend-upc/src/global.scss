@@ -24,3 +24,8 @@
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
+body {
+    font-size: var(--app-font-size);
+  }
+
+  @import url('https://fonts.googleapis.com/css?family=TuFuente');

@@ -1,32 +1,6 @@
 // Ionic Variables and Theming. For more info, please see:
 // http://ionicframework.com/docs/theming/
-p {
-  font-size: var(--app-font-size);
-}
-body {
-  font-size: var(--app-font-size);
-}
 
-
-/* Estilos para el control deslizante */
-.slider-container {
-  margin: 20px;
-}
-
-/* Estilos para los botones de tamaño de fuente */
-.font-size-button {
-  font-size: 18px;
-  margin: 5px;
-  padding: 5px 10px;
-  border: 1px solid #ccc;
-  cursor: pointer;
-}
-
-/* Estilos para el texto que muestra el tamaño de fuente actual */
-.current-font-size {
-  font-size: 16px;
-  margin: 10px;
-}
 /** Ionic CSS Variables **/
 :root {
   /** primary **/

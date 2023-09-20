@@ -40,8 +40,8 @@
         <ion-label position="floating">ID de Usuario</ion-label>
         <ion-input type="text" [(ngModel)]="idUsuario"></ion-input>
       </ion-item>
-      <ion-button expand="full" color="primary" (click)="addCarrito()">Agregar Carrito</ion-button>
-      <ion-button expand="full" color="primary" (click)="updateCarrito(id, fecha, idUsuario)">Actualizar Carrito</ion-button>
+      <ion-button expand="full" color="primary" (click)="addCarrito()" shape="round">Agregar Carrito</ion-button>
+      <ion-button expand="full" color="primary" (click)="updateCarrito(id, fecha, idUsuario)" shape="round">Actualizar Carrito</ion-button>
     </ion-card-content>
   </ion-card>
 
@@ -54,8 +54,8 @@
         <ion-label position="floating">ID del Carrito</ion-label>
         <ion-input type="number" [(ngModel)]="id" ></ion-input>
       </ion-item>
-      <ion-button expand="full" color="primary" (click)="getCarritoById()">Obtener Carrito</ion-button>
-      <ion-button expand="full" color="danger" (click)="deleteCarrito(id)">Eliminar Carrito</ion-button>
+      <ion-button expand="full" color="primary" (click)="getCarritoById()" shape="round">Obtener Carrito</ion-button>
+      <ion-button expand="full" color="danger" (click)="deleteCarrito(id)" shape="round">Eliminar Carrito</ion-button>
     </ion-card-content>
   </ion-card>
 
@@ -92,8 +92,8 @@
         <ion-input type="number" [(ngModel)]="cantidad"></ion-input>
       </ion-item>
 
-      <ion-button expand="full" color="primary" (click)="addDetalleCarrito()">Agregar Detalle</ion-button>
-      <ion-button expand="full" color="primary" (click)="updateDetalle()">Actualizar Detalle</ion-button>
+      <ion-button expand="full" color="primary" (click)="addDetalleCarrito()" shape="round">Agregar Detalle</ion-button>
+      <ion-button expand="full" color="primary" (click)="updateDetalle()" shape="round">Actualizar Detalle</ion-button>
     </ion-card-content>
   </ion-card>
 
@@ -106,8 +106,8 @@
         <ion-label position="floating">ID del Detalle</ion-label>
         <ion-input type="number" [(ngModel)]="idDetalle" ></ion-input>
       </ion-item>
-      <ion-button expand="full" color="primary" (click)="getDetalleById()">Obtener Detalle</ion-button>
-      <ion-button expand="full" color="danger" (click)="deleteDetalle(idDetalle)">Eliminar Detalle</ion-button>
+      <ion-button expand="full" color="primary" (click)="getDetalleById()" shape="round">Obtener Detalle</ion-button>
+      <ion-button expand="full" color="danger" (click)="deleteDetalle(idDetalle)" shape="round">Eliminar Detalle</ion-button>
     </ion-card-content>
   </ion-card>
 

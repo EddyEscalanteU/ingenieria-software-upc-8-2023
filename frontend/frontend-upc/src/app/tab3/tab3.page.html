@@ -41,8 +41,8 @@
         <ion-label position="floating">ID de la Categoría</ion-label>
         <ion-input type="number" [(ngModel)]="idCategoria"></ion-input>
       </ion-item>
-      <ion-button expand="full" color="primary" (click)="addProducto()">Agregar Producto</ion-button>
-      <ion-button expand="full" color="primary" (click)="updateProducto(id, nombre, idCategoria)">Actualizar Producto</ion-button>
+      <ion-button expand="full" color="primary" (click)="addProducto()" shape="round">Agregar Producto</ion-button>
+      <ion-button expand="full" color="primary" (click)="updateProducto(id, nombre, idCategoria)" shape="round">Actualizar Producto</ion-button>
     </ion-card-content>
   </ion-card>
 
@@ -58,8 +58,8 @@
       </ion-item>
 
       <!-- Boton para obtener producto -->
-      <ion-button expand="full" color="primary" (click)="getById()">Obtener Producto</ion-button>
-      <ion-button expand="full" color="danger" (click)="deleteProducto(id)">Eliminar Producto</ion-button>
+      <ion-button expand="full" color="primary" (click)="getById()" shape="round">Obtener Producto</ion-button>
+      <ion-button expand="full" color="danger" (click)="deleteProducto(id)" shape="round">Eliminar Producto</ion-button>
     </ion-card-content>
   </ion-card>
 

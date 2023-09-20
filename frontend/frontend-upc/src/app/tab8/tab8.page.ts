@@ -20,6 +20,11 @@ export class Tab8Page {
   public listaFuncionalidades: Funcionalidades[] = [];
   public funcionalidad: Funcionalidades | null = null;
 
+  mostrarListaFuncionalidades: boolean = false;
+  mostrarListaRolesUsuario: boolean = false;
+
+
+
   // Propiedades para Roles Usuarios
   public rolUsuarioId = 0;
   public rolUsuarioNombre = "";
@@ -32,6 +37,19 @@ export class Tab8Page {
     private funcionalidadService: FuncionalidadService,
     private rolUsuarioService: RolUsuarioService
   ) {}
+
+  toggleFuncionalidades() {
+    this.mostrarListaFuncionalidades = !this.mostrarListaFuncionalidades;
+    if (this.mostrarListaFuncionalidades) {
+      this.cargarFuncionalidades();
+    }
+  }
+  toggleRolesUsuario() {
+    this.mostrarListaRolesUsuario = !this.mostrarListaRolesUsuario;
+    if (this.mostrarListaRolesUsuario) {
+      this.cargarRolesUsuarios();
+    }
+  }
 
   // Métodos para Funcionalidades
 

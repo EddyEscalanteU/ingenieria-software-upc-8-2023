@@ -16,7 +16,7 @@ export class Tab3Page {
 
 
     public id = 0;
-    public nombre = ""
+    public nombre = "";
     public idCategoria = 0;
 
     public listaProducto: Producto[] = []

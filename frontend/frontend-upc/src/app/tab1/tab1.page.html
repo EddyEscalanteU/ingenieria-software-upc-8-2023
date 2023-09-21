@@ -4,7 +4,9 @@
     <ion-title>
       Usuarios
     </ion-title>
-    <ion-button (click)="modalIniciaSecion()">Inicio secion</ion-button>
+    <ion-button *ngIf="enableLogin" (click)="modalIniciaSecion()">Inicio secion</ion-button>
+    <ion-button *ngIf="!enableLogin" (click)="serrarSesion()">Serrar sesion</ion-button>
+    <ion-label *ngIf="!enableLogin"> Usuario: {{loginNombreCopleto}} </ion-label>
   </ion-toolbar>
 </ion-header>
 

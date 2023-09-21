@@ -46,7 +46,8 @@ public class UsuarioAuthenticationController : ControllerBase
                 {
                     success = false,
                     message = "Usuario no encotrado",
-                    result = ""
+                    result = "",
+                    user = ""
                 };
             }
             else
@@ -78,7 +79,9 @@ public class UsuarioAuthenticationController : ControllerBase
                 return new
                 {
                     success = true,
-                    result = new JwtSecurityTokenHandler().WriteToken(token)
+                    message = "Usuario encotrado",
+                    result = new JwtSecurityTokenHandler().WriteToken(token),
+                    user = usuario
                 };
             }
         }
@@ -90,19 +93,22 @@ public class UsuarioAuthenticationController : ControllerBase
 
     [HttpPost]
     [Route("CambiarContrasenia")]
-    public IActionResult cambiarContrasenia(Usuarios usuarios, [FromQuery] string oldPass, [FromQuery] string newPass)
+    public IActionResult cambiarContrasenia([FromQuery] string oldPass, [FromQuery] string newPass)
     {
         var identity = HttpContext.User.Identity as ClaimsIdentity;
         var rToken = Jwt.validarToken(identity);
 
-        if (usuarios.Password == oldPass.ToString())
+        if (!rToken.success)
         {
-            if(!rToken.success){
-                return StatusCode(401,"Error de autenticacion");
-            }
+            return StatusCode(401, "Error de autenticacion");
+        }
+        Usuarios usuario = rToken.result;
+
+        if (string.Equals(usuario.Password, oldPass))
+        {
             try
             {
-                var result = UsuarioLoginServicios.changeUserPassword(usuarios, newPass);
+                var result = UsuarioLoginServicios.changeUserPassword(usuario, newPass);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -114,9 +120,8 @@ public class UsuarioAuthenticationController : ControllerBase
         {
             return StatusCode(500, "Contrasenia no midificada");
         };
-
     }
-    
+
     [HttpGet]
     [Route("pruebadetoken")]
     public IActionResult pruebaDeToken([FromQuery] string Intoken)

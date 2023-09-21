@@ -11,6 +11,7 @@ const routes: Routes = [
     loadChildren: () => import('./tab8/tab8.module').then( m => m.Tab8PageModule)
   },
 
+
 ];
 @NgModule({
   imports: [

@@ -24,3 +24,11 @@
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
+:root {
+    --app-font: Arial, sans-serif;
+  }
+  
+  /* Aplicar la fuente a nivel de la aplicación */
+  body {
+    font-family: var(--app-font);
+  }

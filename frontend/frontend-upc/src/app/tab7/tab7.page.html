@@ -1,44 +1,46 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title [style.fontFamily]="fontFamily">
+    <ion-title  [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'">
       Configuración
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true"[style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'">
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">Configuración</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-text color="primary" >
-    <h2 class="ion-text-center" style="font-family:'Courier New', Courier, monospace;">Apariencia</h2>      
+  <ion-text>
+    <h2 class="ion-text-center">Apariencia</h2>      
   </ion-text>
-  <ion-item>
-    <ion-toggle slot="end" [checked]="darkMode" (ionChange)="toggleDarkMode()" [style.fontFamily]="fontFamily">
+  <ion-item >
+    <ion-toggle [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'"  slot="end" [checked]="darkMode" (ionChange)="toggleDarkMode()" >
       Modo Oscuro
     </ion-toggle>
   </ion-item>
    
   <ion-list>
     <ion-item>
-      <ion-label [style.fontFamily]="fontFamily">Tamaño de Letra:</ion-label>
+      <ion-label [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'"  >Tamaño de Letra:</ion-label>
       <ion-range min="10" max="32" step="2">
         <ion-icon slot="start" size="small" name="text"></ion-icon>
         <ion-icon slot="end" name="text"></ion-icon>
       </ion-range>
-      <ion-button expand="full" [style.fontFamily]="fontFamily">Guardar</ion-button>
+      <ion-button  [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" >Guardar</ion-button>
     </ion-item>
   </ion-list>
 
-  <ion-item>
-    <ion-select [style.fontFamily]="fontFamily" label="Estilo de Fuente" [(ngModel)]="fontFamily">
-      <ion-select-option value="'Arial, san-serif'">Arial</ion-select-option>
-      <ion-select-option value="'Times New Roman, serif'">Times New Roman</ion-select-option>
-      <ion-select-option value="'Courier New', Courier, monospace'">Courier New </ion-select-option>
-    </ion-select>
-    <ion-button (click)="saveFontFamilyPreference()">Guardar Preferencia</ion-button>
-  </ion-item>
+  <ion-list>
+    <ion-item>
+      <ion-label [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" >Fuente</ion-label>
+      <ion-select [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'"  [(ngModel)]="fuenteSeleccionada">
+        <ion-select-option *ngFor="let fuente of fuentesDisponibles" [value]="fuente">{{ fuente }}</ion-select-option>
+      </ion-select>
+      <ion-button [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'"  (click)="guardarFuente()">Guardar Fuente</ion-button>
+    </ion-item>
+  </ion-list>
+
 </ion-content>
 

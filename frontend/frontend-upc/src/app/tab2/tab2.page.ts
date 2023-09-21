@@ -3,7 +3,7 @@ import { CategoriaProducto } from '../entidades/categoria-producto';
 import { CategoriaProductoService } from '../servicios-backend/categoria-producto/categoria-producto.service';
 import { HttpResponse } from '@angular/common/http';
 import * as Notiflix from 'notiflix'; // Importar Notiflix
-
+import { ConfiguracionService } from '../servicios-backend/configuracion/configuracion.service';
 
 @Component({
   selector: 'app-tab2',
@@ -11,16 +11,24 @@ import * as Notiflix from 'notiflix'; // Importar Notiflix
   styleUrls: ['tab2.page.scss']
 })
 export class Tab2Page {
-
+  fuenteSeleccionada: string = 'Arial, sans-serif'; // Fuente predeterminada
   public id = 0;
   public nombre = ""
 
   public listaCategoria: CategoriaProducto[] = []
   public categoriaProducto: CategoriaProducto | null = null;
 
-  constructor(private categoriaProductoService: CategoriaProductoService) {
+  constructor(private configuracionServie: ConfiguracionService,private categoriaProductoService: CategoriaProductoService) {
     this.getCategoriaFromBackend();
+    this.callMethod();
   }
+    // Método para llamar a un método de tab2
+    callMethod() {
+      const savedFontFamily = localStorage.getItem('fuente');
+      if (savedFontFamily) {
+        this.fuenteSeleccionada = savedFontFamily;
+      }
+    }
 
   // Este método obtiene todas las categorías de producto de la API.
   private getCategoriaFromBackend(){

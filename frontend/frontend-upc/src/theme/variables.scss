@@ -228,9 +228,35 @@
     --ion-item-background: #1e1e1e;
 
     --ion-toolbar-background: #1f1f1f;
+    //--ion-toolbar-background: #b70d00;
 
     --ion-tab-bar-background: #1f1f1f;
 
     --ion-card-background: #1e1e1e;
+  }
+
+  
+
+
+  /* Estilo para que el iframe ocupe toda la pantalla */
+  iframe {
+    width: 100%;
+    height: 100vh; /* Esto establece la altura al 100% de la altura visible del navegador */
+    border: none; /* Elimina el borde del iframe, si lo deseas */
+  }
+  .custom-toolbar {
+    --ion-toolbar-background: #B22626;
+    color: #fff; /* Cambiar el color del texto a blanco u otro color que desees */
+  }
+  .custom-card-header {
+  background-color: #B22626; /* Color de fondo */
+  color: #fff; /* Color del texto */
+  font-size: 24px; /* Tamaño de fuente */
+  text-align: left; /* Alineación de texto */
+  padding: 16px; /* Espaciado interno */
+  border-bottom: 2px solid #B22626; /* Borde inferior opcional */
+  }
+  .custom-card-title {
+  color: #fff; /* Color del texto */
   }
 //}

@@ -20,10 +20,10 @@ export class Tab2Page {
 
   constructor(private configuracionServie: ConfiguracionService,private categoriaProductoService: CategoriaProductoService) {
     this.getCategoriaFromBackend();
-    this.callMethod();
+    this.obtenerFuente();
   }
-    // Método para llamar a un método de tab2
-    callMethod() {
+    // Método para llamar obterner fuente
+    obtenerFuente() {
       const savedFontFamily = localStorage.getItem('fuente');
       if (savedFontFamily) {
         this.fuenteSeleccionada = savedFontFamily;

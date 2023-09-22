@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="primary">
-    <ion-title class="ion-text-center">Producto</ion-title>
+    <ion-title [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" class="ion-text-center">Producto</ion-title>
   </ion-toolbar>
   <style>
     .styled-table {
@@ -16,78 +16,78 @@
   </style>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar color="primary">
-      <ion-title size="large" class="ion-text-center">Producto</ion-title>
+      <ion-title [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" size="large" class="ion-text-center">Producto</ion-title>
     </ion-toolbar>
   </ion-header>
 
   <!-- Agregar o Actualizar Producto -->
-  <ion-card>
+  <ion-card [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'">
     <ion-card-header>
       <ion-card-title class="ion-text-center">Agregar o Actualizar Producto</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <form (ngSubmit)="updateProducto(id, nombre, idCategoria)">
         <ion-item>
-          <ion-label position="floating">ID del Producto</ion-label>
-          <ion-input type="number" [(ngModel)]="id" name="id"></ion-input>
+          <ion-label position="floating" [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'">ID del Producto</ion-label>
+          <ion-input [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" type="number" [(ngModel)]="id" name="id"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label position="floating">Nombre del Producto</ion-label>
-          <ion-input type="text" [(ngModel)]="nombre" name="nombre"></ion-input>
+          <ion-label position="floating" [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'">Nombre del Producto</ion-label>
+          <ion-input [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" type="text" [(ngModel)]="nombre" name="nombre"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label position="floating">ID de la Categoría</ion-label>
-          <ion-input type="number" [(ngModel)]="idCategoria" name="idCategoria"></ion-input>
+          <ion-label position="floating" [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'">ID de la Categoría</ion-label>
+          <ion-input [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" type="number" [(ngModel)]="idCategoria" name="idCategoria"></ion-input>
         </ion-item>
-        <ion-button expand="full" color="primary" type="submit" shape="round">Actualizar Producto</ion-button>
-        <ion-button expand="full" color="primary" (click)="addProducto()" shape="round">Agregar Producto</ion-button>
+        <ion-button [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" expand="full" color="primary" type="submit" shape="round">Actualizar Producto</ion-button>
+        <ion-button [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" expand="full" color="primary" (click)="addProducto()" shape="round">Agregar Producto</ion-button>
       </form>
     </ion-card-content>
   </ion-card>
 
   <!-- Obtener o Eliminar Producto por ID -->
-  <ion-card>
+  <ion-card [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'">
     <ion-card-header>
-      <ion-card-title class="ion-text-center">Obtener o Eliminar Producto por ID</ion-card-title>
+      <ion-card-title class="ion-text-center" [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'">Obtener o Eliminar Producto por ID</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <form (ngSubmit)="getById()">
         <ion-item>
-          <ion-label position="floating">ID del Producto</ion-label>
-          <ion-input type="number" [(ngModel)]="id" name="id"></ion-input>
+          <ion-label position="floating" [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'">ID del Producto</ion-label>
+          <ion-input [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" type="number" [(ngModel)]="id" name="id"></ion-input>
         </ion-item>
 
         <!-- Botones para obtener y eliminar producto -->
-        <ion-button expand="full" color="primary" type="submit" shape="round">Obtener Producto</ion-button>
-        <ion-button expand="full" color="danger" (click)="deleteProducto(id)" shape="round">Eliminar Producto</ion-button>
+        <ion-button [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" expand="full" color="primary" type="submit" shape="round">Obtener Producto</ion-button>
+        <ion-button [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" expand="full" color="danger" (click)="deleteProducto(id)" shape="round">Eliminar Producto</ion-button>
       </form>
     </ion-card-content>
   </ion-card>
 
   <!-- Mostrar Detalles del Producto  Por ID -->
-  <ion-card *ngIf="producto">
+  <ion-card [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" *ngIf="producto">
     <ion-card-header>
-      <ion-card-title class="ion-text-center">Detalles del Producto</ion-card-title>
+      <ion-card-title [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" class="ion-text-center">Detalles del Producto</ion-card-title>
     </ion-card-header>
     <ion-card-content>      
         <!-- ID del Producto -->
         <ion-item>
-          <ion-label position="floating">ID del Producto</ion-label>
+          <ion-label [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" position="floating">ID del Producto</ion-label>
           <ion-input id="id"  type="number" value="{{producto.id}}" name="id" ></ion-input>
         </ion-item>
         
         <!-- Nombre del Producto -->
         <ion-item>
-          <ion-label id="nombre" position="floating">Nombre del Producto</ion-label>
-          <ion-input  type="text" value="{{producto.nombre}}" name="nombre" ></ion-input>
+          <ion-label [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" id="nombre" position="floating">Nombre del Producto</ion-label>
+          <ion-input [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'"  type="text" value="{{producto.nombre}}" name="nombre" ></ion-input>
         </ion-item>
         
         <!-- ID de la Categoría -->
         <ion-item>
-          <ion-label position="floating">ID de la Categoría</ion-label>
+          <ion-label [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" position="floating">ID de la Categoría</ion-label>
           <ion-input id="idCategoria" type="number" value="{{producto.idCategoria}}" name="idCategoria" ></ion-input>
         </ion-item>  
     </ion-card-content>
@@ -96,13 +96,13 @@
 
 
 <!-- Mostrar Lista de Producto -->
-  <ion-card>
+  <ion-card [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'">
     <ion-card-header>
-      <ion-card-title class="ion-text-center">Lista de Productos</ion-card-title>
+      <ion-card-title [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" class="ion-text-center">Lista de Productos</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ion-item>
-        <table class="styled-table">
+        <table [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" class="styled-table">
           <thead>
             <tr>
               <th>ID</th>

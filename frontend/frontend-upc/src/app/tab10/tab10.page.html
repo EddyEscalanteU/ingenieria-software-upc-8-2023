@@ -1,0 +1,64 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title class="ion-text-center">BITACORA</ion-title>
+  </ion-toolbar>
+</ion-header>
+  
+<style>
+  .styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+
+  th,
+  td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+  }
+</style>
+<ion-content [fullscreen]="true">
+
+  <ion-header collapse="condense">
+    <ion-toolbar color="primary">
+      <ion-title size="large" class="ion-text-center">BITACORA</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-card>
+    <ion-card-content>
+    <ion-card-content>
+      <ion-item>
+        <!-- <ion-label position="floating">Selecciona una fecha</ion-label> -->
+        <input type="date" [(ngModel)]="fechaHora" (change)="filtrarFecha($event)">
+      </ion-item>
+      <ion-item>
+        <table class="styled-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>FECHA HORA</th>
+              <th>EVENTO</th>
+              <th>ID-VALOR</th>
+              <th>VALOR</th>
+              <th>USUARIO</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let bitacora of listaBitacora; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ bitacora.fechaHora }}</td>
+              <td>{{ bitacora.evento }}</td>
+              <td>{{ bitacora.idValor }}</td>
+              <td>{{ bitacora.valor }}</td>
+              <td>{{ bitacora.usuario }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </ion-item>
+
+    </ion-card-content>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

@@ -18,6 +18,8 @@ export class Tab4Page {
   public id = 0;
   public fecha = new Date();
   public idUsuario = 0;
+  isUpdating: boolean = false; // Esta variable controla si se está actualizando o agregando un carrito
+
 
   public listaCarrito: CarritoCompra[] = []
   public carritoCompra: CarritoCompra | null = null;
@@ -140,36 +142,63 @@ export class Tab4Page {
               //console.log('complete - this.AddUsuario()');
           },
       });
-  }
+    }
 
   // Metodo public Eliminar Carrito por ID
-  public deleteCarrito(id: number) {
-    this.deleteCarritoFromBackend(id);
-}
+    public deleteCarrito(id: number) {
+     this.deleteCarritoFromBackend(id);
+    }
 
-// Eliminar Carrito por ID
-private deleteCarritoFromBackend(id: number) {
-    this.carritoService.Delete(id).subscribe({
-        next: (response: HttpResponse<any>) => {
-            if (response.body == 1) {
-                Notiflix.Notify.success("Se eliminó el CARRITO con éxito :)");
-            this.getCarritoFromBackend(); // Se actualiza el listado            
-            } else {
-                Notiflix.Notify.failure("Fallo al eliminar el CARRITO  :(");
-            }
-        },
-        error: (error: any) => {
-            console.log(error);
-            Notiflix.Notify.failure("Error al eliminar el carrito  :(");
-        },
-        complete: () => {
-            //console.log('complete - this.deleteCarrito()');
-        },
-    });
-}
+    // Eliminar Carrito por ID
+    private deleteCarritoFromBackend(id: number) {
+        this.carritoService.Delete(id).subscribe({
+            next: (response: HttpResponse<any>) => {
+                if (response.body == 1) {
+                    Notiflix.Notify.success("Se eliminó el CARRITO con éxito :)");
+                this.getCarritoFromBackend(); // Se actualiza el listado            
+                } else {
+                    Notiflix.Notify.failure("Fallo al eliminar el CARRITO  :(");
+                }
+            },
+            error: (error: any) => {
+                console.log(error);
+                Notiflix.Notify.failure("Error al eliminar el carrito  :(");
+            },
+            complete: () => {
+                //console.log('complete - this.deleteCarrito()');
+            },
+        });
+    }
+
+    // Iniciar la actualizacion 
+    startUpdating() {
+        // Lógica para iniciar la actualización
+        this.isUpdating = true;        
+        // Puedes agregar más lógica aquí, como cargar los datos del carrito que se va a actualizar
+    }
+
+    // Detener la actualizacion 
+    stopUpdating() {
+        // Lógica para iniciar la actualización
+        this.isUpdating = false;        
+        // Puedes agregar más lógica aquí, como cargar los datos del carrito que se va a actualizar
+    }
 
 
-  ///// Metodos para Detalle de Carrito
+    // ||| Submit del formualario para actualizar o agregar carrito de compra
+    onSubmit() {
+        if (this.isUpdating) {
+          // Realiza la lógica para actualizar el carrito con el ID proporcionado
+          this.updateCarritoFromBackend(this.id, this.fecha, this.idUsuario)
+          console.log('Actualizar carrito con ID:', this.id, 'Fecha:', this.fecha, 'ID de Usuario:', this.idUsuario);
+        } else {
+          // Realiza la lógica para agregar un nuevo carrito
+          this.AddCarritoFromBackend(this.fecha , this.idUsuario)
+          console.log('Agregar nuevo carrito con Fecha:', this.fecha, 'ID de Usuario:', this.idUsuario);
+        }
+      }
+
+  ///// METODOS PARA DETALLE DE CARRITO  ||||||||||||||||||||||
 
   private getDetalleFromBackend(){
     this.detalleService.GetAll().subscribe({
@@ -248,7 +277,7 @@ private deleteCarritoFromBackend(id: number) {
 
   }
 
-  // Actualizar Carrito de Compra
+  // Actualizar Detalle de Carrito de Compra
   public updateDetalle(){
     this.updateDetalleFromBackend(this.idDetalle, this.cantidad, this.idProducto , this.idCarritoCompra)
   }    
@@ -307,5 +336,6 @@ private deleteCarritoFromBackend(id: number) {
       });
   }
   
+
 
 }

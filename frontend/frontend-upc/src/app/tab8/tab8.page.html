@@ -18,29 +18,46 @@
     </ion-card-header>
     <ion-card-content>
 
-      <!-- Botones para Funcionalidades -->
-      <ion-button expand="full" (click)="mostrarFuncionalidades()">Mostrar Funcionalidades</ion-button>
-      <ion-button expand="full" (click)="agregarFuncionalidad()">
-      Agregar Funcionalidad
-      <ion-input name="nombrefuncionalidad" type="text" placeholder="Ingrese el Nombre de la Funcionalidad" [(ngModel)]="funcionalidadNombre"></ion-input>
-      <ion-input name="descripcionfuncionalidad" type="text" placeholder="Ingrese la Descripción de la Funcionalidad" [(ngModel)]="funcionalidadDescripcion"></ion-input>
-      </ion-button>
+  <!-- Botones para Funcionalidades -->
+  <ion-button expand="full" (click)="toggleFuncionalidades()">{{ mostrarListaFuncionalidades ? 'Ocultar Funcionalidades' : 'Mostrar Funcionalidades' }}</ion-button>
+  <ion-button expand="full" (click)="agregarFuncionalidad()">
+  Agregar Funcionalidad
+  <ion-input name="nombrefuncionalidad" type="text" placeholder="Ingrese el Nombre de la Funcionalidad" [(ngModel)]="funcionalidadNombre"></ion-input>
+  <ion-input name="descripcionfuncionalidad" type="text" placeholder="Ingrese la Descripción de la Funcionalidad" [(ngModel)]="funcionalidadDescripcion"></ion-input>
+  </ion-button>
 
-
-      <!-- Lista de Funcionalidades -->
-      <ion-list *ngIf="listaFuncionalidades.length > 0">
-        <ion-item *ngFor="let funcionalidad of listaFuncionalidades">
-          <ion-label>{{ funcionalidad.nombre }}</ion-label>
-          <ion-note slot="end">{{ funcionalidad.descripcion }}</ion-note>
-          <ion-button (click)="editarFuncionalidad(funcionalidad)">Editar Funcionalidad</ion-button>
-          <ion-button (click)="guardarFuncionalidad()">Guardar Funcionalidad</ion-button>
-          <ion-button (click)="eliminarFuncionalidad()">Eliminar Funcionalidad</ion-button>
-        </ion-item>
-      </ion-list>
-      <div *ngIf="listaFuncionalidades.length === 0" class="ion-text-center">
-        No hay funcionalidades disponibles.
+  <div class="ion-padding">
+  <!-- Lista de Funcionalidades -->
+  <table *ngIf="mostrarListaFuncionalidades" style="width: 100%;">
+    <thead>
+      <tr>
+              <th>Nombre</th>
+              <th>Descripción</th>
+              <th style="width: 165px;">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let funcionalidad of listaFuncionalidades">
+              <td>{{ funcionalidad.nombre }}</td>
+              <td>{{ funcionalidad.descripcion }}</td>
+              <td>
+                <ion-button shape="square" (click)="editarFuncionalidad(funcionalidad)">
+                  <ion-icon name="create-outline"></ion-icon>
+                </ion-button>
+                <ion-button shape="square" (click)="guardarFuncionalidad()">
+                  <ion-icon name="save-outline"></ion-icon>
+                </ion-button>
+                <ion-button shape="square" (click)="eliminarFuncionalidad()">
+                  <ion-icon name="trash-outline"></ion-icon>
+                </ion-button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div *ngIf="listaFuncionalidades.length === 0 && mostrarListaFuncionalidades" class="ion-text-center">
+          No hay funcionalidades disponibles.
+        </div>
       </div>
-
     </ion-card-content>
   </ion-card>
 
@@ -52,30 +69,45 @@
     <ion-card-content>
 
       <!-- Botones para Roles de Usuario -->
-      <ion-button expand="full" (click)="mostrarRolesUsuario()">Mostrar Roles Usuarios</ion-button>
+      <ion-button expand="full" (click)="toggleRolesUsuario()">{{ mostrarListaRolesUsuario ? 'Ocultar Roles de Usuario' : 'Mostrar Roles Usuarios' }}</ion-button>
       <ion-button expand="full" (click)="agregarRolUsuario()">
-      Agregar Rol Usuario
-      <ion-input name="nombrerolusuario" type="text" placeholder="Ingrese el Nombre del Rol de Usuario" [(ngModel)]="rolUsuarioNombre"></ion-input>
-      <ion-input name="descripcionrolusuario" type="text" placeholder="Ingrese la Descripción del Rol de Usuario" [(ngModel)]="rolUsuarioDescripcion"></ion-input>
+        Agregar Rol Usuario
+        <ion-input name="nombrerolusuario" type="text" placeholder="Ingrese el Nombre del Rol de Usuario" [(ngModel)]="rolUsuarioNombre"></ion-input>
+        <ion-input name="descripcionrolusuario" type="text" placeholder="Ingrese la Descripción del Rol de Usuario" [(ngModel)]="rolUsuarioDescripcion"></ion-input>
       </ion-button>
 
-
-      <!-- Lista de Roles de Usuario -->
-      <ion-list *ngIf="listaRolesUsuarios.length > 0">
-        <ion-item *ngFor="let rol of listaRolesUsuarios">
-          <ion-label>{{ rol.nombrE_ROL }}</ion-label>
-          <ion-note slot="end">{{ rol.descripcion }}</ion-note>
-          <ion-button (click)="editarRolUsuario(rol)">Editar Rol Usuario</ion-button>
-          <ion-button (click)="guardarRolUsuario()">Guardar Rol Usuario</ion-button>
-          <ion-button (click)="eliminarRolUsuario()">Eliminar Rol Usuario</ion-button>
-        </ion-item>
-      </ion-list>
-      <div *ngIf="listaRolesUsuarios.length === 0" class="ion-text-center">
-        No hay roles de usuario disponibles.
+      <div class="ion-padding">
+        <!-- Lista de Roles de Usuario -->
+        <table *ngIf="mostrarListaRolesUsuario" style="width: 100%;">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Descripción</th>
+              <th style="width: 165px;">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let rol of listaRolesUsuarios">
+              <td>{{ rol.nombrE_ROL }}</td>
+              <td>{{ rol.descripcion }}</td>
+              <td>
+                <ion-button shape="square" (click)="editarRolUsuario(rol)">
+                  <ion-icon name="create-outline"></ion-icon>
+                </ion-button>
+                <ion-button shape="square" (click)="guardarRolUsuario()">
+                  <ion-icon name="save-outline"></ion-icon>
+                </ion-button>
+                <ion-button shape="square" (click)="eliminarRolUsuario()">
+                  <ion-icon name="trash-outline"></ion-icon>
+                </ion-button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div *ngIf="listaRolesUsuarios.length === 0 && mostrarListaRolesUsuario" class="ion-text-center">
+          No hay roles de usuario disponibles.
+        </div>
       </div>
-
-
     </ion-card-content>
   </ion-card>
 
-</ion-content>

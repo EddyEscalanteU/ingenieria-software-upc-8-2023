@@ -1,16 +1,16 @@
 
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
+    <ion-title [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'">
       Usuarios
     </ion-title>
-    <ion-button *ngIf="enableLogin" (click)="modalIniciaSecion()">Inicio secion</ion-button>
-    <ion-button *ngIf="!enableLogin" (click)="serrarSesion()">Serrar sesion</ion-button>
+    <ion-button [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" *ngIf="enableLogin" (click)="modalIniciaSecion()">Inicio sesion</ion-button>
+    <ion-button [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" *ngIf="!enableLogin" (click)="serrarSesion()">Cerrar sesion</ion-button>
     <ion-label *ngIf="!enableLogin"> Usuario: {{loginNombreCopleto}} </ion-label>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">Usuarios</ion-title>
@@ -18,16 +18,16 @@
   </ion-header>
 
  
-    <ion-item>
-      <ion-input id="nombreCompleto" type="text" placeholder="Ingrese el Nombre Completo" [(ngModel)]="nombreCompleto"></ion-input>
+    <ion-item >
+      <ion-input [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" id="nombreCompleto" type="text" placeholder="Ingrese el Nombre Completo" [(ngModel)]="nombreCompleto"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-input id="userName" type="text" placeholder="Ingrese su User Name" [(ngModel)]="userName"></ion-input>
+      <ion-input [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" id="userName" type="text" placeholder="Ingrese su User Name" [(ngModel)]="userName"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-input id="password" type="text" placeholder="Ingrese la Contraseña" [(ngModel)]="password"></ion-input>
+      <ion-input  [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" id="password" type="text" placeholder="Ingrese la Contraseña" [(ngModel)]="password"></ion-input>
     </ion-item>
-    <ion-button id="addUsuario" (click)="addUsuario()">Agregar Usuario</ion-button>
+    <ion-button  [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" id="addUsuario" (click)="addUsuario()">Agregar Usuario</ion-button>
 
 <br>
 <ion-list>

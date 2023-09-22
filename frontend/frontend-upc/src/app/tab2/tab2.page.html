@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="primary">
-    <ion-title class="ion-text-center">Categoría Producto</ion-title>
+    <ion-title class="ion-text-center" [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'">Categoría Producto</ion-title>
   </ion-toolbar>
   
   <style>
@@ -19,7 +19,7 @@
   </style>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar color="primary">
       <ion-title size="large" class="ion-text-center">Categoría Producto</ion-title>
@@ -29,7 +29,7 @@
   <!-- Agregar o actualizar Categoria Producto -->
   <ion-card>
     <ion-card-header>
-      <ion-card-title class="ion-text-center">Agregar o Actualizar Categoría</ion-card-title>
+      <ion-card-title class="ion-text-center" [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'">Agregar o Actualizar Categoría</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <form>

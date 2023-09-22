@@ -26,12 +26,14 @@ export class Tab7Page {
   // Método para guardar la preferencia del usuario
   guardarFuente() {
     localStorage.setItem('fuente', this.fuenteSeleccionada);
+    window.location.reload();
   }
 
   constructor() {
     this.checkFont();
     this.checkAppMode();
   }
+
 
   checkFont() {
     const savedFontFamily = localStorage.getItem('fuente');

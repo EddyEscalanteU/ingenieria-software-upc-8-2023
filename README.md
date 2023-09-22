@@ -14,6 +14,7 @@ Asignatura de Ingeniería de Software del modulo 8-2023
 
 ## Victor Hugo Condori Bejarano - victorhugocondoribejarano@gmail.com - 60961276
 
+## Michael Veliz Cadima - michaelvelizcadima@gmail.com - 75682018
 
 
 

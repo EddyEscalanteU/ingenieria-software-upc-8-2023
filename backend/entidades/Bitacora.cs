@@ -4,10 +4,10 @@ namespace backend.entidades
     {
         public int Id{get; set;}
         public DateTime FechaHora{get; set;}
-        public int idValor{get; set;}
-        public string evento{get; set;}
-        public string valor{get; set;}
-        public string usuario{get; set;}
+        public int IdValor{get; set;}
+        public string Evento{get; set;}
+        public string Valor{get; set;}
+        public string Usuario{get; set;}
     }
 }
 

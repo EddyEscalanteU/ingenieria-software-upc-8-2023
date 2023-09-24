@@ -46,4 +46,18 @@ public class BitacoraController : ControllerBase
             return StatusCode(500, ex.Message);
         }
     } 
+
+    
+    [HttpGet]
+    [Route("FiltrarUsuarioBitacora")]
+    public IActionResult FiltrarUsuarioBitacora(string id){
+        try{
+            var result = BitacoraServicios.FiltrarUsuario(id);
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
+    } 
 }

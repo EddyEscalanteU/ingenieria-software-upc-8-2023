@@ -10,4 +10,17 @@
       <ion-title size="large">settingUser</ion-title>
     </ion-toolbar>
   </ion-header>
+  <ion-list>
+    <ion-item>
+      <ion-label position="floating">Nombre</ion-label>
+      <ion-input placeholder [(ngModel)]="nombreCompleto"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Nombre</ion-label>
+      <ion-input placeholder [(ngModel)]="userName"></ion-input>
+    </ion-item>
+    <ion-button (click)="actualizarDatos()" color="primary" size="small">Aceptar Cambios</ion-button>
+    <ion-button color="primary" size="small"[routerLink]="['/tabs/tab1']">Cancelar</ion-button>
+    <ion-button (click)="modalChangePassword()" color="warning" size="small">Cambiar Contrasenia</ion-button>
+  </ion-list>
 </ion-content>

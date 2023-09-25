@@ -7,6 +7,7 @@
     <ion-button *ngIf="enableLogin" (click)="modalIniciaSecion()">Inicio secion</ion-button>
     <ion-button *ngIf="!enableLogin" (click)="serrarSesion()">Serrar sesion</ion-button>
     <ion-label *ngIf="!enableLogin"> Usuario: {{loginNombreCopleto}} </ion-label>
+    <ion-button *ngIf="!enableLogin" color="warning" [routerLink]="['/editar-user']">Editar</ion-button>
   </ion-toolbar>
 </ion-header>
 
@@ -19,15 +20,15 @@
 
  
     <ion-item>
-      <ion-input id="nombreCompleto" type="text" placeholder="Ingrese el Nombre Completo" [(ngModel)]="nombreCompleto"></ion-input>
+      <ion-input type="text" placeholder="Ingrese el Nombre Completo" [(ngModel)]="nombreCompleto"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-input id="userName" type="text" placeholder="Ingrese su User Name" [(ngModel)]="userName"></ion-input>
+      <ion-input type="text" placeholder="Ingrese su User Name" [(ngModel)]="userName"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-input id="password" type="text" placeholder="Ingrese la Contraseña" [(ngModel)]="password"></ion-input>
+      <ion-input type="text" placeholder="Ingrese la Contraseña" [(ngModel)]="password"></ion-input>
     </ion-item>
-    <ion-button id="addUsuario" (click)="addUsuario()">Agregar Usuario</ion-button>
+    <ion-button (click)="addUsuario()">Agregar Usuario</ion-button>
 
 <br>
 <ion-list>

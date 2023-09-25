@@ -13,6 +13,7 @@ import { Storage } from '@ionic/storage-angular';
   styleUrls: ['tab1.page.scss'],
 })
 export class Tab1Page implements OnInit {
+
   public loginNombreCopleto = '';
 
   public nombreCompleto = '';
@@ -36,6 +37,7 @@ export class Tab1Page implements OnInit {
     this.stadoVentana();
   }
 
+  /* Inicio secion de modo modal */
   public async modalIniciaSecion() {
     const modal = this.modalCtrl.create({
       component: IniciaSecionPage,
@@ -53,12 +55,13 @@ export class Tab1Page implements OnInit {
     this.stadoVentana();
   }
   
+  /** Actualiza el DOM */
   public async stadoVentana() {
     var token = await this.storage.get('token');
     if (token != null) {
       this.enableLogin = false;
       this.getUsuariosFromBackend();
-      this.loginNombreCopleto = await this.storage.get('nameUserComplit');
+      this.loginNombreCopleto = await this.storage.get('nameUserStorage');
     }
     else{
 

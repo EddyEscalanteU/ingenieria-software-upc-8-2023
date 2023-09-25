@@ -6,14 +6,14 @@ import { FormBuilder } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { IniciaSecionPage } from '../loginUser/inicia-secion/inicia-secion.page';
 import { Storage } from '@ionic/storage-angular';
-
+import { ConfiguracionService } from '../servicios-backend/configuracion/configuracion.service';
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss'],
 })
 export class Tab1Page implements OnInit {
-
+  fuenteSeleccionada: string = 'Arial, sans-serif'; // Fuente predeterminada
   public loginNombreCopleto = '';
 
   public nombreCompleto = '';
@@ -25,14 +25,30 @@ export class Tab1Page implements OnInit {
   public listaUsuarios: Usuarios[] = [];
 
   constructor(
+    private configuracionServie: ConfiguracionService,
+
     private usuariosService: UsuariosService,
     private modalCtrl: ModalController,
     private storage: Storage
   ) {
+    this.checkFont();
+    
     // this.getUsuariosFromBackend();
     this.storage.create();
     this.stadoVentana();
   }
+  checkFont() {
+    const savedFontFamily = localStorage.getItem('fuente');
+    if (savedFontFamily) {
+      this.fuenteSeleccionada = savedFontFamily;
+    }
+  }
+  // Método para llamar a un método de tab2
+  callMethod() {
+    this.configuracionServie.checkFont();
+  }
+
+
   ngOnInit() {
     this.stadoVentana();
   }
@@ -63,7 +79,7 @@ export class Tab1Page implements OnInit {
       this.getUsuariosFromBackend();
       this.loginNombreCopleto = await this.storage.get('nameUserStorage');
     }
-    else{
+    else {
 
     }
   }
@@ -83,7 +99,7 @@ export class Tab1Page implements OnInit {
     });
   }
 
-  public async serrarSesion(){
+  public async serrarSesion() {
     await this.storage.clear();
     location.reload();
     this.stadoVentana();
@@ -128,4 +144,5 @@ export class Tab1Page implements OnInit {
       },
     });
   }
+
 }

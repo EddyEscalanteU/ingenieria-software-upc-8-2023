@@ -1,0 +1,69 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title class="ion-text-center">BITACORA</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-header collapse="condense">
+    <ion-toolbar color="primary">
+      <ion-title size="large" class="ion-text-center">BITACORA</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-card>
+    <ion-card-content>
+    <ion-card-content>
+      <ion-item>
+        <div class="input-container">
+          
+          <label for="fechaInput">Buscar</label>
+          <input type="date" class="date" id="fechaInput" [(ngModel)]="fechaHora" (change)="filtrarFecha($event)">
+          <!-- <input type="date" class="date" id="fechaInput" [(ngModel)]="fechaHora" (change)="filtrarFecha($event)"> -->
+          <ion-item>
+            <ion-label class="label-left">Usuario</ion-label>
+            <!-- Porque es un componente de IONIC -->
+            <ion-select placeholder="Selecciona un usuario" [(ngModel)]="idUsuario" (ionChange)="filtrarUsuario($event)">
+              <ion-select-option *ngFor="let usuario of listaUsuario" [value]="usuario.id">{{usuario.nombreCompleto}}</ion-select-option>
+              <ion-select-option value="escalante_77_SQLLogin_4">Usuario - Default</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+        <!-- <input type="date" [(ngModel)]="fechaHora" (change)="filtrarFecha($event)"> -->
+      </ion-item>
+      <ion-item>
+        <table class="styled-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>EVENTO</th>
+              <th>ID-VALOR</th>
+              <th>VALOR</th>
+              <th>FECHA HORA</th>
+              <th>USUARIO</th>
+            </tr>
+          </thead>
+          <ng-container *ngIf="listaBitacora.length > 0; else noData">
+          <tbody>
+            <tr *ngFor="let bitacora of listaBitacora; let i = index">
+              <td class="text-center">{{ i + 1 }}</td>
+              <td>{{ bitacora.evento }}</td>
+              <td>{{ bitacora.idValor }}</td>
+              <td>{{ bitacora.valor }}</td>
+              <td>{{ bitacora.fechaHora | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
+              <td>{{ bitacora.usuario }}</td>
+            </tr>
+          </tbody>
+        </ng-container>
+        </table>
+      </ion-item>
+      <ng-template #noData>
+        <tr>
+          <td colspan="7" style="text-align: center;">No hay datos disponibles</td>
+        </tr>
+      </ng-template>
+    </ion-card-content>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

@@ -10,7 +10,7 @@ namespace backend.servicios
     public static class UsuariosServicios
     {
         public static IEnumerable<T> ObtenerTodo<T>(){
-            const string sql = "select * from usuarios ORDER BY FECHA_REGISTRO DESC";
+            const string sql = "select * from usuarios WHERE ESTADO_REGISTRO = 1 ORDER BY FECHA_REGISTRO DESC";
             return BDManager.GetInstance.GetData<T>(sql);
             // const string storedProcedure = "ObtenerTodosLosUsuarios";
             // var parameters = new DynamicParameters(); // Agrega parámetros si es necesario

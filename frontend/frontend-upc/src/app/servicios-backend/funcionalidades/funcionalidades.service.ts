@@ -51,8 +51,7 @@ export class FuncionalidadService {
   public Delete(id: number): Observable<HttpResponse<any>> {
     const url = `${this.URL_DELETE}?id=${id}`;
     return this.httpClient
-      .delete<any>(url,
-        { observe: 'response' })
+      .delete<any>(url, { observe: 'response' })
       .pipe();
   }
 }

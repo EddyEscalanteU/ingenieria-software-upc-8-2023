@@ -27,8 +27,8 @@ namespace backend.servicios
         {
             const string sql = "INSERT INTO ASIGNACION_ROLES (ID_USUARIO, ID_ROL) VALUES (@IdUsuario, @IdRol)";
             var parameters = new DynamicParameters();
-            parameters.Add("IdUsuario", asignacion.ID_USUARIO, DbType.Int32);
-            parameters.Add("IdRol", asignacion.ID_ROL, DbType.Int32);
+            parameters.Add("IdUsuario", asignacion.IdUsuario, DbType.Int32);
+            parameters.Add("IdRol", asignacion.IdRol, DbType.Int32);
 
             return BDManager.GetInstance.SetData(sql, parameters);
         }
@@ -37,9 +37,9 @@ namespace backend.servicios
         {
             const string sql = "UPDATE ASIGNACION_ROLES SET ID_USUARIO = @IdUsuario, ID_ROL = @IdRol WHERE ID = @Id";
             var parameters = new DynamicParameters();
-            parameters.Add("Id", asignacion.ID, DbType.Int32);
-            parameters.Add("IdUsuario", asignacion.ID_USUARIO, DbType.Int32);
-            parameters.Add("IdRol", asignacion.ID_ROL, DbType.Int32);
+            parameters.Add("Id", asignacion.Id, DbType.Int32);
+            parameters.Add("IdUsuario", asignacion.IdUsuario, DbType.Int32);
+            parameters.Add("IdRol", asignacion.IdRol, DbType.Int32);
 
             return BDManager.GetInstance.SetData(sql, parameters);
         }

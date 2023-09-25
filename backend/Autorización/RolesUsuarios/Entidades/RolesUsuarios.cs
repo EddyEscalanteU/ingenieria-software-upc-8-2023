@@ -8,11 +8,6 @@ public class RolesUsuarios
 
     public string? DESCRIPCION { get; set; }
 
-    public string? USUARIO_REGISTRO { get; set; }
-
-    public DateTime FECHA_REGISTRO { get; set; }
-
-    public int ESTADO_REGISTRO { get; set; }
     }
 }
 

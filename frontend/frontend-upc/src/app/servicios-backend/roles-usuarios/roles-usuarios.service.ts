@@ -11,10 +11,10 @@ export class RolUsuarioService {
   PATH_BACKEND = "http://localhost:" + "5163"
 
   URL_GET_ALL = this.PATH_BACKEND + "/api/RolesUsuarios/GetAllRolesUsuarios";
-  URL_GET_BY_ID = this.PATH_BACKEND + "/api/RolesUsuarios/GetRolUsuarioById";
-  URL_ADD = this.PATH_BACKEND + "/api/RolesUsuarios/AddRolUsuario";
-  URL_UPDATE = this.PATH_BACKEND + "/api/RolesUsuarios/UpdateRolUsuario";
-  URL_DELETE = this.PATH_BACKEND + "/api/RolesUsuarios/DeleteRolUsuario";
+  URL_GET_BY_ID = this.PATH_BACKEND + "/api/RolesUsuarios/GetRolesUsuarioById";
+  URL_ADD = this.PATH_BACKEND + "/api/RolesUsuarios/AddRolesUsuario";
+  URL_UPDATE = this.PATH_BACKEND + "/api/RolesUsuarios/UpdateRolesUsuario";
+  URL_DELETE = this.PATH_BACKEND + "/api/RolesUsuarios/DeleteRolesUsuario";
 
   constructor(private httpClient: HttpClient) {
   }

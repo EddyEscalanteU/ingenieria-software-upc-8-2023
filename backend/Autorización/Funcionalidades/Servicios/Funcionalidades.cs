@@ -25,27 +25,22 @@ namespace backend.servicios
 
         public static int InsertarFuncionalidad(Funcionalidad funcionalidad)
         {
-            const string sql = "INSERT INTO GESTION_FUNCIONALIDADES (NOMBRE, DESCRIPCION, USUARIO_REGISTRO, FECHA_REGISTRO, ESTADO_REGISTRO) VALUES (@Nombre, @Descripcion, @UsuarioRegistro, @FechaRegistro, @EstadoRegistro)";
+            const string sql = "INSERT INTO GESTION_FUNCIONALIDADES (NOMBRE, DESCRIPCION) VALUES (@Nombre, @Descripcion)";
             var parameters = new DynamicParameters();
-            parameters.Add("Nombre", funcionalidad.NOMBRE, DbType.String);
-            parameters.Add("Descripcion", funcionalidad.DESCRIPCION, DbType.String);
-            parameters.Add("UsuarioRegistro", funcionalidad.USUARIO_REGISTRO, DbType.String);
-            parameters.Add("FechaRegistro", funcionalidad.FECHA_REGISTRO, DbType.DateTime);
-            parameters.Add("EstadoRegistro", funcionalidad.ESTADO_REGISTRO, DbType.Int32);
+            parameters.Add("Nombre", funcionalidad.Nombre, DbType.String);
+            parameters.Add("Descripcion", funcionalidad.Descripcion, DbType.String);
+            
 
             return BDManager.GetInstance.SetData(sql, parameters);
         }
 
         public static int ActualizarFuncionalidad(Funcionalidad funcionalidad)
         {
-            const string sql = "UPDATE GESTION_FUNCIONALIDADES SET NOMBRE = @Nombre, DESCRIPCION = @Descripcion, USUARIO_REGISTRO = @UsuarioRegistro, FECHA_REGISTRO = @FechaRegistro, ESTADO_REGISTRO = @EstadoRegistro WHERE ID = @Id";
+            const string sql = "UPDATE GESTION_FUNCIONALIDADES SET NOMBRE = @Nombre, DESCRIPCION = @Descripcion WHERE ID = @Id";
             var parameters = new DynamicParameters();
-            parameters.Add("Id", funcionalidad.ID, DbType.Int32);
-            parameters.Add("Nombre", funcionalidad.NOMBRE, DbType.String);
-            parameters.Add("Descripcion", funcionalidad.DESCRIPCION, DbType.String);
-            parameters.Add("UsuarioRegistro", funcionalidad.USUARIO_REGISTRO, DbType.String);
-            parameters.Add("FechaRegistro", funcionalidad.FECHA_REGISTRO, DbType.DateTime);
-            parameters.Add("EstadoRegistro", funcionalidad.ESTADO_REGISTRO, DbType.Int32);
+            parameters.Add("Id", funcionalidad.Id, DbType.Int32);
+            parameters.Add("Nombre", funcionalidad.Nombre, DbType.String);
+            parameters.Add("Descripcion", funcionalidad.Descripcion, DbType.String);
 
             return BDManager.GetInstance.SetData(sql, parameters);
         }

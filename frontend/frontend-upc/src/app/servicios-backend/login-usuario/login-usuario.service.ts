@@ -41,12 +41,12 @@ export class LoginUsuarioService {
   }
 
 
-  public changePassword2(oldPass: string, newPass: string): Observable<any> {
+  public changePassword2(oldPass: string, newPass: string, options?: any): Observable<any> {
     const url = this.URL_CHANGE_PASS;
     const body = { oldPass: oldPass, newPass: newPass };
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-    return this.httpClient.post(url, body, { headers: headers });
+    return this.httpClient.post(url, body, options);
   }
 }
 

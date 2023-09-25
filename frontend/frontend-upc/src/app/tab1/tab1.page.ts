@@ -7,6 +7,7 @@ import { ModalController } from '@ionic/angular';
 import { IniciaSecionPage } from '../loginUser/inicia-secion/inicia-secion.page';
 import { Storage } from '@ionic/storage-angular';
 import { ConfiguracionService } from '../servicios-backend/configuracion/configuracion.service';
+
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
@@ -53,6 +54,7 @@ export class Tab1Page implements OnInit {
     this.stadoVentana();
   }
 
+  /* Inicio secion de modo modal */
   public async modalIniciaSecion() {
     const modal = this.modalCtrl.create({
       component: IniciaSecionPage,
@@ -69,13 +71,14 @@ export class Tab1Page implements OnInit {
     }
     this.stadoVentana();
   }
-
+  
+  /** Actualiza el DOM */
   public async stadoVentana() {
     var token = await this.storage.get('token');
     if (token != null) {
       this.enableLogin = false;
       this.getUsuariosFromBackend();
-      this.loginNombreCopleto = await this.storage.get('nameUserComplit');
+      this.loginNombreCopleto = await this.storage.get('nameUserStorage');
     }
     else {
 
@@ -111,7 +114,7 @@ export class Tab1Page implements OnInit {
     );
   }
 
-  private AddUsuarioFromBackend(
+  private async AddUsuarioFromBackend(
     nombreCompleto: string,
     userName: string,
     password: string
@@ -120,7 +123,8 @@ export class Tab1Page implements OnInit {
     usuarioEntidad.nombreCompleto = nombreCompleto;
     usuarioEntidad.userName = userName;
     usuarioEntidad.password = password;
-
+    usuarioEntidad.usuarioRegistro = (await this.storage.get('idUserStorage')).toString();
+    console.log(usuarioEntidad);
     this.usuariosService.AddUsuario(usuarioEntidad).subscribe({
       next: (response: HttpResponse<any>) => {
         console.log(response.body); //1
@@ -142,5 +146,4 @@ export class Tab1Page implements OnInit {
       },
     });
   }
-
 }

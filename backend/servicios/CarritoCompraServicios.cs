@@ -29,10 +29,12 @@ namespace backend.servicios
         }
 
         public static int InsertCarritoCompra(CarritoCompra carritoCompra){
-            const string sql = "INSERT INTO [dbo].[CARRITO_COMPRA]([FECHA], [ID_USUARIO]) VALUES (@fecha, @id_usuario) ";            
+            const string sql = "INSERT INTO [dbo].[CARRITO_COMPRA]([FECHA], [ID_USUARIO], [USUARIO_REGISTRO]) VALUES (@fecha, @id_usuario, @usuario_registro)";            
             var parameter = new DynamicParameters();
             parameter.Add("fecha", carritoCompra.Fecha, DbType.DateTime);
             parameter.Add("id_usuario", carritoCompra.IdUsuario, DbType.Int64);
+            parameter.Add("usuario_registro", carritoCompra.UsuarioRegistro, DbType.String);
+
             var result = BDManager.GetInstance.SetData(sql, parameter);
 
             // const string storedProcedureName = "InsertCarritoCompra";

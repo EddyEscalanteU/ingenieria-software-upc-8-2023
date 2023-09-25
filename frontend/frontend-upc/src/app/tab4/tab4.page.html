@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="primary">
-    <ion-title class="ion-text-center" >Carrito de Compra</ion-title>
+    <ion-title [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" class="ion-text-center" >Carrito de Compra</ion-title>
   </ion-toolbar>
   <style>
     .styled-table {
@@ -16,10 +16,10 @@
   </style>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar color="primary">
-      <ion-title size="large" class="ion-text-center">Carrito de Compra</ion-title>
+      <ion-title size="large" [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" class="ion-text-center">Carrito de Compra</ion-title>
     </ion-toolbar>
   </ion-header>
 
@@ -47,57 +47,57 @@
   </ion-card> -->
 
   <!-- Agregar o Actualizar Carrito -->
-  <ion-card>
+  <ion-card [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'">
     <ion-card-header>
-      <ion-card-title class="ion-text-center">Agregar o Actualizar Carrito</ion-card-title>
+      <ion-card-title class="ion-text-center" [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'">Agregar o Actualizar Carrito</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <!-- Botón para iniciar la actualización -->
-      <ion-button color="primary" (click)="startUpdating()">Actualizar</ion-button>
+      <ion-button color="primary" (click)="startUpdating()" [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'">Actualizar</ion-button>
       <!-- Botón para Agregar  -->
-      <ion-button color="primary" (click)="stopUpdating()">Agregar</ion-button>
+      <ion-button color="primary" (click)="stopUpdating()" [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'">Agregar</ion-button>
 
       <!--Formualario para agregar o actualizar-->
-      <form (ngSubmit)="onSubmit()" #carritoForm="ngForm">
+      <form  (ngSubmit)="onSubmit()" #carritoForm="ngForm">
         <ion-item>
-          <ion-label position="floating">ID del Carrito</ion-label>
-          <ion-input type="number" [(ngModel)]="id" name="id" [required]="!isUpdating"></ion-input>
+          <ion-label [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" position="floating">ID del Carrito</ion-label>
+          <ion-input [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" type="number" [(ngModel)]="id" name="id" [required]="!isUpdating"></ion-input>
           <div *ngIf="isUpdating && carritoForm.form.controls['id'].hasError('required')">El ID del carrito es obligatorio al actualizar.</div>
         </ion-item>
         <ion-item>
-          <ion-label position="floating">Fecha</ion-label>
-          <ion-input type="date" [(ngModel)]="fecha" name="fecha" required></ion-input>
+          <ion-label position="floating" [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'">Fecha</ion-label>
+          <ion-input [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" type="date" [(ngModel)]="fecha" name="fecha" required></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label position="floating">ID de Usuario</ion-label>
-          <ion-input type="text" [(ngModel)]="idUsuario" name="idUsuario" required></ion-input>
+          <ion-label position="floating" [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'">ID de Usuario</ion-label>
+          <ion-input [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" type="text" [(ngModel)]="idUsuario" name="idUsuario" required></ion-input>
         </ion-item>
         <!-- Botón para Agregar -->
-        <ion-button expand="full" color="primary" type="submit" shape="round">{{ isUpdating ? 'Actualizar Carrito' : 'Agregar Carrito' }}</ion-button>                
+        <ion-button [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" expand="full" color="primary" type="submit" shape="round">{{ isUpdating ? 'Actualizar Carrito' : 'Agregar Carrito' }}</ion-button>                
       </form>
     </ion-card-content>
   </ion-card>
 
   <!-- Obtener o Eliminar Carrito por ID -->
-  <ion-card>
+  <ion-card [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'">
     <ion-card-header>
-      <ion-card-title class="ion-text-center">Obtener o Eliminar Carrito por ID</ion-card-title>
+      <ion-card-title [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" class="ion-text-center">Obtener o Eliminar Carrito por ID</ion-card-title>
     </ion-card-header>
-    <ion-card-content>    
+    <ion-card-content [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'">    
         <ion-item>
-          <ion-label position="floating">ID del Carrito</ion-label>
-          <ion-input type="number" [(ngModel)]="id"></ion-input>
+          <ion-label position="floating" [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'">ID del Carrito</ion-label>
+          <ion-input [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" type="number" [(ngModel)]="id"></ion-input>
         </ion-item>
-        <ion-button expand="full" color="primary" (click)="getCarritoById()" shape="round" >Obtener Carrito</ion-button>
-        <ion-button expand="full" color="danger" (click)="deleteCarrito(id)" shape="round">Eliminar Carrito</ion-button>
+        <ion-button [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" expand="full" color="primary" (click)="getCarritoById()" shape="round" >Obtener Carrito</ion-button>
+        <ion-button [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" expand="full" color="danger" (click)="deleteCarrito(id)" shape="round">Eliminar Carrito</ion-button>
     </ion-card-content>
   </ion-card>
 
-  <ion-card *ngIf="carritoCompra">
+  <ion-card [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" *ngIf="carritoCompra">
     <ion-card-header>
-      <ion-card-title class="ion-text-center">Detalles del Carrito</ion-card-title>
+      <ion-card-title class="ion-text-center" [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'">Detalles del Carrito</ion-card-title>
     </ion-card-header>
-    <ion-card-content>
+    <ion-card-content [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'">
       <p><strong>ID:</strong> {{ carritoCompra.id }}</p>
       <p><strong>Fecha:</strong> {{ carritoCompra.fecha }}</p>
       <p><strong>ID Usuario:</strong> {{ carritoCompra.idUsuario }}</p>
@@ -107,51 +107,51 @@
   <!--Agregar o Actualizar Detalle de Carrito-->
   <ion-card>
     <ion-card-header>
-      <ion-card-title class="ion-text-center">Agregar o Actualizar Detalle de Carrito</ion-card-title>
+      <ion-card-title [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" class="ion-text-center">Agregar o Actualizar Detalle de Carrito</ion-card-title>
     </ion-card-header>
-    <ion-card-content>
+    <ion-card-content [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'">
       <ion-item>
-        <ion-label position="floating">ID del Detalle</ion-label>
-        <ion-input type="number" [(ngModel)]="idDetalle"></ion-input>
+        <ion-label [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" position="floating">ID del Detalle</ion-label>
+        <ion-input [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" type="number" [(ngModel)]="idDetalle"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="floating">ID del Carrito de Compra</ion-label>
-        <ion-input type="number" [(ngModel)]="idCarritoCompra"></ion-input>
+        <ion-label [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" position="floating">ID del Carrito de Compra</ion-label>
+        <ion-input [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" type="number" [(ngModel)]="idCarritoCompra"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="floating">ID del Producto</ion-label>
-        <ion-input type="number" [(ngModel)]="idProducto"></ion-input>
+        <ion-label [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" position="floating">ID del Producto</ion-label>
+        <ion-input  [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" type="number" [(ngModel)]="idProducto"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="floating">Cantidad</ion-label>
-        <ion-input type="number" [(ngModel)]="cantidad"></ion-input>
+        <ion-label [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" position="floating">Cantidad</ion-label>
+        <ion-input [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" type="number" [(ngModel)]="cantidad"></ion-input>
       </ion-item>
 
-      <ion-button expand="full" color="primary" (click)="addDetalleCarrito()" shape="round">Agregar Detalle</ion-button>
-      <ion-button expand="full" color="primary" (click)="updateDetalle()" shape="round">Actualizar Detalle</ion-button>
+      <ion-button [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" expand="full" color="primary" (click)="addDetalleCarrito()" shape="round">Agregar Detalle</ion-button>
+      <ion-button [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" expand="full" color="primary" (click)="updateDetalle()" shape="round">Actualizar Detalle</ion-button>
     </ion-card-content>
   </ion-card>
 
   <!--Obtener o Eliminar Detalle de Carrito por ID-->
   <ion-card>
     <ion-card-header>
-      <ion-card-title class="ion-text-center">Obtener o Eliminar Detalle de Carrito por ID</ion-card-title>
+      <ion-card-title [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" class="ion-text-center">Obtener o Eliminar Detalle de Carrito por ID</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ion-item>
-        <ion-label position="floating">ID del Detalle</ion-label>
-        <ion-input type="number" [(ngModel)]="idDetalle" ></ion-input>
+        <ion-label [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" position="floating">ID del Detalle</ion-label>
+        <ion-input [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" type="number" [(ngModel)]="idDetalle" ></ion-input>
       </ion-item>
-      <ion-button expand="full" color="primary" (click)="getDetalleById()" shape="round">Obtener Detalle</ion-button>
-      <ion-button expand="full" color="danger" (click)="deleteDetalle(idDetalle)" shape="round">Eliminar Detalle</ion-button>
+      <ion-button [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" expand="full" color="primary" (click)="getDetalleById()" shape="round">Obtener Detalle</ion-button>
+      <ion-button [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" expand="full" color="danger" (click)="deleteDetalle(idDetalle)" shape="round">Eliminar Detalle</ion-button>
     </ion-card-content>
   </ion-card>
 
   <ion-card *ngIf="detalleCarrito">
     <ion-card-header>
-      <ion-card-title class="ion-text-center">Detalles del Detalle de Carrito</ion-card-title>
+      <ion-card-title class="ion-text-center" [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" >Detalles del Detalle de Carrito</ion-card-title>
     </ion-card-header>
-    <ion-card-content>
+    <ion-card-content [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" >
       <p><strong>ID:</strong> {{ detalleCarrito.id }}</p>
       <p><strong>Cantidad:</strong> {{ detalleCarrito.cantidad }}</p>
       <p><strong>ID Producto:</strong> {{ detalleCarrito.idProducto }}</p>
@@ -162,10 +162,10 @@
 <!--Últimos 5 Carritos-->
   <ion-card>
     <ion-card-header>
-      <ion-card-title class="ion-text-center">Últimos 5 Carritos</ion-card-title>
+      <ion-card-title class="ion-text-center" [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'">Últimos 5 Carritos</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <table class="styled-table">
+      <table [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" class="styled-table">
         <thead>
           <tr>
             <th>ID</th>
@@ -187,10 +187,10 @@
 <!--Últimos 5 Detalles de Carrito-->
   <ion-card>
     <ion-card-header>
-      <ion-card-title class="ion-text-center">Últimos 5 Detalles de Carrito</ion-card-title>
+      <ion-card-title class="ion-text-center" [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'">Últimos 5 Detalles de Carrito</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <table class="styled-table">
+      <table [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" class="styled-table">
         <thead>
           <tr>
             <th>ID</th>

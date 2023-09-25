@@ -7,7 +7,6 @@ CREATE TABLE BITACORA (
     USUARIO VARCHAR(100)
 );
 
-
 CREATE TRIGGER TRIGGER_INSERT_USUARIO
 ON USUARIOS FOR INSERT
 AS
@@ -17,6 +16,7 @@ BEGIN
     DECLARE @Evento VARCHAR(100);
     DECLARE @Valor NVARCHAR(100);
     DECLARE @Id NVARCHAR(100);
+    DECLARE @Usuario NVARCHAR(100)
 
     IF EXISTS (SELECT * FROM INSERTED)
     BEGIN
@@ -26,13 +26,15 @@ BEGIN
             SET @Evento = 'INSERT EN LA COLUMNA USER_NAME DE LA TABLA USUARIO';
             SELECT @Valor = USER_NAME FROM INSERTED;
             SELECT @Id = ID FROM INSERTED;
+            SELECT @Usuario = USUARIO_REGISTRO FROM INSERTED;
+
             INSERT INTO BITACORA (FECHA_HORA,ID_VALOR,EVENTO, VALOR, USUARIO)
             SELECT
                 GETDATE(),
                 @Id,
                 @Evento,
                 @Valor,
-                SYSTEM_USER;
+                @Usuario;
         END
         -- Si existe una insercion en la columna USER_NAME
         IF EXISTS (SELECT NOMBRE_COMPLETO FROM INSERTED)
@@ -40,13 +42,15 @@ BEGIN
             SET @Evento = 'INSERT EN LA COLUMNA NOMBRE_COMPLETO DE LA TABLA USUARIO';
             SELECT @Valor = NOMBRE_COMPLETO FROM INSERTED;
             SELECT @Id = ID FROM INSERTED;
-            INSERT INTO BITACORA (FECHA_HORA, ID_VALOR,EVENTO, VALOR, USUARIO)
+            SELECT @Usuario = USUARIO_REGISTRO FROM INSERTED;
+
+            INSERT INTO BITACORA (FECHA_HORA,ID_VALOR,EVENTO, VALOR, USUARIO)
             SELECT
                 GETDATE(),
                 @Id,
                 @Evento,
                 @Valor,
-                SYSTEM_USER;
+                @Usuario;
         END
 
         -- Si existe una insercion en la columna PASSWORD
@@ -55,13 +59,14 @@ BEGIN
             SET @Evento = 'INSERT EN LA COLUMNA PASSWORD DE LA TABLA USUARIO';
             SELECT @Valor = PASSWORD FROM INSERTED;
             SELECT @Id = ID FROM INSERTED;
-            INSERT INTO BITACORA (FECHA_HORA, ID_VALOR,EVENTO, VALOR, USUARIO)
+            SELECT @Usuario = USUARIO_REGISTRO FROM INSERTED;
+            INSERT INTO BITACORA (FECHA_HORA,ID_VALOR,EVENTO, VALOR, USUARIO)
             SELECT
                 GETDATE(),
                 @Id,
                 @Evento,
                 @Valor,
-                SYSTEM_USER;
+                @Usuario;
         END
     END
 END;
@@ -150,7 +155,7 @@ BEGIN
     END
 END;
 
-
+-- // CATEGORIA PRODUCTO
 
 CREATE TRIGGER TRIGGER_INSERT_CATEGORIA_PRODUCTO
 ON CATEGORIA_PRODUCTO FOR INSERT
@@ -161,6 +166,7 @@ BEGIN
     DECLARE @Evento VARCHAR(100);
     DECLARE @Valor NVARCHAR(100);
     DECLARE @Id NVARCHAR(100);
+    DECLARE @Usuario NVARCHAR(100);
 
     IF EXISTS (SELECT * FROM INSERTED)
     BEGIN
@@ -170,13 +176,15 @@ BEGIN
             SET @Evento = 'INSERT EN LA COLUMNA NOMBRE DE LA TABLA CATEGORIA_PRODUCTO';
             SELECT @Valor = NOMBRE FROM INSERTED;
             SELECT @Id = ID FROM INSERTED;
+            SELECT @Usuario = USUARIO_REGISTRO FROM INSERTED;
+
             INSERT INTO BITACORA (FECHA_HORA,ID_VALOR,EVENTO, VALOR, USUARIO)
             SELECT
                 GETDATE(),
                 @Id,
                 @Evento,
                 @Valor,
-                SYSTEM_USER;
+                @Usuario;
         END
     END
 END;
@@ -190,6 +198,7 @@ BEGIN
     DECLARE @Evento VARCHAR(100);
     DECLARE @Valor NVARCHAR(100);
     DECLARE @Id NVARCHAR(100);
+    DECLARE @Usuario NVARCHAR(100);
 
     IF EXISTS (SELECT * FROM INSERTED)
     BEGIN
@@ -199,13 +208,15 @@ BEGIN
             SET @Evento = 'UPDATE EN LA COLUMNA NOMBRE DE LA TABLA CATEGORIA_PRODUCTO';
             SELECT @Valor = NOMBRE FROM INSERTED;
             SELECT @Id = ID FROM INSERTED;
+            SELECT @Usuario = USUARIO_REGISTRO FROM INSERTED;
+
             INSERT INTO BITACORA (FECHA_HORA,ID_VALOR,EVENTO, VALOR, USUARIO)
             SELECT
                 GETDATE(),
                 @Id,
                 @Evento,
                 @Valor,
-                SYSTEM_USER;
+                @Usuario;
         END
     END
 END;
@@ -219,10 +230,12 @@ BEGIN
     DECLARE @Evento VARCHAR(100);
     DECLARE @Valor NVARCHAR(100);
     DECLARE @Id INT;
+    DECLARE @Usuario NVARCHAR(100);
 
     IF EXISTS (SELECT * FROM DELETED)
     BEGIN
         SELECT @Id = ID FROM DELETED;
+        SELECT @Usuario = USUARIO_REGISTRO FROM DELETED;
 
         SET @Evento = 'DELETE DE LA TABLA CATEGORIA_PRODUCTO CON EL ID: ' + CAST(@Id AS VARCHAR(10));
 
@@ -232,7 +245,7 @@ BEGIN
             @Id,
             @Evento,
             @Valor,
-            SYSTEM_USER;
+            @Usuario;
     END
 END;
 -----------------------------------------------------
@@ -246,6 +259,7 @@ BEGIN
     DECLARE @Evento VARCHAR(100);
     DECLARE @Valor NVARCHAR(100);
     DECLARE @Id NVARCHAR(100);
+    DECLARE @Usuario NVARCHAR(100);
 
     IF EXISTS (SELECT * FROM INSERTED)
     BEGIN
@@ -254,26 +268,30 @@ BEGIN
             SET @Evento = 'INSERT EN LA COLUMNA NOMBRE DE LA TABLA PRODUCTO';
             SELECT @Valor = NOMBRE FROM INSERTED;
             SELECT @Id = ID FROM INSERTED;
+            SELECT @Usuario = USUARIO_REGISTRO FROM INSERTED;
+
             INSERT INTO BITACORA (FECHA_HORA,ID_VALOR,EVENTO, VALOR, USUARIO)
             SELECT
                 GETDATE(),
                 @Id,
                 @Evento,
                 @Valor,
-                SYSTEM_USER;
+                @Usuario;
         END
         IF EXISTS (SELECT ID_CATEGORIA FROM INSERTED)
         BEGIN
             SET @Evento = 'INSERT EN LA COLUMNA ID_CATEGORIA DE LA TABLA PRODUCTO';
             SELECT @Valor = ID_CATEGORIA FROM INSERTED;
             SELECT @Id = ID FROM INSERTED;
+            SELECT @Usuario = USUARIO_REGISTRO FROM INSERTED;
+
             INSERT INTO BITACORA (FECHA_HORA, ID_VALOR,EVENTO, VALOR, USUARIO)
             SELECT
                 GETDATE(),
                 @Id,
                 @Evento,
                 @Valor,
-                SYSTEM_USER;
+                @Usuario;
         END
     END
 END;
@@ -288,6 +306,7 @@ BEGIN
     DECLARE @Evento VARCHAR(100);
     DECLARE @Valor NVARCHAR(100);
     DECLARE @Id NVARCHAR(100);
+    DECLARE @Usuario NVARCHAR(100);
 
     IF EXISTS (SELECT * FROM INSERTED)
     BEGIN
@@ -296,26 +315,30 @@ BEGIN
             SET @Evento = 'UPDATE EN LA COLUMNA NOMBRE DE LA TABLA PRODUCTO';
             SELECT @Valor = NOMBRE FROM INSERTED;
             SELECT @Id = ID FROM INSERTED;
+            SELECT @Usuario = USUARIO_REGISTRO FROM INSERTED;
+
             INSERT INTO BITACORA (FECHA_HORA,ID_VALOR,EVENTO, VALOR, USUARIO)
             SELECT
                 GETDATE(),
                 @Id,
                 @Evento,
                 @Valor,
-                SYSTEM_USER;
+                @Usuario;
         END
         IF EXISTS (SELECT ID_CATEGORIA FROM INSERTED)
         BEGIN
             SET @Evento = 'UPDATE EN LA COLUMNA ID_CATEGORIA DE LA TABLA PRODUCTO';
             SELECT @Valor = ID_CATEGORIA FROM INSERTED;
             SELECT @Id = ID FROM INSERTED;
+            SELECT @Usuario = USUARIO_REGISTRO FROM INSERTED;
+
             INSERT INTO BITACORA (FECHA_HORA, ID_VALOR,EVENTO, VALOR, USUARIO)
             SELECT
                 GETDATE(),
                 @Id,
                 @Evento,
                 @Valor,
-                SYSTEM_USER;
+                @Usuario;
         END
     END
 END;
@@ -329,10 +352,12 @@ BEGIN
     DECLARE @Evento VARCHAR(100);
     DECLARE @Valor NVARCHAR(100);
     DECLARE @Id INT;
+    DECLARE @Usuario NVARCHAR(100);
 
     IF EXISTS (SELECT * FROM DELETED)
     BEGIN
         SELECT @Id = ID FROM DELETED;
+        SELECT @Usuario = USUARIO_REGISTRO FROM DELETED;
 
         SET @Evento = 'DELETE DE LA TABLA PRODUCTO CON EL ID: ' + CAST(@Id AS VARCHAR(10));
 
@@ -342,7 +367,7 @@ BEGIN
             @Id,
             @Evento,
             @Valor,
-            SYSTEM_USER;
+            @Usuario;
     END
 END;
 
@@ -356,6 +381,7 @@ BEGIN
     DECLARE @Evento VARCHAR(100);
     DECLARE @Valor NVARCHAR(100);
     DECLARE @Id NVARCHAR(100);
+    DECLARE @Usuario NVARCHAR(100);
 
     IF EXISTS (SELECT * FROM INSERTED)
     BEGIN
@@ -364,26 +390,30 @@ BEGIN
             SET @Evento = 'INSERT EN LA COLUMNA FECHA DE LA TABLA CARRITO_COMPRA';
             SELECT @Valor = FECHA FROM INSERTED;
             SELECT @Id = ID FROM INSERTED;
+            SELECT @Usuario = USUARIO_REGISTRO FROM INSERTED;
+
             INSERT INTO BITACORA (FECHA_HORA,ID_VALOR,EVENTO, VALOR, USUARIO)
             SELECT
                 GETDATE(),
                 @Id,
                 @Evento,
                 @Valor,
-                SYSTEM_USER;
+                @Usuario;
         END
         IF EXISTS (SELECT ID_USUARIO FROM INSERTED)
         BEGIN
             SET @Evento = 'INSERT EN LA COLUMNA ID_USUARIO DE LA TABLA CARRITO_COMPRA';
             SELECT @Valor = ID_USUARIO FROM INSERTED;
             SELECT @Id = ID FROM INSERTED;
+            SELECT @Usuario = USUARIO_REGISTRO FROM INSERTED;
+
             INSERT INTO BITACORA (FECHA_HORA, ID_VALOR,EVENTO, VALOR, USUARIO)
             SELECT
                 GETDATE(),
                 @Id,
                 @Evento,
                 @Valor,
-                SYSTEM_USER;
+                @Usuario;
         END
     END
 END;
@@ -397,6 +427,7 @@ BEGIN
     DECLARE @Evento VARCHAR(100);
     DECLARE @Valor NVARCHAR(100);
     DECLARE @Id NVARCHAR(100);
+    DECLARE @Usuario NVARCHAR(100);
 
     IF EXISTS (SELECT * FROM INSERTED)
     BEGIN
@@ -405,26 +436,30 @@ BEGIN
             SET @Evento = 'UPDATE EN LA COLUMNA FECHA DE LA TABLA CARRITO_COMPRA';
             SELECT @Valor = FECHA FROM INSERTED;
             SELECT @Id = ID FROM INSERTED;
+            SELECT @Usuario = USUARIO_REGISTRO FROM INSERTED;
+
             INSERT INTO BITACORA (FECHA_HORA,ID_VALOR,EVENTO, VALOR, USUARIO)
             SELECT
                 GETDATE(),
                 @Id,
                 @Evento,
                 @Valor,
-                SYSTEM_USER;
+                @Usuario;
         END
         IF EXISTS (SELECT ID_USUARIO FROM INSERTED)
         BEGIN
             SET @Evento = 'UPDATE EN LA COLUMNA ID_USUARIO DE LA TABLA CARRITO_COMPRA';
             SELECT @Valor = ID_USUARIO FROM INSERTED;
             SELECT @Id = ID FROM INSERTED;
+            SELECT @Usuario = USUARIO_REGISTRO FROM INSERTED;
+
             INSERT INTO BITACORA (FECHA_HORA, ID_VALOR,EVENTO, VALOR, USUARIO)
             SELECT
                 GETDATE(),
                 @Id,
                 @Evento,
                 @Valor,
-                SYSTEM_USER;
+                @Usuario;
         END
     END
 END;
@@ -439,10 +474,12 @@ BEGIN
     DECLARE @Evento VARCHAR(100);
     DECLARE @Valor NVARCHAR(100);
     DECLARE @Id INT;
+    DECLARE @Usuario NVARCHAR(100);
 
     IF EXISTS (SELECT * FROM DELETED)
     BEGIN
         SELECT @Id = ID FROM DELETED;
+        SELECT @Usuario = USUARIO_REGISTRO FROM DELETED;
 
         SET @Evento = 'DELETE DE LA TABLA CARRITO_COMPRA CON EL ID: ' + CAST(@Id AS VARCHAR(10));
 
@@ -452,7 +489,7 @@ BEGIN
             @Id,
             @Evento,
             @Valor,
-            SYSTEM_USER;
+            @Usuario;
     END
 END;
 
@@ -466,6 +503,7 @@ BEGIN
     DECLARE @Evento VARCHAR(100);
     DECLARE @Valor NVARCHAR(100);
     DECLARE @Id NVARCHAR(100);
+    DECLARE @Usuario NVARCHAR(100);
 
     IF EXISTS (SELECT * FROM INSERTED)
     BEGIN
@@ -474,39 +512,45 @@ BEGIN
             SET @Evento = 'INSERT EN LA COLUMNA CANTIDAD DE LA TABLA DETALLE_CARRITO';
             SELECT @Valor = CANTIDAD FROM INSERTED;
             SELECT @Id = ID FROM INSERTED;
+            SELECT @Usuario = USUARIO_REGISTRO FROM INSERTED;
+
             INSERT INTO BITACORA (FECHA_HORA,ID_VALOR,EVENTO, VALOR, USUARIO)
             SELECT
                 GETDATE(),
                 @Id,
                 @Evento,
                 @Valor,
-                SYSTEM_USER;
+                @Usuario;
         END
         IF EXISTS (SELECT ID_PRODUCTO FROM INSERTED)
         BEGIN
             SET @Evento = 'INSERT EN LA COLUMNA ID_PRODUCTO DE LA TABLA DETALLE_CARRITO';
             SELECT @Valor = ID_PRODUCTO FROM INSERTED;
             SELECT @Id = ID FROM INSERTED;
+            SELECT @Usuario = USUARIO_REGISTRO FROM INSERTED;
+
             INSERT INTO BITACORA (FECHA_HORA, ID_VALOR,EVENTO, VALOR, USUARIO)
             SELECT
                 GETDATE(),
                 @Id,
                 @Evento,
                 @Valor,
-                SYSTEM_USER;
+                @Usuario;
         END
         IF EXISTS (SELECT ID_CARRITO_COMPRA FROM INSERTED)
         BEGIN
             SET @Evento = 'INSERT EN LA COLUMNA ID_CARRITO_COMPRA DE LA TABLA DETALLE_CARRITO';
             SELECT @Valor = ID_CARRITO_COMPRA FROM INSERTED;
             SELECT @Id = ID FROM INSERTED;
+            SELECT @Usuario = USUARIO_REGISTRO FROM INSERTED;
+
             INSERT INTO BITACORA (FECHA_HORA, ID_VALOR,EVENTO, VALOR, USUARIO)
             SELECT
                 GETDATE(),
                 @Id,
                 @Evento,
                 @Valor,
-                SYSTEM_USER;
+                @Usuario;
         END
     END
 END;
@@ -521,6 +565,7 @@ BEGIN
     DECLARE @Evento VARCHAR(100);
     DECLARE @Valor NVARCHAR(100);
     DECLARE @Id NVARCHAR(100);
+    DECLARE @Usuario NVARCHAR(100);
 
     IF EXISTS (SELECT * FROM INSERTED)
     BEGIN
@@ -529,39 +574,45 @@ BEGIN
             SET @Evento = 'UPDATE EN LA COLUMNA CANTIDAD DE LA TABLA DETALLE_CARRITO';
             SELECT @Valor = CANTIDAD FROM INSERTED;
             SELECT @Id = ID FROM INSERTED;
+            SELECT @Usuario = USUARIO_REGISTRO FROM INSERTED;
+
             INSERT INTO BITACORA (FECHA_HORA,ID_VALOR,EVENTO, VALOR, USUARIO)
             SELECT
                 GETDATE(),
                 @Id,
                 @Evento,
                 @Valor,
-                SYSTEM_USER;
+                @Usuario;
         END
         IF EXISTS (SELECT ID_PRODUCTO FROM INSERTED)
         BEGIN
             SET @Evento = 'UPDATE EN LA COLUMNA ID_PRODUCTO DE LA TABLA DETALLE_CARRITO';
             SELECT @Valor = ID_PRODUCTO FROM INSERTED;
             SELECT @Id = ID FROM INSERTED;
+            SELECT @Usuario = USUARIO_REGISTRO FROM INSERTED;
+
             INSERT INTO BITACORA (FECHA_HORA, ID_VALOR,EVENTO, VALOR, USUARIO)
             SELECT
                 GETDATE(),
                 @Id,
                 @Evento,
                 @Valor,
-                SYSTEM_USER;
+                @Usuario;
         END
         IF EXISTS (SELECT ID_CARRITO_COMPRA FROM INSERTED)
         BEGIN
             SET @Evento = 'UPDATE EN LA COLUMNA ID_CARRITO_COMPRA DE LA TABLA DETALLE_CARRITO';
             SELECT @Valor = ID_CARRITO_COMPRA FROM INSERTED;
             SELECT @Id = ID FROM INSERTED;
+            SELECT @Usuario = USUARIO_REGISTRO FROM INSERTED;
+
             INSERT INTO BITACORA (FECHA_HORA, ID_VALOR,EVENTO, VALOR, USUARIO)
             SELECT
                 GETDATE(),
                 @Id,
                 @Evento,
                 @Valor,
-                SYSTEM_USER;
+                @Usuario;
         END
     END
 END;
@@ -575,10 +626,12 @@ BEGIN
     DECLARE @Evento VARCHAR(100);
     DECLARE @Valor NVARCHAR(100);
     DECLARE @Id INT;
+    DECLARE @Usuario NVARCHAR(100);
 
     IF EXISTS (SELECT * FROM DELETED)
     BEGIN
         SELECT @Id = ID FROM DELETED;
+        SELECT @Usuario = USUARIO_REGISTRO FROM DELETED;
 
         SET @Evento = 'DELETE DE LA TABLA DETALLE_CARRITO CON EL ID: ' + CAST(@Id AS VARCHAR(10));
 
@@ -588,7 +641,7 @@ BEGIN
             @Id,
             @Evento,
             @Valor,
-            SYSTEM_USER;
+            @Usuario;
     END
 END;
 

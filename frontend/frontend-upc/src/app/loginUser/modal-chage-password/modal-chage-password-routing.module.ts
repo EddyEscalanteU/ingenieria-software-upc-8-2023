@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { IniciaSecionPage } from './inicia-secion.page';
+import { ModalChagePasswordPage } from './modal-chage-password.page';
 
 @NgModule({
   imports: [],
   exports: [RouterModule],
 })
-export class IniciaSecionPageRoutingModule {}
+export class ModalChagePasswordPageRoutingModule {}

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http'
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http'
 import { Observable } from 'rxjs';
 import { Usuarios } from 'src/app/entidades/usuarios';
 
@@ -28,10 +28,21 @@ export class UsuariosService {
   }
 
   public  GetById(id: number): Observable<HttpResponse<any>> {
-    const url = `${this.URL_GET}?id=${id}`;
+    const url = `${this.URL_GETBYID}?id=${id}`;
     return this.httpClient
-      .get<any>(url,
+      .post<any>(url,
         { observe: 'response' })
+      .pipe();
+  }
+
+  public getObtenerById(id: string): Observable<HttpResponse<any>> {
+    var parametros = new HttpParams();
+    parametros = parametros.set('id', id);
+
+    const url = `${this.URL_GETBYID}`;
+    
+    return this.httpClient
+      .get<any>(url, {params:parametros, observe: 'response' })
       .pipe();
   }
 

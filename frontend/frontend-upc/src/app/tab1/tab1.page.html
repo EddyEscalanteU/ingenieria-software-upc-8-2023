@@ -7,6 +7,7 @@
     <ion-button [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" *ngIf="enableLogin" (click)="modalIniciaSecion()">Inicio sesion</ion-button>
     <ion-button [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" *ngIf="!enableLogin" (click)="serrarSesion()">Cerrar sesion</ion-button>
     <ion-label *ngIf="!enableLogin"> Usuario: {{loginNombreCopleto}} </ion-label>
+    <ion-button *ngIf="!enableLogin" color="warning" [routerLink]="['/editar-user']">Editar</ion-button>
   </ion-toolbar>
 </ion-header>
 
@@ -16,7 +17,6 @@
       <ion-title size="large">Usuarios</ion-title>
     </ion-toolbar>
   </ion-header>
-
  
     <ion-item >
       <ion-input [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" id="nombreCompleto" type="text" placeholder="Ingrese el Nombre Completo" [(ngModel)]="nombreCompleto"></ion-input>

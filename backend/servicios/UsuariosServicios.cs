@@ -10,7 +10,7 @@ namespace backend.servicios
     public static class UsuariosServicios
     {
         public static IEnumerable<T> ObtenerTodo<T>(){
-            const string sql = "select * from usuarios ORDER BY FECHA_REGISTRO DESC";
+            const string sql = "select * from usuarios WHERE ESTADO_REGISTRO = 1 ORDER BY FECHA_REGISTRO DESC";
             return BDManager.GetInstance.GetData<T>(sql);
             // const string storedProcedure = "ObtenerTodosLosUsuarios";
             // var parameters = new DynamicParameters(); // Agrega parámetros si es necesario
@@ -28,18 +28,19 @@ namespace backend.servicios
         }
 
         public static int InsertUsuarios(Usuarios usuarios){
-            // const string sql = "INSERT INTO [dbo].[USUARIOS]([USER_NAME], [NOMBRE_COMPLETO], [PASSWORD]) VALUES (@user_name, @nombre_completo, @password)";
-            const string storedProcedure = "InsertUsuario";
+            const string sql = "INSERT INTO [dbo].[USUARIOS]([USER_NAME], [NOMBRE_COMPLETO], [PASSWORD], [USUARIO_REGISTRO]) VALUES (@user_name, @nombre_completo, @password, @usuario_registro)";
+            // const string storedProcedure = "InsertUsuario";
             var parameter = new DynamicParameters();
             parameter.Add("user_name", usuarios.UserName, DbType.String);
             parameter.Add("nombre_completo", usuarios.NombreCompleto, DbType.String);
-            parameter.Add("password", usuarios.Password, DbType.String);            
-            // var result = BDManager.GetInstance.SetData(sql, parameter);
-            var result = BDManager.GetInstance.SPSetData(storedProcedure, parameter);
+            parameter.Add("password", usuarios.Password, DbType.String);
+            parameter.Add("usuario_registro", usuarios.UsuarioRegistro, DbType.String);            
+            var result = BDManager.GetInstance.SetData(sql, parameter);
+            // var result = BDManager.GetInstance.SPSetData(sql, parameter);
             return result;
         }    
 
-         public static int UpdateUsuarios(Usuarios usuarios)
+        public static int UpdateUsuarios(Usuarios usuarios)
         {
             const string sql = "UPDATE [dbo].[USUARIOS] SET [USER_NAME] = @user_name, [NOMBRE_COMPLETO] = @nombre_completo, [PASSWORD] = @password WHERE [ID] = @id";
             var parameter = new DynamicParameters();
@@ -67,6 +68,18 @@ namespace backend.servicios
             return result;
         }   
 
+        public static int EnviarIdUsuario(int id)
+        {
+            const string sql = "DELETE FROM [dbo].[USUARIOS] WHERE [ID] = @id";
+            var parameter = new DynamicParameters();
+            parameter.Add("id", id, DbType.Int32);
+            var result = BDManager.GetInstance.SetData(sql, parameter);
+
+            
+            // const string storedProcedure = "DeleteUsuario";
+            // var result = BDManager.GetInstance.SPSetData(storedProcedure, parameter);
+            return result;
+        }   
 
     }
 }

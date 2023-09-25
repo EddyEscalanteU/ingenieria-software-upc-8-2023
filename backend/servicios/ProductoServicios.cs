@@ -29,10 +29,11 @@ namespace backend.servicios
         }
 
         public static int InsertProducto(Producto producto){
-            const string sql = "INSERT INTO [dbo].[PRODUCTO]([NOMBRE], [ID_CATEGORIA]) VALUES (@nombre, @id_categoria) ";            
+            const string sql = "INSERT INTO [dbo].[PRODUCTO]([NOMBRE], [ID_CATEGORIA], [USUARIO_REGISTRO]) VALUES (@nombre, @id_categoria, @usuario_registro)";            
             var parameter = new DynamicParameters();
             parameter.Add("nombre", producto.Nombre, DbType.String);
             parameter.Add("id_categoria", producto.IdCategoria, DbType.Int64);
+            parameter.Add("usuario_registro", producto.UsuarioRegistro, DbType.String);
             var result = BDManager.GetInstance.SetData(sql, parameter);
 
             // const string storedProcedureName = "InsertProducto";
@@ -40,7 +41,7 @@ namespace backend.servicios
             return result;
         }    
 
-         public static int UpdateProducto(Producto producto)
+        public static int UpdateProducto(Producto producto)
         {
             const string sql = "UPDATE [PRODUCTO] SET [NOMBRE] = @nombre, [ID_CATEGORIA] = @id_categoria WHERE [ID] = @id";
             var parameter = new DynamicParameters();

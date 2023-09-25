@@ -28,9 +28,10 @@ namespace backend.servicios
         }
 
         public static int InsertCategoriaProducto(CategoriaProducto categoriaProducto){
-            const string sql = "INSERT INTO [CATEGORIA_PRODUCTO]([NOMBRE]) VALUES (@NOMBRE)";            
+            const string sql = "INSERT INTO [CATEGORIA_PRODUCTO]([NOMBRE], [USUARIO_REGISTRO]) VALUES (@NOMBRE, @USUARIO_REGISTRO)";            
             var parameter = new DynamicParameters();
             parameter.Add("NOMBRE", categoriaProducto.Nombre, DbType.String);
+            parameter.Add("USUARIO_REGISTRO", categoriaProducto.UsuarioRegistro, DbType.String);
             var result = BDManager.GetInstance.SetData(sql, parameter);
 
             // const string storedProcedureName = "InsertCategoriaProducto";

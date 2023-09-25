@@ -5,6 +5,7 @@ import { CarritoCompraService } from '../servicios-backend/carrito-compra/carrit
 import { HttpResponse } from '@angular/common/http';
 import { DetalleCarritoService } from '../servicios-backend/detalle-carrito/detalle-carrito.service';
 import * as Notiflix from 'notiflix'; // Importar Notiflix
+import { Storage } from '@ionic/storage-angular';
 
 @Component({
   selector: 'app-tab4',
@@ -33,10 +34,12 @@ export class Tab4Page {
   public listaDetalle: DetalleCarrito[] = []
   public detalleCarrito: DetalleCarrito | null = null;
 
-  constructor(private carritoService: CarritoCompraService, private detalleService: DetalleCarritoService,) {
+  constructor(private carritoService: CarritoCompraService, private detalleService: DetalleCarritoService, private storage: Storage) {
     this.obtenerFuente();
     this.getCarritoFromBackend();
     this.getDetalleFromBackend();
+    this.storage.create();
+
   }
 
   // Método para llamar obterner fuente
@@ -93,10 +96,11 @@ export class Tab4Page {
   public addCarrito() {
     this.AddCarritoFromBackend(this.fecha, this.idUsuario)
   }
-  private AddCarritoFromBackend(fecha: Date, idUsuario: number) {
+  private async AddCarritoFromBackend(fecha: Date, idUsuario: number) {
     var carritoEntidad = new CarritoCompra();
     carritoEntidad.fecha = fecha;
     carritoEntidad.idUsuario = idUsuario;
+    carritoEntidad.usuarioRegistro = (await this.storage.get('idUserStorage')).toString();
     this.carritoService.Add(carritoEntidad).subscribe({
       next: (response: HttpResponse<any>) => {
         console.log(response.body)//1
@@ -253,12 +257,13 @@ export class Tab4Page {
   public addDetalleCarrito() {
     this.AddDetalleFromBackend(this.cantidad, this.idProducto, this.idCarritoCompra)
   }
-  private AddDetalleFromBackend(cantidad: number, idProducto: number, idCarritoCompra: number) {
+  private async AddDetalleFromBackend(cantidad: number, idProducto: number, idCarritoCompra: number) {
 
     var detalleEntidad = new DetalleCarrito();
     detalleEntidad.cantidad = cantidad;
     detalleEntidad.idProducto = idProducto;
     detalleEntidad.idCarritoCompra = idCarritoCompra;
+    detalleEntidad.usuarioRegistro = (await this.storage.get('idUserStorage')).toString();
 
     this.detalleService.Add(detalleEntidad).subscribe({
       next: (response: HttpResponse<any>) => {

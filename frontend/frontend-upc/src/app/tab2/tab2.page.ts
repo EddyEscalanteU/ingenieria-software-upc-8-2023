@@ -4,6 +4,7 @@ import { CategoriaProductoService } from '../servicios-backend/categoria-product
 import { HttpResponse } from '@angular/common/http';
 import * as Notiflix from 'notiflix'; // Importar Notiflix
 import { ConfiguracionService } from '../servicios-backend/configuracion/configuracion.service';
+import { Storage } from '@ionic/storage-angular';
 
 @Component({
   selector: 'app-tab2',
@@ -18,9 +19,10 @@ export class Tab2Page {
   public listaCategoria: CategoriaProducto[] = []
   public categoriaProducto: CategoriaProducto | null = null;
 
-  constructor(private configuracionServie: ConfiguracionService,private categoriaProductoService: CategoriaProductoService) {
+  constructor(private configuracionServie: ConfiguracionService,private categoriaProductoService: CategoriaProductoService, private storage: Storage) {
     this.getCategoriaFromBackend();
     this.obtenerFuente();
+    this.storage.create();
   }
     // Método para llamar obterner fuente
     obtenerFuente() {
@@ -84,9 +86,10 @@ export class Tab2Page {
   }
   
   // Este método agrega una nueva categoría de producto a la API.
-  private AddCategoriaFromBackend(nombre: string){
+  private async AddCategoriaFromBackend(nombre: string){
     var categoriaEntidad = new CategoriaProducto();
     categoriaEntidad.nombre = nombre;
+    categoriaEntidad.usuarioRegistro = (await this.storage.get('idUserStorage')).toString();
 
     this.categoriaProductoService.Add(categoriaEntidad).subscribe({
       next: (response: HttpResponse<any>) => {
@@ -107,7 +110,7 @@ export class Tab2Page {
           //console.log('complete - this.addCategoria()');
       },
   });
-  }
+}
 
   // metodo para actualizar una categoria
   //  public updatecategoriaproducto(id: number,nombre :string){

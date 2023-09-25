@@ -13,7 +13,7 @@ export class TabsPage {
     }
   constructor(private configuracionServie: ConfiguracionService) {
     this.obtenerFuente();
-   }
+  }
   // Método para llamar a un método de tab2
   
   obtenerFuente() {
@@ -22,4 +22,5 @@ export class TabsPage {
       this.fuenteSeleccionada = savedFontFamily;
     }
   }
+
 }

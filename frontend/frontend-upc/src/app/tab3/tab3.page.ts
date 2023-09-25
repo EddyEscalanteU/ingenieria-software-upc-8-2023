@@ -3,6 +3,7 @@ import { Producto } from '../entidades/producto';
 import { ProductoService } from '../servicios-backend/producto/producto.service';
 import { HttpClient, HttpResponse } from '@angular/common/http'
 import * as Notiflix from 'notiflix'; // Importar Notiflix
+import { Storage } from '@ionic/storage-angular';
 
 
 
@@ -22,9 +23,10 @@ export class Tab3Page {
     public listaProducto: Producto[] = []
     public producto: Producto | null = null;
 
-    constructor(private productoService: ProductoService) {
+    constructor(private productoService: ProductoService, private storage: Storage) {
         this.obtenerFuente();
         this.getProductoFromBackend();
+        this.storage.create();
     }
 
     // Método para llamar obterner fuente
@@ -89,10 +91,12 @@ export class Tab3Page {
         this.AddProductoFromBackend(this.nombre, this.idCategoria)
     }
     // Este método agrega un nuevo producto a la API.
-    private AddProductoFromBackend(nombre: string, idCategoria: number) {
+    private async AddProductoFromBackend(nombre: string, idCategoria: number) {
         var productoEntidad = new Producto();
         productoEntidad.nombre = nombre;
         productoEntidad.idCategoria = idCategoria;
+        productoEntidad.usuarioRegistro = (await this.storage.get('idUserStorage')).toString();
+
         this.productoService.Add(productoEntidad).subscribe({
             next: (response: HttpResponse<any>) => {
                 console.log(response.body)//1

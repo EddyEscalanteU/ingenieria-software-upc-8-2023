@@ -29,11 +29,12 @@ namespace backend.servicios
         }
 
         public static int InsertDetalleCarrito(DetalleCarrito detalleCarrito){
-            const string sql = "INSERT INTO [DETALLE_CARRITO]([CANTIDAD],[ID_PRODUCTO],[ID_CARRITO_COMPRA]) VALUES (@cantidad, @id_producto, @id_carrito_compra)";            
+            const string sql = "INSERT INTO [DETALLE_CARRITO]([CANTIDAD],[ID_PRODUCTO],[ID_CARRITO_COMPRA], [USUARIO_REGISTRO]) VALUES (@cantidad, @id_producto, @id_carrito_compra, @usuario_registro)";            
             var parameter = new DynamicParameters();
             parameter.Add("cantidad", detalleCarrito.Cantidad, DbType.Int32);
             parameter.Add("id_producto", detalleCarrito.IdProducto, DbType.Int32);
             parameter.Add("id_carrito_compra", detalleCarrito.IdCarritoCompra, DbType.Int32);
+            parameter.Add("usuario_registro", detalleCarrito.UsuarioRegistro, DbType.String);
             var result = BDManager.GetInstance.SetData(sql, parameter);
             
             // const string storedProcedureName = "InsertDetalleCarrito";

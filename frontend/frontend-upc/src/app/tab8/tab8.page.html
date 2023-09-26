@@ -200,3 +200,75 @@
 <div *ngIf="listaAsignacionRoles.length === 0 && mostrarListaAsignacionRoles" class="ion-text-center">
   No hay asignaciones disponibles.
 </div>
+</div>
+</ion-card-content>
+</ion-card>
+
+<!-- Administracion de Privilegios -->
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Administración de Privilegios</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+
+  <!-- Botón para Mostrar/Ocultar Lista de Privilegios -->
+  <ion-button expand="full" (click)="togglePrivilegios()">{{ mostrarListaPrivilegios ? 'Ocultar Privilegios' : 'Mostrar Privilegios' }}</ion-button>
+
+  <!-- Botón para Agregar Privilegio a Usuario -->
+  <ion-button expand="full" (click)="agregarPrivilegio()">
+      Agregar Privilegio a Usuario
+  </ion-button>
+
+  <!-- Lista desplegable de Roles de Usuario -->
+  <ion-item>
+      <ion-label>Seleccionar Rol de Usuario</ion-label>
+      <ion-select label="Seleccionar Rol de Usuario" [(ngModel)]="rolUsuarioSeleccionado">
+        <ion-select-option *ngFor="let rol of listaRolesUsuarios" [value]="rol.id">{{ rol.nombrE_ROL }}</ion-select-option>
+      </ion-select>
+  </ion-item>
+
+  <!-- Lista desplegable de Funcionalidades -->
+  <ion-item>
+      <ion-label>Seleccionar Funcionalidad</ion-label>
+      <ion-select label="Seleccionar Funcionalidad" [(ngModel)]="funcionalidadSeleccionada">
+        <ion-select-option *ngFor="let funcionalidad of listaFuncionalidades" [value]="funcionalidad.id">{{ funcionalidad.nombre }}</ion-select-option>
+      </ion-select>
+  </ion-item>
+<div class="ion-padding">
+
+  <!-- Lista de privilegios asignados -->
+    <table *ngIf="mostrarListaPrivilegios" style="width: 100%;">
+      <thead>
+        <tr>
+        <th>Id</th>
+        <th>Rol</th>
+        <th>Funcionalidad</th>
+        <th style="width: 165px;">Acciones</th>
+        </tr>
+      </thead>
+    <tbody>
+  <tr *ngFor="let privilegio of listaPrivilegios">
+    <td>{{ privilegio.id }}</td>
+    <td>{{ obtenerNombreRol(privilegio.idRol) }}</td>
+    <td>{{ obtenerNombreFuncionalidad(privilegio.idFuncionalidad) }}</td>
+    <td>
+    <ion-button shape="square" (click)="editarPrivilegio(privilegio)">
+    <ion-icon name="create-outline"></ion-icon>
+    </ion-button>
+    <ion-button shape="square" (click)="guardarPrivilegio()">
+    <ion-icon name="save-outline"></ion-icon>
+    </ion-button>
+    <ion-button shape="square" (click)="eliminarPrivilegio(privilegio)">
+    <ion-icon name="trash-outline"></ion-icon>
+    </ion-button>
+    </td>
+    </tr>
+  </tbody>
+  </table>
+  <div *ngIf="listaPrivilegios.length === 0 && mostrarListaPrivilegios" class="ion-text-center">
+  No hay privilegios disponibles.
+</div>
+</div>
+
+</ion-card-content>
+</ion-card>

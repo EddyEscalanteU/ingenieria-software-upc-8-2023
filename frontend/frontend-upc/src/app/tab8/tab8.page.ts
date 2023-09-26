@@ -11,6 +11,9 @@ import { AsignacionRoles } from '../entidades/asignacion-roles';
 import { Usuarios } from '../entidades/usuarios';
 import { AsignacionRolesService } from '../servicios-backend/asignacion-roles/asignacion-roles.service';
 import { UsuariosService } from '../servicios-backend/usuarios/usuarios.service';
+import { AdministracionPrivilegios } from '../entidades/administracion-privilegio';
+import { AdministracionPrivilegiosService } from '../servicios-backend/administracion-privilegios/administracion-privilegios.service';
+
 import { map } from 'rxjs';
 
 @Component({
@@ -61,6 +64,21 @@ export class Tab8Page {
 
   mostrarListaAsignacionRoles: boolean = false;
 
+  // Propiedades para Adiministracion de Privilegios
+  public privilegiosId = 0;
+  public rolUsuarioSeleccionado2: number = 0;
+  public funcionalidadSeleccionada: number = 0;
+  public nombreRolSeleccionado: string = '';
+  public nombreFuncionalidadSeleccionada: string = '';
+
+  public listaPrivilegios: AdministracionPrivilegios[] = [];
+  public listaUsuarios2: Usuarios[] = []; // Lista de Usuarios
+  public listaRolesUsuarios3: RolesUsuarios[] = []; // Lista de Roles de Usuario
+  public privilegioAEliminar: AdministracionPrivilegios | null = null;
+
+
+  mostrarListaPrivilegios: boolean = false;
+
 
   toggleFuncionalidades() {
     this.mostrarListaFuncionalidades = !this.mostrarListaFuncionalidades;
@@ -82,14 +100,23 @@ export class Tab8Page {
     }
   }
 
+  togglePrivilegios() {
+    this.mostrarListaPrivilegios = !this.mostrarListaPrivilegios;
+    if (this.mostrarListaPrivilegios) {
+      this.cargarPrivilegios();
+    }
+  }
+
   constructor(
     private funcionalidadService: FuncionalidadService,
     private asignacionRolesService: AsignacionRolesService,
+    private privilegiosService: AdministracionPrivilegiosService,
     private usuarioService: UsuariosService,
     private rolUsuarioService: RolUsuarioService
   ) {
       this.cargarUsuarios(); // Llama a la función para cargar los usuarios
       this.cargarRolesUsuarios(); // Llama a la función para cargar los usuarios
+      this.cargarFuncionalidades();
     
    
   }
@@ -453,20 +480,20 @@ obtenerNombreRol(idRol: number): string {
     });
   }
 
-  // Método para editar una asignación de rol existente
+// Método para editar una asignación de rol existente
   public editarAsignacion(asignacionRol: AsignacionRoles) {
     this.asignacionRolesId = asignacionRol.id;
     this.usuarioSeleccionado = asignacionRol.idUsuario;
     this.rolUsuarioSeleccionado = asignacionRol.idRol;
   
-    // Cargar el nombre del usuario y el nombre del rol
+// Cargar el nombre del usuario y el nombre del rol
     const nombreUsuario = this.obtenerNombreUsuario(this.usuarioSeleccionado);
     const nombreRol = this.obtenerNombreRol(this.rolUsuarioSeleccionado);
     this.nombreUsuarioSeleccionado = nombreUsuario;
     this.nombreRolUsuarioSeleccionado = nombreRol;
   }
 
-  // Método para guardar una asignación de rol (tanto agregar como editar)
+// Método para guardar una asignación de rol (tanto agregar como editar)
   public guardarAsignacion() {
     if (this.asignacionRolesId === 0) {
       this.agregarAsignacionRol();
@@ -474,8 +501,7 @@ obtenerNombreRol(idRol: number): string {
       this.editarAsignacionExistente();
     }
   }
-
-  // Método para editar una asignación de rol existente
+// Método para editar una asignación de rol existente
   private editarAsignacionExistente() {
     const asignacionRolEditada: AsignacionRoles = {
       id: this.asignacionRolesId,
@@ -496,8 +522,7 @@ obtenerNombreRol(idRol: number): string {
       },
     });
   }
-
-  // Método para eliminar una asignación de rol
+// Método para eliminar una asignación de rol
   public eliminarAsignacion(asignacionRol: AsignacionRoles) {
     this.asignacionRolAEliminar = asignacionRol;
     Notiflix.Confirm.show(
@@ -510,7 +535,6 @@ obtenerNombreRol(idRol: number): string {
       }
     );
   }
-  
   // Método para realizar la eliminación de una asignación de rol
   private realizarEliminacion2() {
     if (this.asignacionRolAEliminar && this.asignacionRolAEliminar.id !== 0) {
@@ -535,4 +559,143 @@ obtenerNombreRol(idRol: number): string {
       });
     }
   }
+
+// Métodos para Administracion Privilegios
+
+// Método para cargar la lista de Administracion de privilegios
+private cargarPrivilegios() {
+  this.privilegiosService.GetAll().subscribe({
+    next: (response: HttpResponse<any>) => {
+      this.listaPrivilegios = response.body;
+    },
+    error: (error: any) => {
+      console.log(error);
+    },
+  });
+}
+
+obtenerNombreFuncionalidad(idFuncionalidad: number): string {
+  const funcionalidad = this.listaFuncionalidades.find(funcionalidad => funcionalidad.id === idFuncionalidad);
+  return funcionalidad ? funcionalidad.nombre : 'Usuario no encontrado';
+}
+
+  // Método para agregar
+  public agregarPrivilegio() {
+    if (this.rolUsuarioSeleccionado === 0 || this.funcionalidadSeleccionada === 0) {
+      Notiflix.Notify.failure("Selecciona un Usuario y un Rol de Usuario");
+    } else {
+      const nombreRol = this.obtenerNombreRol(this.rolUsuarioSeleccionado);
+      const nombreFuncionalidad = this.obtenerNombreFuncionalidad(this.funcionalidadSeleccionada);
+      this.nombreRolUsuarioSeleccionado = nombreRol;
+      this.nombreFuncionalidadSeleccionada = nombreFuncionalidad;
+      this.AddPrivilegio(this.rolUsuarioSeleccionado, this.funcionalidadSeleccionada);
+    }
+  }
+
+  private AddPrivilegio(idRol: number, idFuncionalidad: number) {
+    var privilegioEntidad = new AdministracionPrivilegios();
+    privilegioEntidad.idRol = idRol;
+    privilegioEntidad.idFuncionalidad = idFuncionalidad;
+    this.privilegiosService.Add(privilegioEntidad).subscribe({
+      next: (response: HttpResponse<any>) => {
+        if (response.body === 1) {
+          Notiflix.Notify.success("Asignación de rol agregada con éxito");
+          this.cargarPrivilegios(); // Se actualiza el listado
+          this.rolUsuarioSeleccionado = 0;
+          this.funcionalidadSeleccionada = 0;
+        } else {
+          Notiflix.Notify.failure("Fallo al agregar la asignación de rol");
+        }
+      },
+      error: (error: any) => {
+        console.log(error);
+        Notiflix.Notify.failure("Error al agregar la asignación de rol");
+      },
+      complete: () => {
+      },
+    });
+  }
+// Método para editar
+public editarPrivilegio(privilegio: AdministracionPrivilegios) {
+  this.privilegiosId = privilegio.id;
+  this.rolUsuarioSeleccionado = privilegio.idRol;
+  this.funcionalidadSeleccionada = privilegio.idFuncionalidad;
+
+// Cargar el nombre del rol y el nombre de la funcionalidad
+  const nombreRol = this.obtenerNombreRol(this.rolUsuarioSeleccionado);
+  const nombreFuncionalidad = this.obtenerNombreFuncionalidad(this.funcionalidadSeleccionada);
+  this.nombreRolUsuarioSeleccionado = nombreRol;
+  this.nombreFuncionalidadSeleccionada = nombreFuncionalidad;
+}
+// Método para guardar una asignación de rol (tanto agregar como editar)
+public guardarPrivilegio() {
+  if (this.privilegiosId === 0) {
+    this.agregarPrivilegio();
+  } else {
+    this.editarPrivilegioExistente();
+  }
+}
+// Método para editar una asignación de rol existente
+private editarPrivilegioExistente() {
+  const privilegioEditada: AdministracionPrivilegios = {
+    id: this.asignacionRolesId,
+    idRol: this.rolUsuarioSeleccionado,
+    idFuncionalidad: this.funcionalidadSeleccionada
+  };
+
+  this.privilegiosService.Update(privilegioEditada).subscribe({
+    next: (response: HttpResponse<any>) => {
+      Notiflix.Notify.success("Asignación de rol guardada con éxito");
+      this.cargarPrivilegios();
+      this.privilegiosId = 0;
+      this.rolUsuarioSeleccionado = 0;
+      this.funcionalidadSeleccionada = 0;
+    },
+    error: (error: any) => {
+      console.log(error);
+    },
+  });
+}
+// Método para eliminar un privilegio
+public eliminarPrivilegio(privilegio: AdministracionPrivilegios) {
+  this.privilegioAEliminar = privilegio;
+  Notiflix.Confirm.show(
+    'Confirmar Eliminación',
+    '¿Estás seguro de que deseas eliminar esta asignación de rol?',
+    'Sí',
+    'No',
+    () => {
+      this.realizarEliminacion3();
+    }
+  );
+}
+// Método para realizar la eliminación de un privilegio
+private realizarEliminacion3() {
+  if (this.privilegioAEliminar && this.privilegioAEliminar.id !== 0) {
+    this.privilegiosService.Delete(this.privilegioAEliminar.id).subscribe({
+      next: (response: HttpResponse<any>) => {
+        if (response.body === 1) {
+          Notiflix.Notify.success("Asignación de rol eliminada con éxito");
+          this.cargarPrivilegios();
+          this.privilegiosId = 0;
+          this.rolUsuarioSeleccionado = 0;
+          this.funcionalidadSeleccionada = 0;
+        } else {
+          Notiflix.Notify.failure("Fallo al eliminar la asignación de rol");
+        }
+      },
+      error: (error: any) => {
+        console.log(error);
+        Notiflix.Notify.failure("Error al eliminar la asignación de rol");
+      },
+      complete: () => {
+      },
+    });
+  }
+}
+
+
+
+
+
 }

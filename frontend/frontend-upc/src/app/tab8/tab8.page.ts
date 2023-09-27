@@ -638,7 +638,7 @@ public guardarPrivilegio() {
 // Método para editar una asignación de rol existente
 private editarPrivilegioExistente() {
   const privilegioEditada: AdministracionPrivilegios = {
-    id: this.asignacionRolesId,
+    id: this.privilegiosId,
     idRol: this.rolUsuarioSeleccionado,
     idFuncionalidad: this.funcionalidadSeleccionada
   };

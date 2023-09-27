@@ -11,7 +11,7 @@ import { NavController } from '@ionic/angular';
 
 })
 export class Tab7Page {
- 
+  fontSize: number = 16;
   fuenteSeleccionada: string = 'Arial, sans-serif'; // Fuente predeterminada
   darkMode = false;
   fuentesDisponibles: string[] = [
@@ -22,19 +22,29 @@ export class Tab7Page {
     'Georgia, serif',
   ];
 
-
+  saveSize() {
+    localStorage.setItem('fontSize', this.fontSize.toString());
+    // Aplica el tamaño de fuente a toda la aplicación
+    document.documentElement.style.setProperty('--app-font-size', this.fontSize + 'px');
+  }
   // Método para guardar la preferencia del usuario
   guardarFuente() {
     localStorage.setItem('fuente', this.fuenteSeleccionada);
-    window.location.reload();
   }
 
   constructor() {
+
+    this.checkFontSize();
     this.checkFont();
     this.checkAppMode();
   }
 
-
+  checkFontSize(){
+    const savedFontSize = localStorage.getItem('fontSize');
+    if (savedFontSize) {
+      document.documentElement.style.setProperty('--app-font-size', savedFontSize + 'px');
+    }
+  }
   checkFont() {
     const savedFontFamily = localStorage.getItem('fuente');
     if (savedFontFamily) {

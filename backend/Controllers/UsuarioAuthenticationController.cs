@@ -6,6 +6,7 @@ using System.Text;
 using backend.connection;
 using backend.entidades;
 using backend.servicios;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -72,7 +73,7 @@ public class UsuarioAuthenticationController : ControllerBase
                     jwt.Issuer,
                     jwt.Audience,
                     claims,
-                    expires: DateTime.Now.AddMinutes(50),
+                    expires: DateTime.Now.AddMinutes(2),
                     signingCredentials: credentials
                 );
 
@@ -91,16 +92,23 @@ public class UsuarioAuthenticationController : ControllerBase
         }
     }
 
-    [HttpPost]
+    [HttpGet]
     [Route("CambiarContrasenia")]
-    public IActionResult cambiarContrasenia([FromQuery] string oldPass, [FromQuery] string newPass)
+    // [Authorize]
+    public dynamic cambiarContrasenia([FromQuery] string oldPass, [FromQuery] string newPass)
     {
         var identity = HttpContext.User.Identity as ClaimsIdentity;
         var rToken = Jwt.validarToken(identity);
 
         if (!rToken.success)
         {
-            return StatusCode(401, "Error de autenticacion");
+            return new
+            {
+                success = false,
+                message = rToken.message,
+                result = "",
+                error = StatusCode(401, "Error de autenticacion")
+            };
         }
         Usuarios usuario = rToken.result;
 
@@ -109,21 +117,41 @@ public class UsuarioAuthenticationController : ControllerBase
             try
             {
                 var result = UsuarioLoginServicios.changeUserPassword(usuario, newPass);
-                return Ok(result);
+                return new
+                {
+                    success = true,
+                    message = "Se cambio la contrasenia",
+                    result = Ok(result),
+                    error = ""
+                };
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return new
+                {
+                    success = false,
+                    message = "Revice la conceccion",
+                    result = "",
+                    error = StatusCode(500, ex.Message)
+                };
             }
         }
         else
         {
-            return StatusCode(500, "Contrasenia no midificada");
+            return new
+            {
+                success = false,
+                message = "La Contraseña anterior no es corecta",
+                result = "",
+                error = StatusCode(500, "Contrasenia no modificada")
+            };
         };
     }
 
     [HttpGet]
     [Route("pruebadetoken")]
+    // [Authorize]
+
     public IActionResult pruebaDeToken([FromQuery] string Intoken)
     {
         // var identity = HttpContext.User.Identity as ClaimsIdentity;

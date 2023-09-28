@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, catchError } from 'rxjs';
 import { Usuarios } from 'src/app/entidades/usuarios';
 
 @Injectable({
@@ -31,22 +31,60 @@ export class LoginUsuarioService {
   public changePassword(oldPass: string, newPass: string):Observable<HttpResponse<any>>{
     var parametros = new HttpParams();
     parametros = parametros.set('oldPass', oldPass);
-    parametros = parametros.set('newPas', newPass);
-
+    parametros = parametros.set('newPass', newPass);
     const url = `${this.URL_CHANGE_PASS}`;
+    // alert({params:parametros, observe: 'response' });
     
     return this.httpClient
-      .post<any>(url, {params:parametros, observe: 'response' })
+      .get<any>(url, {params:parametros, observe: 'response'})
       .pipe();
   }
 
-
-  public changePassword2(oldPass: string, newPass: string, options?: any): Observable<any> {
-    const url = this.URL_CHANGE_PASS;
+  public changePasswordx(oldPass: string, newPass: string): Observable<HttpResponse<any>> {
+    const url = `${this.URL_CHANGE_PASS}`;
     const body = { oldPass: oldPass, newPass: newPass };
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
-
-    return this.httpClient.post(url, body, options);
+  
+    return this.httpClient.post<any>(url, body, { observe: 'response' });
   }
+
+  // public async changePassword(oldPass: string, newPass: string, tt:any): Promise<Observable<HttpResponse<any>>>{
+  //   const url = `${this.URL_CHANGE_PASS}`;
+  //   let params = new HttpParams();
+  //   params = params.set('oldPass', oldPass);
+  //   params = params.set('newPass', newPass);
+  //   let headers = new HttpHeaders();
+  //   headers = headers.set("Token", tt);
+  //   alert(headers);
+
+  //   const body = { oldPass: oldPass, newPass: newPass };
+    
+  //   return this.httpClient
+  //     .post<any>(url, body, {headers: headers, observe: 'response'})
+  //     .pipe();
+  // }
+
+  public changePasswordxxx(oldPass: string, newPass: string, tt: string): Observable<HttpResponse<any>> {
+    const url = `${this.URL_CHANGE_PASS}`;
+    const headers = new HttpHeaders().set("Token", tt);
+    const body = {
+      oldPass: oldPass,
+      newPass: newPass
+    };
+  
+    return this.httpClient
+      .post<any>(url, body, { headers: headers, observe: 'response' })
+      .pipe();
+  }
+
+  // public async changePasswordxx(oldPass: string, newPass: string): Promise<any> {
+  //   const url = `${this.URL_CHANGE_PASS}`;
+  //   const headers = new HttpHeaders().set('Content-Type', 'application/json');
+  //   const token = await this.storage.get('token');
+  //   headers = headers.set('Authorization', `Bearer ${token}`);
+  
+  //   const body = { oldPass: oldPass, newPass: newPass };
+  
+  //   return this.httpClient.post<any>(url, body, { headers: headers });
+  // }
 }
 

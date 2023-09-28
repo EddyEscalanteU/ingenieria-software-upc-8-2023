@@ -54,15 +54,15 @@
       <ion-card-title class="ion-text-center">Obtener o Eliminar Producto por ID</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <form (ngSubmit)="getById()">
+      <form >
         <ion-item>
-          <ion-label  [style.font-family]="fuenteSeleccionada" position="floating">ID del Producto</ion-label>
-          <ion-input class="cambiar-fuente" type="number" [(ngModel)]="id" name="id"></ion-input>
+          <ion-label position="floating" [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'">ID del Producto</ion-label>
+          <ion-input [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" type="number" [(ngModel)]="id" name="id"></ion-input>
         </ion-item>
 
         <!-- Botones para obtener y eliminar producto -->
-        <ion-button expand="full" color="primary" type="submit" shape="round">Obtener Producto</ion-button>
-        <ion-button expand="full" color="danger" (click)="deleteProducto(id)" shape="round">Eliminar Producto</ion-button>
+        <ion-button [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" expand="full" color="primary" type="submit" shape="round">Obtener Producto</ion-button>
+        <ion-button [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" expand="full" color="danger" (click)="deleteProducto(id)" shape="round">Eliminar Producto</ion-button>
       </form>
     </ion-card-content>
   </ion-card>

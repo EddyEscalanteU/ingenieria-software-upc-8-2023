@@ -24,18 +24,30 @@ export class ModalChagePasswordPage implements OnInit {
     this.modalCtrl.dismiss();
   }
 
-  public async changePassword2(){
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    // Obtener el token del almacenamiento
-    const token = await this.storage.get('token'); 
-    console.log(token);
-  
-    // Agregar el token al encabezado de la solicitud
-    headers.set('authorization', 'Bearer '+ token);
-    console.log(headers);
-
-    return this.loginUser.changePassword2(this.passOld, this.passNew, { headers: headers }); // Reemplaza 'post' con el método adecuado para realizar una solicitud POST en tu servicio de conexión a la API
+  public async changePassword() {
+    (await this.loginUser.changePassword(this.passOld, this.passNew)).subscribe({
+      next: (response: HttpResponse<any>) => {
+        console.log(response.body);
+        if (response.body.success) {
+          alert(response.body.message);
+          this.modalCtrl.dismiss();
+        } else {
+          console.log(JSON.stringify(response.body.message));
+          alert(response.body.message);
+        }
+      },
+      error: (error: any) => {
+        console.log(error);
+      },
+      complete: () => {
+        console.log('Corrio...  - cambio de contresenia');
+      },
+    });
   }
+
+
+
+
 
   ngOnInit() {
   }

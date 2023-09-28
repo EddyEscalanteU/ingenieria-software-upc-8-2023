@@ -1,6 +1,8 @@
+using System.Security.Claims;
 using backend.connection;
 using backend.entidades;
 using backend.servicios;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,6 +25,7 @@ public class UsuariosController : ControllerBase
 
     [HttpGet]
     [Route("GetAllUsuarios")]
+    // [Authorize]
     public IActionResult GetAllUsuarios()
     {
         try
@@ -68,7 +71,11 @@ public class UsuariosController : ControllerBase
     [Route("UpdateUsuario")]
     public IActionResult UpdateUsuario(Usuarios usuarios)
     {
-        try
+        var identity = HttpContext.User.Identity as ClaimsIdentity;
+        var rToken = Jwt.validarToken(identity);
+
+        if (rToken.success){
+            try
         {
             var result = UsuariosServicios.UpdateUsuarios(usuarios);
             return Ok(result);
@@ -77,6 +84,11 @@ public class UsuariosController : ControllerBase
         {
             return StatusCode(500, ex.Message);
         }
+        }
+        else{
+            return StatusCode(500, "No autenticado");
+        }
+        
     }
 
     

@@ -70,6 +70,7 @@ export class Tab1Page implements OnInit {
     if (stateWin) {
     }
     this.stadoVentana();
+    location.reload();
   }
   
   /** Actualiza el DOM */

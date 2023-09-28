@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using backend.connection;
 using backend.entidades;
 using backend.servicios;
@@ -24,7 +25,12 @@ public class ProductoController : ControllerBase
     [Route("GetAllProducto")]
     public IActionResult GetAllProducto()
     {
-        try
+        var identity = HttpContext.User.Identity as ClaimsIdentity;
+        var rToken = Jwt.validarToken(identity);
+
+        if (rToken.success)
+        {
+            try
         {
             var result = ProductoServicios.ObtenerTodo<Producto>();
             return Ok(result);
@@ -33,6 +39,9 @@ public class ProductoController : ControllerBase
         {
             return StatusCode(500, ex.Message);
         }
+        }
+        return StatusCode(511, "Erro de autenticacion");
+        
     }
 
     [HttpGet]

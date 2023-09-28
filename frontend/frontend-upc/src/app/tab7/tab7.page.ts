@@ -12,8 +12,8 @@ import { NavController } from '@ionic/angular';
 })
 export class Tab7Page {
   fontSize: number = 16;
-  fuenteSeleccionada: string = 'Arial, sans-serif'; // Fuente predeterminada
-  darkMode = false;
+  fuenteSeleccionada: string = ''; // Fuente predeterminada
+  darkMode = false; //Modo oscuro
   fuentesDisponibles: string[] = [
     'Arial, sans-serif',
     'Times New Roman, serif',
@@ -27,9 +27,11 @@ export class Tab7Page {
     // Aplica el tamaño de fuente a toda la aplicación
     document.documentElement.style.setProperty('--app-font-size', this.fontSize + 'px');
   }
+
   // Método para guardar la preferencia del usuario
   guardarFuente() {
     localStorage.setItem('fuente', this.fuenteSeleccionada);
+    document.documentElement.style.setProperty('--fuente-seleccionada', this.fuenteSeleccionada);
   }
 
   constructor() {
@@ -49,9 +51,10 @@ export class Tab7Page {
     const savedFontFamily = localStorage.getItem('fuente');
     if (savedFontFamily) {
       this.fuenteSeleccionada = savedFontFamily;
+      document.documentElement.style.setProperty('--fuente-seleccionada', this.fuenteSeleccionada);
     }
   }
-
+//Obtener el tema de preferencia
   checkAppMode() {
     const checkIsDarkMode = localStorage.getItem('darkModeActivaded');
     checkIsDarkMode == 'true'

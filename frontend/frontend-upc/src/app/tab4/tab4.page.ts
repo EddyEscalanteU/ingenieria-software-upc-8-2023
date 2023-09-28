@@ -47,6 +47,7 @@ export class Tab4Page {
     const savedFontFamily = localStorage.getItem('fuente');
     if (savedFontFamily) {
       this.fuenteSeleccionada = savedFontFamily;
+      document.documentElement.style.setProperty('--fuente-seleccionada', this.fuenteSeleccionada);
     }
   }
 

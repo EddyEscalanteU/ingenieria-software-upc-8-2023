@@ -25,7 +25,7 @@
             <ion-label class="label-left">Usuario</ion-label>
             <!-- Porque es un componente de IONIC -->
             <ion-select placeholder="Selecciona un usuario" [(ngModel)]="idUsuario" (ionChange)="filtrarUsuario($event)">
-              <ion-select-option *ngFor="let usuario of listaUsuario" [value]="usuario.id">{{usuario.nombreCompleto}}</ion-select-option>
+              <ion-select-option class="cambiar-fuente" *ngFor="let usuario of listaUsuario" [value]="usuario.id">{{usuario.nombreCompleto}}</ion-select-option>
               <ion-select-option value="escalante_77_SQLLogin_4">Usuario - Default</ion-select-option>
             </ion-select>
           </ion-item>

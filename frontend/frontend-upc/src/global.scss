@@ -24,11 +24,36 @@
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
-:root {
-    --app-font: Arial, sans-serif;
-  }
-  
-  /* Aplicar la fuente a nivel de la aplicación */
-  body {
-    font-family: var(--app-font);
-  }
+
+.cambiar-fuente {
+  font-family: var(--fuente-seleccionada, 'Arial, sans-serif');
+}
+
+.cambiar-tamano{
+  font-size: var(--app-font-size, 16px);
+}
+
+ion-title, ion-card-title, ion-content{
+  font-family: var(--fuente-seleccionada, --app-font-size);
+}
+
+ion-content{
+  font-family: var(--fuente-seleccionada);
+}
+ion-button, ion-select{
+  font-family: var(--fuente-seleccionada);
+}
+
+ion-label{
+  font-family: var(--fuente-seleccionada, --app-font-size);
+}
+
+ion-item{
+  font-family: var(--fuente-seleccionada);
+}
+ion-list{
+  font-family: var(--fuente-seleccionada);
+}
+ion-input{
+  font-family: var(--fuente-seleccionada);
+}

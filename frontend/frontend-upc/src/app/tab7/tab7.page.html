@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
+    <ion-title class="custom-font-size">
       Configuración
     </ion-title>
   </ion-toolbar>
@@ -13,7 +13,7 @@
     </ion-toolbar>
   </ion-header>
   <ion-text>
-    <h2 [style.font-size]="fontSize"  class="ion-text-center">Apariencia</h2>
+    <h2 [style.font-size]="fontSize" [style.font-size.px]="fontSize"  class="ion-text-center">Apariencia</h2>
   </ion-text>
   <ion-item>
     <ion-toggle slot="end" [checked]="darkMode"
@@ -44,6 +44,22 @@
     </ion-item>
   </ion-list>
 
-  
+  <ion-list>
+    <ion-item>
+      <ion-label>Tamaño de Fuente</ion-label>
+      <ion-select [(ngModel)]="selectedFontSize">
+        <ion-select-option style="font-size: 14px;" value="small">Pequeño</ion-select-option>
+        <ion-select-option style="font-size: 16px;" value="medium">Mediano</ion-select-option>
+        <ion-select-option style="font-size: 20px;" value="large">Grande</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <ion-button expand="full" (click)="guardarPreferencia()">Guardar</ion-button>
+
+  <ion-item>
+    <ion-label>Texto de Prueba</ion-label>
+    <ion-textarea [(ngModel)]="textoDePrueba" [style.font-size.px]="fontSize"></ion-textarea>
+  </ion-item>
 
 </ion-content>

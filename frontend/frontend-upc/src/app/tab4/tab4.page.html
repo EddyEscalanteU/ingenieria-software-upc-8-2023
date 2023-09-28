@@ -47,14 +47,16 @@
         </ion-item>
         <!-- Botón para Agregar -->
         <ion-button [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" 
-          expand="full" 
-          color="primary" 
-          type="submit" 
-          shape="round"
-          (click)="addCarrito()"
+          expand="full" color="primary" type="submit" shape="round"(click)="addCarrito()"
           >
           Agregar Carrito
         </ion-button> 
+        <!-- Botón para Agregar -->
+        <ion-button [style.font-family]="fuenteSeleccionada || 'Arial, sans-serif'" 
+          expand="full" color="primary" type="submit" shape="round"(click)="updateCarrito(id, fecha, idUsuario)"
+          >
+          Actualizar Carrito
+      </ion-button> 
       </form>
     </ion-card-content>
   </ion-card>

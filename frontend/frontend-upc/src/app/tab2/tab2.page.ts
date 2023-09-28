@@ -96,7 +96,7 @@ export class Tab2Page {
       // El campo nombre debe tener almenos 5 caracteres, muestra una notificación de error
       Notiflix.Notify.failure("El campo nombre debe terner al menos 4 caracteres");
 
-    } else if ( this.verificarNombreCategoria(this.nombre)) {
+    } else if ( this.existeNombreCategoria(this.nombre)) {
       // El nombre de categoria ya existe, muestra una notificación de error
       Notiflix.Notify.failure("El nombre de categoria ingresado ya existe");
 
@@ -138,7 +138,7 @@ export class Tab2Page {
       Notiflix.Notify.failure("El campo nombre debe tener al menos 5 caracteres");
       return false;
     }
-    if (this.verificarNombreCategoria(this.nombre)) {
+    if (this.existeNombreCategoria(this.nombre)) {
       Notiflix.Notify.failure("El nombre de categoría ingresado ya existe");
       return false;
     }
@@ -174,14 +174,61 @@ export class Tab2Page {
     });
   }
 
+  // Método para verificar si id de categoria existe
+  public verificarIdCategoria(idCategoria: number): boolean {
+    return this.listaCategoria.some((categoriaProducto) => categoriaProducto.id === idCategoria);
+  }
+
+  // Método para validar el ID de la categoría
+  private validarIdCategoria(): boolean {
+    if (!this.verificarIdCategoria(this.id)) {
+      Notiflix.Notify.failure("El ID de categoría ingresado no existe");
+      return false;
+    }
+      return true;
+  }
+
+
+  // Método para verificar si un nombre de categoría ya existe en la lista
+  public existeNombreCategoria(nombreCategoria: string): boolean {
+    return this.listaCategoria.some((categoria) => categoria.nombre === nombreCategoria);
+  }
+
+  // Método para validar el nombre de Categoria
+  private validarNombreProducto(): boolean {
+    if (this.nombre.length < 4) {
+        Notiflix.Notify.failure("El campo nombre debe tener al menos 4 caracteres");
+        return false;
+    }
+    
+    if (this.existeNombreCategoria(this.nombre)) {
+      Notiflix.Notify.failure("El nombre de categoria ingresado ya existe");
+      return false;
+    }            
+      return true;
+    }
+
 
 
   // Metodo para actualizar una categoria
-    public updateCategoriaProducto(){
-      this.updateCategoriaProductoFromBackend(this.id, this.nombre)
-    }
+  public updateCategoriaProducto(){   
+    const validacionIdCategoria = this.validarIdCategoria();  
+    const validacionNombreCategoria = this.validarNombreProducto();
+    console.log(validacionIdCategoria) ;
+    if (validacionIdCategoria && !validacionNombreCategoria ) {
+      Notiflix.Confirm.show(
+        'Confirmar',
+        '¿Estás seguro de que deseas actualizar este Categoria de Producto?',
+        'Sí',
+        'No',
+        () => {
+          this.updateCategoriaProductoFromBackend(this.id, this.nombre);
+        }
+      );
+    }   
+  }
   
-   // este método actualiza una categoría de producto en la api.
+  // este método actualiza una categoría de producto en la api.
   private updateCategoriaProductoFromBackend(id: number, nombre: string){
      var categoriaproductoentidad = new CategoriaProducto();
      categoriaproductoentidad.id = id;
@@ -196,7 +243,7 @@ export class Tab2Page {
                this.nombre = "";
 
            }else{
-            Notiflix.Notify.failure("Fallo al agregar al CATEGORIA PRODUCTO :(");
+            Notiflix.Notify.failure("Fallo al actualizar categoria producto :(");
            }
        },
        error: (error: any) => {
@@ -224,7 +271,7 @@ export class Tab2Page {
       );
     } else {
         // El campo Id no puede ser cero, muestra una notificación de error
-        Notiflix.Notify.failure("El campo Id de Carrito es obligatorio y distinto de cero");
+        Notiflix.Notify.failure("El campo Id de Categoria es obligatorio y distinto de cero");
     }
   }
 
@@ -249,10 +296,7 @@ export class Tab2Page {
     });
   }
 
-  // Método para verificar si un nombre de categoría ya existe en la lista
-  public verificarNombreCategoria(nombreCategoria: string): boolean {
-    return this.listaCategoria.some((categoria) => categoria.nombre === nombreCategoria);
-  }
+
   
 
 

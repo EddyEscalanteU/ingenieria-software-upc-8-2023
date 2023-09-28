@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component,  Renderer2 } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { Storage } from '@ionic/storage';
@@ -11,7 +11,13 @@ import { NavController } from '@ionic/angular';
 
 })
 export class Tab7Page {
-  fontSize: number = 16;
+  selectedFontSize: string;
+  textoDePrueba: string;
+  fontSize: number;
+
+
+
+  //fontSize: number = 16;
   fuenteSeleccionada: string = ''; // Fuente predeterminada
   darkMode = false; //Modo oscuro
   fuentesDisponibles: string[] = [
@@ -34,12 +40,41 @@ export class Tab7Page {
     document.documentElement.style.setProperty('--fuente-seleccionada', this.fuenteSeleccionada);
   }
 
-  constructor() {
+  constructor(private renderer: Renderer2) {
+
+     // Inicializar el tamaño de fuente desde el localStorage al cargar la página.
+     const storedFontSize = localStorage.getItem('fontSize');
+     this.selectedFontSize = storedFontSize || 'medium'; // Tamaño de fuente predeterminado si no hay preferencia almacenada.
+ 
+     // Inicializar el texto de prueba.
+     this.textoDePrueba = 'Este es un texto de prueba.';
+     this.fontSize = this.calcularTamanioFuente(this.selectedFontSize);
 
     this.checkFontSize();
     this.checkFont();
     this.checkAppMode();
   }
+
+  guardarPreferencia() {
+    // Guardar el tamaño de fuente seleccionado en el localStorage.
+    localStorage.setItem('fontSize', this.selectedFontSize);
+    // Actualizar el tamaño de fuente aplicado al texto de prueba.
+    this.fontSize = this.calcularTamanioFuente(this.selectedFontSize);
+  }
+
+  calcularTamanioFuente(tamaño: string): number {
+    switch (tamaño) {
+      case 'small':
+        return 14;
+      case 'medium':
+        return 16;
+      case 'large':
+        return 20;
+      default:
+        return 16; // Tamaño de fuente predeterminado si no coincide con las opciones.
+    }
+  }
+
 
   checkFontSize(){
     const savedFontSize = localStorage.getItem('fontSize');

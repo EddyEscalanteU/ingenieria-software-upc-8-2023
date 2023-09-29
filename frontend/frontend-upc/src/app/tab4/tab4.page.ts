@@ -184,7 +184,12 @@ export class Tab4Page {
 
   // Método para verificar si existe el ID de Usuario
   public existeIdUsuario(idUsuario: number): boolean {
+    console.log(idUsuario);
+    console.log(this.listaUsuarios);
+    
     return this.listaUsuarios.some((usuarios) => usuarios.id == idUsuario);
+    
+
   }
 
   // Método para validar el ID de Usuario
@@ -255,21 +260,16 @@ export class Tab4Page {
 
   // Método para validar el ID de Carrito
   private validarIdCarrito(): boolean {
-    if (!this.existeIdCarrito(this.idCarritoCompra)) {
-      Notiflix.Notify.failure(`El ID de Carrito ${this.idCarritoCompra} ingresado no existe`);
+    if (!this.existeIdCarrito(this.id)) {
+      Notiflix.Notify.failure(`El ID de Carrito ${this.id} ingresado no existe`);
       return false;
     }
     return true;
   }
 
-  /*// Agregar Carrito de compras
-  public addCarrito() {
-    this.AddCarritoFromBackend(this.fecha, this.idUsuario)
-
-  }*/
-
   // Metodo para Agregar Carrito de Compra
   public addCarrito() {
+    //this.AddCarritoFromBackend(this.fecha, this.idUsuario)
     const validacionIdUsuario = this.validarIdUsuario();
     console.log(validacionIdUsuario);
     if (validacionIdUsuario) {

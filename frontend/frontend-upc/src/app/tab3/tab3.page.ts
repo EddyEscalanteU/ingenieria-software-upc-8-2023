@@ -148,37 +148,32 @@ export class Tab3Page {
     // Método para verificar si id de categoria existe
     public verificarIdCategoria(idCategoria: number): boolean {
         return this.listaCategoria.some((categoriaProducto) => categoriaProducto.id === idCategoria);
+    }    
+
+    // Método para validar el nombre de producto
+    private validarNombreProducto(): boolean {
+        if (this.nombre.length < 4) {
+            Notiflix.Notify.failure("El campo nombre debe tener al menos 4 caracteres");
+            return false;
+        }
+
+        if (this.verificarNombreProducto(this.nombre)) {
+            Notiflix.Notify.failure("El nombre de producto ingresado ya existe");
+            return false;
+        }
+
+        return true;
+    }    
+
+    // Método para validar el ID de la categoría
+    private validarIdCategoria(): boolean {
+        if (!this.verificarIdCategoria(this.idCategoria)) {
+            Notiflix.Notify.failure("El ID de categoría ingresado no existe");
+            return false;
+        }
+        return true;
     }
 
-    /*   //Agregar un producto 
-       public addProducto() {        
-   
-           if (this.nombre == '' || this.nombre.length<=4) {
-               // El campo nombre debe tener almenos 4 caracteres, muestra una notificación de error
-               Notiflix.Notify.failure("El campo nombre debe terner al menos 4 caracteres");
-         
-             } else if ( this.verificarNombreProducto(this.nombre)) {
-               // El nombre de producto ya existe, muestra una notificación de error
-               Notiflix.Notify.failure("El nombre de categoria ingresado ya existe");
-         
-             }else if ( !this.verificarIdCategoria(this.idCategoria)) {
-               // El nombre de categoria no existe, muestra una notificación de error
-               Notiflix.Notify.failure("El nombre de categoria ingresado no existe");
-         
-             }else{
-               // Muestra un mensaje de confirmación utilizando Notiflix
-               Notiflix.Confirm.show(      
-                 'Confirmar',
-                 '¿Estás seguro de que deseas agregar est Producto?',
-                 'Sí',
-                 'No',
-                 () => {
-                   this.AddProductoFromBackend(this.nombre, this.idCategoria)
-                 }       
-               );
-           }
-       }
-   */
     // Método para agregar un producto
     public addProducto() {
         const validacionNombre = this.validarNombreProducto();
@@ -196,31 +191,6 @@ export class Tab3Page {
             );
         }
     }
-
-    // Método para validar el nombre de producto
-    private validarNombreProducto(): boolean {
-        if (this.nombre.length < 4) {
-            Notiflix.Notify.failure("El campo nombre debe tener al menos 4 caracteres");
-            return false;
-        }
-
-        if (this.verificarNombreProducto(this.nombre)) {
-            Notiflix.Notify.failure("El nombre de producto ingresado ya existe");
-            return false;
-        }
-
-        return true;
-    }
-
-    // Método para validar el ID de la categoría
-    private validarIdCategoria(): boolean {
-        if (!this.verificarIdCategoria(this.idCategoria)) {
-            Notiflix.Notify.failure("El nombre de categoría ingresado no existe");
-            return false;
-        }
-        return true;
-    }
-
 
     // Este método agrega un nuevo producto a la API.
     private async AddProductoFromBackend(nombre: string, idCategoria: number) {
@@ -265,10 +235,6 @@ export class Tab3Page {
         return true;
     }
 
-
-
-
-
     // metodo para actualizar un Producto
     public updateProducto(id: number, nombre: string, idCategoria: number) {
         //this.updateProductoFromBackend(id, nombre, idCategoria)
@@ -276,7 +242,7 @@ export class Tab3Page {
         const validacionNombre = this.validarNombreProducto();
         const validacionIdCategoria = this.validarIdCategoria();
     
-        if (validacionIdProducto && !validacionNombre && validacionIdCategoria) {
+        if (validacionIdProducto && validacionNombre && validacionIdCategoria) {
             Notiflix.Confirm.show(
                 'Confirmar',
                 '¿Estás seguro de que deseas agregar este Producto?',

@@ -47,11 +47,11 @@ export class Tab7Page {
   calcularTamanioFuente(tamaño: string): number {
     switch (tamaño) {
       case 'small':
-        return 14;
+        return 13;
       case 'medium':
         return 18;
       case 'large':
-        return 22;
+        return 18;
       default:
         return 16; // Tamaño de fuente predeterminado si no coincide con las opciones.
     }
@@ -64,8 +64,9 @@ export class Tab7Page {
      this.selectedFontSize = storedFontSize || 'medium';
      if (storedFontSize) {
       document.documentElement.style.setProperty('--app-font-size', this.selectedFontSize);
+      this.fontSize = this.calcularTamanioFuente(this.selectedFontSize);
      } // Tamaño de fuente predeterminado si no hay preferencia almacenada.
-     this.fontSize = this.calcularTamanioFuente(this.selectedFontSize);
+     
   }
   checkFont() {
     const savedFontFamily = localStorage.getItem('fuente');

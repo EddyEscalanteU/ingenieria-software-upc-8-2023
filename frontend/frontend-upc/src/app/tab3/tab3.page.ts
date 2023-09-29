@@ -15,8 +15,10 @@ import { CategoriaProductoService } from '../servicios-backend/categoria-product
     styleUrls: ['tab3.page.scss']
 })
 export class Tab3Page {
+    selectedFontSize: string = '';
+    fontSize: number = 16; // Tamaño Fuente predeterminada
     fuenteSeleccionada: string = 'Arial, sans-serif'; // Fuente predeterminada
-
+    darkMode = false; //Modo oscuro
     // Propiedades para Producto
     public id = 0;
     public nombre = "";
@@ -30,17 +32,26 @@ export class Tab3Page {
     public listaCategoria: CategoriaProducto[] = []
     public categoriaProducto: CategoriaProducto | null = null;
 
-
-
     constructor(
-        private productoService: ProductoService, 
+        private productoService: ProductoService,
         private categoriaProductoService: CategoriaProductoService,
         private storage: Storage
     ) {
+        this.obtenerTamanoFuente();
         this.obtenerFuente();
+        this.obtenerTema();
         this.getProductoFromBackend();
         this.cargarCategoriaProducto();
         this.storage.create();
+    }
+
+    obtenerTamanoFuente() {
+        // Inicializar el tamaño de fuente desde el localStorage al cargar la página.
+        const storedFontSize = localStorage.getItem('fontSize');
+        this.selectedFontSize = storedFontSize || 'medium';
+        if (storedFontSize) {
+            document.documentElement.style.setProperty('--app-font-size', this.selectedFontSize);
+        } // Tamaño de fuente predeterminado si no hay preferencia almacenada.
     }
 
     // Método para llamar obterner fuente
@@ -51,9 +62,16 @@ export class Tab3Page {
             document.documentElement.style.setProperty('--fuente-seleccionada', this.fuenteSeleccionada);
         }
     }
-
+    //Obtener el tema de preferencia
+    obtenerTema() {
+        const checkIsDarkMode = localStorage.getItem('darkModeActivaded');
+        checkIsDarkMode == 'true'
+            ? (this.darkMode = true)
+            : (this.darkMode = false)
+        document.body.classList.toggle('dark', this.darkMode);
+    }
     // Este método obtiene todas las categorías de producto de la API.
-    private cargarCategoriaProducto(){    
+    private cargarCategoriaProducto() {
         this.categoriaProductoService.GetAll().subscribe({
             next: (response: HttpResponse<any>) => {
                 this.listaCategoria = response.body;
@@ -87,13 +105,13 @@ export class Tab3Page {
     }
 
     //Metodo para obtener producto por ID 
-    public getById() {        
+    public getById() {
         if (this.id !== 0 || this.id) {
-            this.getByIDFromBackend(this.id);      
+            this.getByIDFromBackend(this.id);
         } else {
             // El campo Id no puede ser cero, muestra una notificación de error
             Notiflix.Notify.failure("El campo Id es obligatorio y distinto de cero");
-        } 
+        }
 
     }
 
@@ -132,77 +150,77 @@ export class Tab3Page {
         return this.listaCategoria.some((categoriaProducto) => categoriaProducto.id === idCategoria);
     }
 
- /*   //Agregar un producto 
-    public addProducto() {        
-
-        if (this.nombre == '' || this.nombre.length<=4) {
-            // El campo nombre debe tener almenos 4 caracteres, muestra una notificación de error
-            Notiflix.Notify.failure("El campo nombre debe terner al menos 4 caracteres");
-      
-          } else if ( this.verificarNombreProducto(this.nombre)) {
-            // El nombre de producto ya existe, muestra una notificación de error
-            Notiflix.Notify.failure("El nombre de categoria ingresado ya existe");
-      
-          }else if ( !this.verificarIdCategoria(this.idCategoria)) {
-            // El nombre de categoria no existe, muestra una notificación de error
-            Notiflix.Notify.failure("El nombre de categoria ingresado no existe");
-      
-          }else{
-            // Muestra un mensaje de confirmación utilizando Notiflix
-            Notiflix.Confirm.show(      
-              'Confirmar',
-              '¿Estás seguro de que deseas agregar est Producto?',
-              'Sí',
-              'No',
-              () => {
-                this.AddProductoFromBackend(this.nombre, this.idCategoria)
-              }       
-            );
-        }
-    }
-*/
+    /*   //Agregar un producto 
+       public addProducto() {        
+   
+           if (this.nombre == '' || this.nombre.length<=4) {
+               // El campo nombre debe tener almenos 4 caracteres, muestra una notificación de error
+               Notiflix.Notify.failure("El campo nombre debe terner al menos 4 caracteres");
+         
+             } else if ( this.verificarNombreProducto(this.nombre)) {
+               // El nombre de producto ya existe, muestra una notificación de error
+               Notiflix.Notify.failure("El nombre de categoria ingresado ya existe");
+         
+             }else if ( !this.verificarIdCategoria(this.idCategoria)) {
+               // El nombre de categoria no existe, muestra una notificación de error
+               Notiflix.Notify.failure("El nombre de categoria ingresado no existe");
+         
+             }else{
+               // Muestra un mensaje de confirmación utilizando Notiflix
+               Notiflix.Confirm.show(      
+                 'Confirmar',
+                 '¿Estás seguro de que deseas agregar est Producto?',
+                 'Sí',
+                 'No',
+                 () => {
+                   this.AddProductoFromBackend(this.nombre, this.idCategoria)
+                 }       
+               );
+           }
+       }
+   */
     // Método para agregar un producto
     public addProducto() {
         const validacionNombre = this.validarNombreProducto();
         const validacionCategoria = this.validarIdCategoria();
-    
+
         if (validacionNombre && validacionCategoria) {
-        Notiflix.Confirm.show(
-            'Confirmar',
-            '¿Estás seguro de que deseas agregar este Producto?',
-            'Sí',
-            'No',
-            () => {
-            this.AddProductoFromBackend(this.nombre, this.idCategoria);
-            }
-        );
+            Notiflix.Confirm.show(
+                'Confirmar',
+                '¿Estás seguro de que deseas agregar este Producto?',
+                'Sí',
+                'No',
+                () => {
+                    this.AddProductoFromBackend(this.nombre, this.idCategoria);
+                }
+            );
         }
     }
-    
+
     // Método para validar el nombre de producto
     private validarNombreProducto(): boolean {
         if (this.nombre.length < 4) {
             Notiflix.Notify.failure("El campo nombre debe tener al menos 4 caracteres");
             return false;
         }
-    
+
         if (this.verificarNombreProducto(this.nombre)) {
-        Notiflix.Notify.failure("El nombre de producto ingresado ya existe");
+            Notiflix.Notify.failure("El nombre de producto ingresado ya existe");
             return false;
-        }     
-        
+        }
+
         return true;
     }
-    
+
     // Método para validar el ID de la categoría
     private validarIdCategoria(): boolean {
         if (!this.verificarIdCategoria(this.idCategoria)) {
-            Notiflix.Notify.failure("El ID de categoría ingresado no existe");
+            Notiflix.Notify.failure("El nombre de categoría ingresado no existe");
             return false;
         }
-            return true;
+        return true;
     }
-  
+
 
     // Este método agrega un nuevo producto a la API.
     private async AddProductoFromBackend(nombre: string, idCategoria: number) {
@@ -232,42 +250,10 @@ export class Tab3Page {
             },
         });
     }
-
-     // Método para verificar si existe el ID de producto
-    public existeIdProducto(idProducto: number): boolean {
-        return this.listaProducto.some((producto) => producto.id === idProducto);
-    }
-
-    // Método para validar el ID de Producto
-    private validarIdProducto(): boolean {
-        if (!this.existeIdProducto(this.id)) {
-        Notiflix.Notify.failure(`El ID de Producto ${this.id} ingresado no existe`);
-        return false;
-        }
-        return true;
-    }
-
     // metodo para actualizar un Producto
     public updateProducto(id: number, nombre: string, idCategoria: number) {
-        
-        const validacionIdProducto = this.validarIdProducto();
-        const validacionNombre = this.validarNombreProducto();
-        const validacionIdCategoria = this.validarIdCategoria();
-    
-        if (validacionIdProducto && !validacionNombre && validacionIdCategoria) {
-        Notiflix.Confirm.show(
-            'Confirmar',
-            '¿Estás seguro de que deseas agregar este Producto?',
-            'Sí',
-            'No',
-            () => {
-                this.updateProductoFromBackend(id, nombre, idCategoria);
-            }
-        );
-        }
-
+        this.updateProductoFromBackend(id, nombre, idCategoria)
     }
-
     // este método actualiza una categoría de producto en la API.   
     private updateProductoFromBackend(id: number, nombre: string, idCategoria: number) {
         var productoEntidad = new Producto();
@@ -298,17 +284,17 @@ export class Tab3Page {
     }
 
     // Metodo public Eliminar Producto por ID
-    public deleteProducto(id: number) {        
+    public deleteProducto(id: number) {
         if (id !== 0 || id) {
             // Muestra un mensaje de confirmación utilizando Notiflix
-            Notiflix.Confirm.show(      
-              'Confirmar Eliminación',
-              '¿Estás seguro de que deseas eliminar este Producto?',
-              'Sí',
-              'No',
-              () => {
-                this.deleteProductoFromBackend(id);
-              }       
+            Notiflix.Confirm.show(
+                'Confirmar Eliminación',
+                '¿Estás seguro de que deseas eliminar este Producto?',
+                'Sí',
+                'No',
+                () => {
+                    this.deleteProductoFromBackend(id);
+                }
             );
         } else {
             // El campo Id no puede ser cero, muestra una notificación de error

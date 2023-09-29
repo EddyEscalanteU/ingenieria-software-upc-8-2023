@@ -9,55 +9,75 @@ import { Usuarios } from '../entidades/usuarios';
   templateUrl: './tab10.page.html',
   styleUrls: ['./tab10.page.scss'],
 })
-export class Tab10Page  implements OnInit {
+export class Tab10Page implements OnInit {
+  selectedFontSize: string = '';
+  fontSize: number = 16; // Tamaño Fuente predeterminada
   fuenteSeleccionada: string = 'Arial, sans-serif'; // Fuente predeterminada
+  darkMode = false; //Modo oscuro
+
   public fechaHora = "";
   public fechaHoraFinal = "";
-  public idUsuario : any;
+  public idUsuario: any;
   public listaBitacora: Bitacora[] = [];
   public listaUsuario: Usuarios[] = [];
   // public fecha = "";
   constructor(private bitacoraService: BitacoraService, private usuariosService: UsuariosService) {
     this.obtenerFuente();
+    this.obtenerTamanoFuente();
+    this.obtenerTema();
     this.getAllBitacoraFromBackend();
     this.getAllUsuarioFromBackend();
   }
-
-   // Método para llamar obterner fuente
-   obtenerFuente() {
+  obtenerTamanoFuente() {
+    // Inicializar el tamaño de fuente desde el localStorage al cargar la página.
+    const storedFontSize = localStorage.getItem('fontSize');
+    this.selectedFontSize = storedFontSize || 'medium';
+    if (storedFontSize) {
+      document.documentElement.style.setProperty('--app-font-size', this.selectedFontSize);
+    } // Tamaño de fuente predeterminado si no hay preferencia almacenada.
+  }
+  // Método para llamar obterner fuente
+  obtenerFuente() {
     const savedFontFamily = localStorage.getItem('fuente');
     if (savedFontFamily) {
       this.fuenteSeleccionada = savedFontFamily;
       document.documentElement.style.setProperty('--fuente-seleccionada', this.fuenteSeleccionada);
     }
   }
-
-  private getAllUsuarioFromBackend(){
+  //Obtener el tema de preferencia
+  obtenerTema() {
+    const checkIsDarkMode = localStorage.getItem('darkModeActivaded');
+    checkIsDarkMode == 'true'
+      ? (this.darkMode = true)
+      : (this.darkMode = false)
+    document.body.classList.toggle('dark', this.darkMode);
+  }
+  private getAllUsuarioFromBackend() {
     this.usuariosService.GetUsuarios().subscribe({
-        next: (response: HttpResponse<any>) => {
-            this.listaUsuario = response.body;
-        },
-        error: (error: any) => {
-            // console.log(error);
-        },
-        complete: () => {
-            //console.log('complete - this.getCategoria()');
-        },
+      next: (response: HttpResponse<any>) => {
+        this.listaUsuario = response.body;
+      },
+      error: (error: any) => {
+        // console.log(error);
+      },
+      complete: () => {
+        //console.log('complete - this.getCategoria()');
+      },
     });
   }
 
-  private getAllBitacoraFromBackend(){
+  private getAllBitacoraFromBackend() {
     this.bitacoraService.GetAll().subscribe({
-        next: (response: HttpResponse<any>) => {
-            this.listaBitacora = response.body;
-        },
-        error: (error: any) => {
-            // console.log(error);
-            // Notiflix.Notify.failure("Error al obtener CATEGORIA PRODUCTO")
-        },
-        complete: () => {
-            //console.log('complete - this.getCategoria()');
-        },
+      next: (response: HttpResponse<any>) => {
+        this.listaBitacora = response.body;
+      },
+      error: (error: any) => {
+        // console.log(error);
+        // Notiflix.Notify.failure("Error al obtener CATEGORIA PRODUCTO")
+      },
+      complete: () => {
+        //console.log('complete - this.getCategoria()');
+      },
     });
   }
   // private filtrarFecha(event: any){
@@ -65,46 +85,23 @@ export class Tab10Page  implements OnInit {
   // }
 
   filtrarFecha(event: Event) {
-      var bitacora = new Bitacora();
-      // const input = event.target as HTMLInputElement;
-      bitacora.fechaHora = this.fechaHora;
-      bitacora.fechaHoraFinal = this.fechaHoraFinal;
-      console.log(bitacora);
-      this.bitacoraService.FiltrarFecha(bitacora).subscribe({
-        next: (response: HttpResponse<any>) => {
-            this.listaBitacora = [];
-            this.listaBitacora = response.body;
-        },
-        error: (error: any) => {
-            // console.log(error);
-            // Notiflix.Notify.failure("Error al obtener CATEGORIA PRODUCTO")
-        },
-        complete: () => {
-            //console.log('complete - this.getCategoria()');
-        },
-    });
-  }
-
-  filtrarFechaFinal(event: Event) {
     var bitacora = new Bitacora();
-    // const input = event.target as HTMLInputElement;
-    bitacora.fechaHora = this.fechaHora;
-    bitacora.fechaHoraFinal = this.fechaHoraFinal;
-
+    const input = event.target as HTMLInputElement;
+    bitacora.fechaHora = input.value;
     this.bitacoraService.FiltrarFecha(bitacora).subscribe({
       next: (response: HttpResponse<any>) => {
-          this.listaBitacora = [];
-          this.listaBitacora = response.body;
+        this.listaBitacora = [];
+        this.listaBitacora = response.body;
       },
       error: (error: any) => {
-          // console.log(error);
-          // Notiflix.Notify.failure("Error al obtener CATEGORIA PRODUCTO")
+        // console.log(error);
+        // Notiflix.Notify.failure("Error al obtener CATEGORIA PRODUCTO")
       },
       complete: () => {
-          //console.log('complete - this.getCategoria()');
+        //console.log('complete - this.getCategoria()');
       },
-  });
-}
+    });
+  }
 
   filtrarUsuario(event: any) {
     // Accede al valor seleccionado directamente desde idUsuario
@@ -122,8 +119,8 @@ export class Tab10Page  implements OnInit {
       },
     });
   }
-  
 
-  ngOnInit() {}
+
+  ngOnInit() { }
 
 }

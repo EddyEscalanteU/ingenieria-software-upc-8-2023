@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title class="custom-font-size">
+    <ion-title>
       Configuración
     </ion-title>
   </ion-toolbar>
@@ -9,57 +9,41 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title  size="large">Configuración</ion-title>
+      <ion-title size="large">Configuración</ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-text>
-    <h2 [style.font-size]="fontSize" [style.font-size.px]="fontSize"  class="ion-text-center">Apariencia</h2>
+    <h2 class="ion-text-center">Apariencia</h2>
   </ion-text>
   <ion-item>
-    <ion-toggle slot="end" [checked]="darkMode"
-      (ionChange)="toggleDarkMode()">
+    <ion-toggle slot="end" [checked]="darkMode" (ionChange)="toggleDarkMode()">
       Modo Oscuro
     </ion-toggle>
   </ion-item>
 
-  <ion-list class="cambiar-fuente">
-    <ion-item>
-      <ion-label [style.font-family]="fuenteSeleccionada" >Tamaño de Letra:</ion-label>
-      <ion-range [(ngModel)]="fontSize" min="10" max="32" step="2">
-        <ion-icon slot="start" size="small" name="text"></ion-icon>
-        <ion-icon slot="end" name="text"></ion-icon>
-      </ion-range>
-      <ion-button (click)="saveSize()">Guardar</ion-button>
-    </ion-item>
-  </ion-list>
 
   <ion-list>
     <ion-item>
-      <ion-label [style.font-family]="fuenteSeleccionada">Fuente</ion-label>
-      <ion-select [(ngModel)]="fuenteSeleccionada">
-        <ion-select-option *ngFor="let fuente of fuentesDisponibles" [value]="fuente">{{ fuente }}</ion-select-option>
-      </ion-select>
-      <ion-button (click)="guardarFuente()">Guardar
-        Fuente</ion-button>
-    </ion-item>
-  </ion-list>
-
-  <ion-list>
-    <ion-item>
-      <ion-label>Tamaño de Fuente</ion-label>
-      <ion-select [(ngModel)]="selectedFontSize">
+      <ion-label [style.font-family]="fuenteSeleccionada">Tamaño de Fuente:</ion-label>
+      <ion-select slot="end" [(ngModel)]="selectedFontSize">
         <ion-select-option style="font-size: 14px;" value="small">Pequeño</ion-select-option>
         <ion-select-option style="font-size: 16px;" value="medium">Mediano</ion-select-option>
         <ion-select-option style="font-size: 20px;" value="large">Grande</ion-select-option>
       </ion-select>
+      <ion-button slot="end" (click)="guardarPreferencia()">Guardar</ion-button>
     </ion-item>
   </ion-list>
 
-  <ion-button expand="full" (click)="guardarPreferencia()">Guardar</ion-button>
+  <ion-list>
+    <ion-item>
+      <ion-label [style.font-family]="fuenteSeleccionada">Fuente: </ion-label>
+      <ion-select slot="end" [(ngModel)]="fuenteSeleccionada">
+        <ion-select-option *ngFor="let fuente of fuentesDisponibles" [value]="fuente">{{ fuente }}</ion-select-option>
+      </ion-select>
+      <ion-button slot="end" (click)="guardarFuente()">Guardar Fuente</ion-button>
+    </ion-item>
+  </ion-list>
 
-  <ion-item>
-    <ion-label>Texto de Prueba</ion-label>
-    <ion-textarea [(ngModel)]="textoDePrueba" [style.font-size.px]="fontSize"></ion-textarea>
-  </ion-item>
+
 
 </ion-content>

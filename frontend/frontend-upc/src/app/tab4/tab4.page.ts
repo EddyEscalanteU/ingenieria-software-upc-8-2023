@@ -20,8 +20,11 @@ import { UsuariosService } from '../servicios-backend/usuarios/usuarios.service'
 })
 
 export class Tab4Page {
+  selectedFontSize: string = '';
+  fontSize: number = 16; // Tamaño Fuente predeterminada
   fuenteSeleccionada: string = 'Arial, sans-serif'; // Fuente predeterminada
- 
+  darkMode = false; //Modo oscuro
+
   //Propiedades Carrito de Compra
   public id = 0;
   public fecha = new Date();
@@ -31,7 +34,7 @@ export class Tab4Page {
   public carritoCompra: CarritoCompra | null = null;
 
   // Propiedades para Detalle de Carrito
-  public idDetalle = 0 ;
+  public idDetalle = 0;
   public cantidad = 0;
   public idProducto = 0;
   public idCarritoCompra = 0;
@@ -58,14 +61,16 @@ export class Tab4Page {
   public usuarios: Usuarios | null = null;
 
   constructor(
-    private carritoService: CarritoCompraService, 
-    private detalleService: DetalleCarritoService, 
-    private categoriaProductoService: CategoriaProductoService, 
-    private productoService: ProductoService, 
+    private carritoService: CarritoCompraService,
+    private detalleService: DetalleCarritoService,
+    private categoriaProductoService: CategoriaProductoService,
+    private productoService: ProductoService,
     private usuariosService: UsuariosService,
-    private storage: Storage    
-    ) {
+    private storage: Storage
+  ) {
+    this.obtenerTamanoFuente();
     this.obtenerFuente();
+    this.obtenerTema();
     this.getCarritoFromBackend();
     this.getDetalleFromBackend();
     this.cargarCategoriaProducto();
@@ -75,7 +80,14 @@ export class Tab4Page {
 
   }
 
-
+  obtenerTamanoFuente() {
+    // Inicializar el tamaño de fuente desde el localStorage al cargar la página.
+    const storedFontSize = localStorage.getItem('fontSize');
+    this.selectedFontSize = storedFontSize || 'medium';
+    if (storedFontSize) {
+      document.documentElement.style.setProperty('--app-font-size', this.selectedFontSize);
+    } // Tamaño de fuente predeterminado si no hay preferencia almacenada.
+  }
   // Método para llamar obterner fuente
   obtenerFuente() {
     const savedFontFamily = localStorage.getItem('fuente');
@@ -85,21 +97,29 @@ export class Tab4Page {
     }
   }
 
+  //Obtener el tema de preferencia
+  obtenerTema() {
+    const checkIsDarkMode = localStorage.getItem('darkModeActivaded');
+    checkIsDarkMode == 'true'
+      ? (this.darkMode = true)
+      : (this.darkMode = false)
+    document.body.classList.toggle('dark', this.darkMode);
+  }
   //Metodos referentes a CATEGORIA PRODUCTO
   // Este método obtiene todas las categorías de producto de la API.
-  private cargarCategoriaProducto(){    
+  private cargarCategoriaProducto() {
     this.categoriaProductoService.GetAll().subscribe({
-        next: (response: HttpResponse<any>) => {
-            this.listaCategoria = response.body;
-            console.log(this.listaCategoria)
-        },
-        error: (error: any) => {
-            console.log(error);
-            Notiflix.Notify.failure("Error al obtener CATEGORIA PRODUCTO")
-        },
-        complete: () => {
-            //console.log('complete - this.getCategoria()');
-        },
+      next: (response: HttpResponse<any>) => {
+        this.listaCategoria = response.body;
+        console.log(this.listaCategoria)
+      },
+      error: (error: any) => {
+        console.log(error);
+        Notiflix.Notify.failure("Error al obtener CATEGORIA PRODUCTO")
+      },
+      complete: () => {
+        //console.log('complete - this.getCategoria()');
+      },
     });
   }
 
@@ -112,17 +132,17 @@ export class Tab4Page {
   // Metodo para obtener todos producto desde la API
   private cargarProducto() {
     this.productoService.GetAll().subscribe({
-        next: (response: HttpResponse<any>) => {
-            this.listaProducto = response.body;
-            console.log(this.listaProducto)
-        },
-        error: (error: any) => {
-            console.log(error);
-            Notiflix.Notify.failure("Error al obtener Productos  :(");
-        },
-          complete: () => {
-          //console.log('complete - this.getProducto()');
-        },
+      next: (response: HttpResponse<any>) => {
+        this.listaProducto = response.body;
+        console.log(this.listaProducto)
+      },
+      error: (error: any) => {
+        console.log(error);
+        Notiflix.Notify.failure("Error al obtener Productos  :(");
+      },
+      complete: () => {
+        //console.log('complete - this.getProducto()');
+      },
     });
   }
 
@@ -164,7 +184,7 @@ export class Tab4Page {
 
   // Método para verificar si existe el ID de Usuario
   public existeIdUsuario(idUsuario: number): boolean {
-    return this.listaUsuarios.some((usuarios) => usuarios.id ==idUsuario);
+    return this.listaUsuarios.some((usuarios) => usuarios.id == idUsuario);
   }
 
   // Método para validar el ID de Usuario
@@ -197,11 +217,11 @@ export class Tab4Page {
   //Obtener Carrito de Compras por ID
   public getCarritoById() {
     if (this.id !== 0 || this.id) {
-        this.getCarritoByIDFromBackend(this.id);  
+      this.getCarritoByIDFromBackend(this.id);
     } else {
-        // El campo Id no puede ser cero, muestra una notificación de error
-        Notiflix.Notify.failure("El campo Id de Carrito es obligatorio y distinto de cero");
-    } 
+      // El campo Id no puede ser cero, muestra una notificación de error
+      Notiflix.Notify.failure("El campo Id de Carrito es obligatorio y distinto de cero");
+    }
   }
 
   //Metodo para obtener un carrito de compras por ID desde la API
@@ -232,19 +252,26 @@ export class Tab4Page {
     console.log(this.listaCarrito);
     return this.listaCarrito.some((carritoCompra) => carritoCompra.id === idCarritoCompra);
   }
-  
+
   // Método para validar el ID de Carrito
   private validarIdCarrito(): boolean {
     if (!this.existeIdCarrito(this.idCarritoCompra)) {
       Notiflix.Notify.failure(`El ID de Carrito ${this.idCarritoCompra} ingresado no existe`);
       return false;
     }
-      return true;
+    return true;
   }
 
+  /*// Agregar Carrito de compras
+  public addCarrito() {
+    this.AddCarritoFromBackend(this.fecha, this.idUsuario)
+
+  }*/
+
   // Metodo para Agregar Carrito de Compra
-  public addCarrito() {  
-    const validacionIdUsuario = this.validarIdUsuario();  
+  public addCarrito() {
+    const validacionIdUsuario = this.validarIdUsuario();
+    console.log(validacionIdUsuario);
     if (validacionIdUsuario) {
       Notiflix.Confirm.show(
         'Confirmar',
@@ -255,9 +282,9 @@ export class Tab4Page {
           this.AddCarritoFromBackend(this.fecha, this.idUsuario);
         }
       );
-    }	      
-  }     
-    
+    }
+  }
+
   //Metodo para Agregar carrito de compras al backend
   private async AddCarritoFromBackend(fecha: Date, idUsuario: number) {
     var carritoEntidad = new CarritoCompra();
@@ -286,36 +313,10 @@ export class Tab4Page {
     });
   }
 
-  // Método para verificar si existe el ID de Detalle
-  public existeIdDetalle(idDetalle: number): boolean {
-    return this.listaDetalle.some((detalleCarrito) => detalleCarrito.id === idDetalle);
-  }
-    
-  // Método para validar el ID de Detalle
-  private validarIdDetalle(): boolean {
-    if (!this.existeIdDetalle(this.idDetalle)) {
-      Notiflix.Notify.failure(`El ID de Detalle Carrito ${this.idDetalle} ingresado no existe`);
-      return false;
-    }
-      return true;
-  }
-
 
   // Actualizar Carrito de Compra
-  public updateCarrito(id: number, fecha: Date, idUsuario: number) { 
-    const validacionIdCarrito = this.validarIdCarrito(); 
-    const validacionIdUsuario = this.validarIdUsuario();  
-    if (validacionIdUsuario && validacionIdCarrito ) {
-      Notiflix.Confirm.show(
-        'Confirmar',
-        '¿Estás seguro de que deseas actualizar este Carrito?',
-        'Sí',
-        'No',
-        () => {
-          this.updateCarritoFromBackend(id, fecha, idUsuario);
-        }
-      );
-    }	
+  public updateCarrito(id: number, fecha: Date, idUsuario: number) {
+    this.updateCarritoFromBackend(id, fecha, idUsuario)
   }
 
   //Metodo para actualizar el carrito de compras desde la API
@@ -349,22 +350,22 @@ export class Tab4Page {
   }
 
   // Metodo public Eliminar Carrito por ID
-  public deleteCarrito(id: number) {        
+  public deleteCarrito(id: number) {
     if (id !== 0 || id) {
       // Muestra un mensaje de confirmación utilizando Notiflix
-      Notiflix.Confirm.show(      
+      Notiflix.Confirm.show(
         'Confirmar Eliminación',
         '¿Estás seguro de que deseas eliminar este Carrito de Compras?',
         'Sí',
         'No',
         () => {
-          this.deleteCarritoFromBackend(id); 
-        }       
+          this.deleteCarritoFromBackend(id);
+        }
       );
     } else {
       // El campo Id no puede ser cero, muestra una notificación de error
       Notiflix.Notify.failure("El campo Id de Carrito es obligatorio y distinto de cero");
-    }  
+    }
   }
 
   // Eliminar Carrito por ID
@@ -390,7 +391,7 @@ export class Tab4Page {
 
 
 
-  
+
 
   // ||||||||||| METODOS PARA DETALLE DE CARRITO  |||||||||||
 
@@ -413,11 +414,11 @@ export class Tab4Page {
   //Metodo para obtener Detalle Carrito por ID
   public getDetalleById() {
     if (this.idDetalle !== 0 || this.idDetalle) {
-        this.getDetalleByIDFromBackend(this.idDetalle);      
+      this.getDetalleByIDFromBackend(this.idDetalle);
     } else {
-        // El campo Id no puede ser cero, muestra una notificación de error
-        Notiflix.Notify.failure("El campo Id de Detalle es obligatorio y distinto de cero");
-    }     
+      // El campo Id no puede ser cero, muestra una notificación de error
+      Notiflix.Notify.failure("El campo Id de Detalle es obligatorio y distinto de cero");
+    }
   }
 
   //Metodo para obtener Detalle de Carrito por Id desde la API
@@ -443,11 +444,13 @@ export class Tab4Page {
     });
   }
 
-  
+
   //Agregar Detalle de Carrito
   public addDetalleCarrito() {
-    const validacionIdCarrito = this.validarIdCarrito(); 
+    const validacionIdCarrito = this.validarIdCarrito();
     const validacionIdProducto = this.validarIdProducto();
+    console.log(validacionIdCarrito);
+    console.log(validacionIdProducto);
     if (validacionIdCarrito && validacionIdProducto) {
       Notiflix.Confirm.show(
         'Confirmar',
@@ -458,9 +461,9 @@ export class Tab4Page {
           this.AddDetalleFromBackend(this.cantidad, this.idProducto, this.idCarritoCompra);
         }
       );
-    }	
+    }
   }
-  
+
 
   //Metodo para agregar detalle de carrito en la API
   private async AddDetalleFromBackend(cantidad: number, idProducto: number, idCarritoCompra: number) {
@@ -468,7 +471,7 @@ export class Tab4Page {
     detalleEntidad.cantidad = cantidad;
     detalleEntidad.idProducto = idProducto;
     detalleEntidad.idCarritoCompra = idCarritoCompra;
-   // detalleEntidad.usuarioRegistro = (await this.storage.get('idUserStorage')).toString();
+    // detalleEntidad.usuarioRegistro = (await this.storage.get('idUserStorage')).toString();
 
     this.detalleService.Add(detalleEntidad).subscribe({
       next: (response: HttpResponse<any>) => {
@@ -495,22 +498,8 @@ export class Tab4Page {
 
 
   // Actualizar Detalle de Carrito de Compra
-  public updateDetalle() {  
-    const validacionIdDetalle = this.validarIdDetalle();  
-    const validacionIdCarrito = this.validarIdCarrito(); 
-    const validacionIdProducto = this.validarIdProducto(); 
-    if (validacionIdCarrito && validacionIdProducto && validacionIdDetalle) {
-      Notiflix.Confirm.show(
-        'Confirmar',
-        '¿Estás seguro de que deseas agregar este Detalle?',
-        'Sí',
-        'No',
-        () => {
-          this.updateDetalleFromBackend(this.idDetalle, this.cantidad, this.idProducto, this.idCarritoCompra);
-        }
-      );
-    }	
-  
+  public updateDetalle() {
+    this.updateDetalleFromBackend(this.idDetalle, this.cantidad, this.idProducto, this.idCarritoCompra)
   }
   private updateDetalleFromBackend(idDetalle: number, cantidad: number, idProducto: number, idCarritoCompra: number) {
     var detalleEntidad = new DetalleCarrito();
@@ -545,14 +534,14 @@ export class Tab4Page {
   public deleteDetalle(idDetalle: number) {
     if (idDetalle !== 0 || idDetalle) {
       // Muestra un mensaje de confirmación utilizando Notiflix
-      Notiflix.Confirm.show(      
+      Notiflix.Confirm.show(
         'Confirmar Eliminación',
         '¿Estás seguro de que deseas eliminar este Detalle de Carrito?',
         'Sí',
         'No',
         () => {
           this.deleteDetalleFromBackend(idDetalle);
-        }       
+        }
       );
     } else {
       // El campo Id no puede ser cero, muestra una notificación de error

@@ -1,4 +1,4 @@
-import { Component,  Renderer2 } from '@angular/core';
+import { Component} from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { Storage } from '@ionic/storage';
@@ -11,13 +11,10 @@ import { NavController } from '@ionic/angular';
 
 })
 export class Tab7Page {
-  selectedFontSize: string;
-  textoDePrueba: string;
-  fontSize: number;
+  selectedFontSize: string= '';
+  fontSize: number=16;
 
 
-
-  //fontSize: number = 16;
   fuenteSeleccionada: string = ''; // Fuente predeterminada
   darkMode = false; //Modo oscuro
   fuentesDisponibles: string[] = [
@@ -28,28 +25,13 @@ export class Tab7Page {
     'Georgia, serif',
   ];
 
-  saveSize() {
-    localStorage.setItem('fontSize', this.fontSize.toString());
-    // Aplica el tamaño de fuente a toda la aplicación
-    document.documentElement.style.setProperty('--app-font-size', this.fontSize + 'px');
-  }
-
   // Método para guardar la preferencia del usuario
   guardarFuente() {
     localStorage.setItem('fuente', this.fuenteSeleccionada);
     document.documentElement.style.setProperty('--fuente-seleccionada', this.fuenteSeleccionada);
   }
 
-  constructor(private renderer: Renderer2) {
-
-     // Inicializar el tamaño de fuente desde el localStorage al cargar la página.
-     const storedFontSize = localStorage.getItem('fontSize');
-     this.selectedFontSize = storedFontSize || 'medium'; // Tamaño de fuente predeterminado si no hay preferencia almacenada.
- 
-     // Inicializar el texto de prueba.
-     this.textoDePrueba = 'Este es un texto de prueba.';
-     this.fontSize = this.calcularTamanioFuente(this.selectedFontSize);
-
+  constructor() {
     this.checkFontSize();
     this.checkFont();
     this.checkAppMode();
@@ -58,7 +40,7 @@ export class Tab7Page {
   guardarPreferencia() {
     // Guardar el tamaño de fuente seleccionado en el localStorage.
     localStorage.setItem('fontSize', this.selectedFontSize);
-    // Actualizar el tamaño de fuente aplicado al texto de prueba.
+    document.documentElement.style.setProperty('--app-font-size', this.selectedFontSize);
     this.fontSize = this.calcularTamanioFuente(this.selectedFontSize);
   }
 
@@ -67,9 +49,9 @@ export class Tab7Page {
       case 'small':
         return 14;
       case 'medium':
-        return 16;
+        return 18;
       case 'large':
-        return 20;
+        return 22;
       default:
         return 16; // Tamaño de fuente predeterminado si no coincide con las opciones.
     }
@@ -77,10 +59,13 @@ export class Tab7Page {
 
 
   checkFontSize(){
-    const savedFontSize = localStorage.getItem('fontSize');
-    if (savedFontSize) {
-      document.documentElement.style.setProperty('--app-font-size', savedFontSize + 'px');
-    }
+ // Inicializar el tamaño de fuente desde el localStorage al cargar la página.
+     const storedFontSize = localStorage.getItem('fontSize');
+     this.selectedFontSize = storedFontSize || 'medium';
+     if (storedFontSize) {
+      document.documentElement.style.setProperty('--app-font-size', this.selectedFontSize);
+     } // Tamaño de fuente predeterminado si no hay preferencia almacenada.
+     this.fontSize = this.calcularTamanioFuente(this.selectedFontSize);
   }
   checkFont() {
     const savedFontFamily = localStorage.getItem('fuente');

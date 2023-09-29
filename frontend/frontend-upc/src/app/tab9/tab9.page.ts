@@ -15,6 +15,8 @@ export class Tab9Page {
    
   ) {
     this.obtenerFuente();
+    this.obtenerTamanoFuente();
+    this.obtenerTema();
   }
   obtenerTamanoFuente(){
     // Inicializar el tamaño de fuente desde el localStorage al cargar la página.

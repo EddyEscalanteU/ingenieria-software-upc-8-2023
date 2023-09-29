@@ -26,15 +26,17 @@
 @import "@ionic/angular/css/flex-utils.css";
 
 .cambiar-fuente {
-  font-family: var(--fuente-seleccionada, 'Arial, sans-serif');
+  font-family: var(--fuente-seleccionada);
 }
 
 .cambiar-tamano{
-  font-size: var(--app-font-size, 16px);
+  font-size: var(--app-font-size);
 }
 
-ion-title, ion-card-title, ion-content{
-  font-family: var(--fuente-seleccionada, --app-font-size);
+ion-title, ion-card-title, ion-textarea, h2,
+ ion-content,ion-button, ion-select, ion-item,ion-label {
+  font-family: var(--fuente-seleccionada);
+  font-size: var(--app-font-size);
 }
 
 ion-content{
@@ -45,7 +47,7 @@ ion-button, ion-select{
 }
 
 ion-label{
-  font-family: var(--fuente-seleccionada, --app-font-size);
+  font-family: var(--fuente-seleccionada);
 }
 
 ion-item{

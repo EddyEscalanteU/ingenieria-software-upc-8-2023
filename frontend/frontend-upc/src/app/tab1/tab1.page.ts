@@ -6,7 +6,6 @@ import { FormBuilder } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { IniciaSecionPage } from '../loginUser/inicia-secion/inicia-secion.page';
 import { Storage } from '@ionic/storage-angular';
-import { ConfiguracionService } from '../servicios-backend/configuracion/configuracion.service';
 
 @Component({
   selector: 'app-tab1',
@@ -14,6 +13,8 @@ import { ConfiguracionService } from '../servicios-backend/configuracion/configu
   styleUrls: ['tab1.page.scss'],
 })
 export class Tab1Page implements OnInit {
+  selectedFontSize: string= '';
+  fontSize: number=16; // Tamaño Fuente predeterminada
   fuenteSeleccionada: string = 'Arial, sans-serif'; // Fuente predeterminada
   darkMode = false; //Modo oscuro
   public loginNombreCopleto = '';
@@ -27,19 +28,27 @@ export class Tab1Page implements OnInit {
   public listaUsuarios: Usuarios[] = [];
 
   constructor(
-    private configuracionServie: ConfiguracionService,
-
     private usuariosService: UsuariosService,
     private modalCtrl: ModalController,
     private storage: Storage
   ) {
+    this.obtenerTamanoFuente();
     this.checkFont();
 
     // this.getUsuariosFromBackend();
     this.storage.create();
     this.stadoVentana();
-    this.checkFont();
+    this.obtenerTema();
   }
+
+  obtenerTamanoFuente(){
+    // Inicializar el tamaño de fuente desde el localStorage al cargar la página.
+        const storedFontSize = localStorage.getItem('fontSize');
+        this.selectedFontSize = storedFontSize || 'medium';
+        if (storedFontSize) {
+         document.documentElement.style.setProperty('--app-font-size', this.selectedFontSize);
+        } // Tamaño de fuente predeterminado si no hay preferencia almacenada.
+     }
   checkFont() {
     const savedFontFamily = localStorage.getItem('fuente');
     if (savedFontFamily) {
@@ -49,7 +58,7 @@ export class Tab1Page implements OnInit {
   }
 
   //Obtener el tema de preferencia
-  checkAppMode() {
+  obtenerTema() {
     const checkIsDarkMode = localStorage.getItem('darkModeActivaded');
     checkIsDarkMode == 'true'
       ? (this.darkMode = true)
@@ -67,7 +76,7 @@ export class Tab1Page implements OnInit {
     const modal = this.modalCtrl.create({
       component: IniciaSecionPage,
       componentProps: {
-        // idNinio: id.... Se puede traer un o varios datos de model
+        // idNinio: id
       },
     });
 

@@ -22,8 +22,11 @@ import { map } from 'rxjs';
   styleUrls: ['tab8.page.scss']
 })
 export class Tab8Page {
+  selectedFontSize: string = '';
+  fontSize: number = 16; // Tamaño Fuente predeterminada
   //Fuente
   fuenteSeleccionada: string = 'Arial, sans-serif'; // Fuente predeterminada
+  darkMode = false; //Modo oscuro
   // Propiedades para Funcionalidades
   public funcionalidadId = 0;
   public funcionalidadNombre = "";
@@ -115,12 +118,23 @@ export class Tab8Page {
     private usuarioService: UsuariosService,
     private rolUsuarioService: RolUsuarioService
   ) {
+    this.obtenerTamanoFuente();
     this.cargarUsuarios(); // Llama a la función para cargar los usuarios
+    this.obtenerTema();
     this.cargarRolesUsuarios(); // Llama a la función para cargar los usuarios
     this.cargarFuncionalidades();
     this.obtenerFuente();
 
   }
+
+  obtenerTamanoFuente(){
+    // Inicializar el tamaño de fuente desde el localStorage al cargar la página.
+        const storedFontSize = localStorage.getItem('fontSize');
+        this.selectedFontSize = storedFontSize || 'medium';
+        if (storedFontSize) {
+         document.documentElement.style.setProperty('--app-font-size', this.selectedFontSize);
+        } // Tamaño de fuente predeterminado si no hay preferencia almacenada.
+     }
   // Método para llamar obterner fuente
   obtenerFuente() {
     const savedFontFamily = localStorage.getItem('fuente');
@@ -128,6 +142,13 @@ export class Tab8Page {
       this.fuenteSeleccionada = savedFontFamily;
       document.documentElement.style.setProperty('--fuente-seleccionada', this.fuenteSeleccionada);
     }
+  }
+  obtenerTema() {
+    const checkIsDarkMode = localStorage.getItem('darkModeActivaded');
+    checkIsDarkMode == 'true'
+      ? (this.darkMode = true)
+      : (this.darkMode = false)
+    document.body.classList.toggle('dark', this.darkMode);
   }
   // Métodos para Funcionalidades
   public mostrarFuncionalidades() {

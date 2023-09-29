@@ -26,9 +26,9 @@
     <ion-item>
       <ion-label [style.font-family]="fuenteSeleccionada">Tamaño de Fuente:</ion-label>
       <ion-select slot="end" [(ngModel)]="selectedFontSize">
-        <ion-select-option style="font-size: 14px;" value="small">Pequeño</ion-select-option>
-        <ion-select-option style="font-size: 16px;" value="medium">Mediano</ion-select-option>
-        <ion-select-option style="font-size: 20px;" value="large">Grande</ion-select-option>
+        <ion-select-option value="small">Pequeño</ion-select-option>
+        <ion-select-option  value="medium">Mediano</ion-select-option>
+        <ion-select-option value="large">Grande</ion-select-option>
       </ion-select>
       <ion-button slot="end" (click)="guardarPreferencia()">Guardar</ion-button>
     </ion-item>

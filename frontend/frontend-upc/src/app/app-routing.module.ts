@@ -13,7 +13,11 @@ const routes: Routes = [
   {
     path: 'editar-user',
     loadChildren: () => import('./loginUser/setting-user/setting-user.module').then( m => m.SettingUserPageModule)
+  },  {
+    path: 'inicio',
+    loadChildren: () => import('./inicio/inicio.module').then( m => m.InicioPageModule)
   },
+
 
 ];
 @NgModule({

@@ -1,0 +1,43 @@
+.container {
+    text-align: center;
+    margin-top: 25px;
+}
+.image {
+    margin-bottom: 20px;
+    width: 200px;
+    height: auto;
+}
+.title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.subtitle {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+.tutor {
+    font-size: 12px;
+    margin-bottom: 20px;
+}
+.location {
+    font-size: 12px;
+}
+.year {
+    font-size: 12px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.names {
+    // margin-bottom: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.names ion-list {
+    padding: 0;
+    
+}
+div{
+    text-align: left;
+}

@@ -34,6 +34,24 @@ export class RolUsuarioService {
     }
   }
 
+  public async isAuth2(): Promise<boolean> {
+    try {
+      const idRol: string = await this.storage.get('idRolStorage') || ''; // Obtiene el ID de rol almacenado en el almacenamiento local.
+  
+      // Define los roles permitidos como un array de IDs de rol.
+      const rolesPermitidos = ['1', '2', '3']; // Por ejemplo, roles: Usuario del sistema (1), Vendedor (2), Administrador (3)
+  
+      if (rolesPermitidos.includes(idRol)) {
+        return true; // El usuario tiene un rol permitido.
+      } else {
+        return false; // El usuario no tiene permisos suficientes.
+      }
+    } catch (error) {
+      console.error('Error al verificar la autorización:', error);
+      return false; // Maneja errores de manera adecuada.
+    }
+  }
+
   public GetAll(): Observable<HttpResponse<any>> {
     return this.httpClient
       .get<any>(this.URL_GET_ALL,

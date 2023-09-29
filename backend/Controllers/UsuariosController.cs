@@ -41,7 +41,7 @@ public class UsuariosController : ControllerBase
 
     [HttpGet]
     [Route("GetUsuariosById")]
-    public IActionResult GetUsuariosById([FromQuery]int id)
+    public IActionResult GetUsuariosById([FromQuery] int id)
     {
         try
         {
@@ -56,8 +56,10 @@ public class UsuariosController : ControllerBase
 
     [HttpPost]
     [Route("AddUsuario")]
-    public IActionResult AddUsuario(Usuarios usuarios){
-        try{
+    public IActionResult AddUsuario(Usuarios usuarios)
+    {
+        try
+        {
             var result = UsuariosServicios.InsertUsuarios(usuarios);
             return Ok(result);
         }
@@ -65,7 +67,7 @@ public class UsuariosController : ControllerBase
         {
             return StatusCode(500, ex.Message);
         }
-    } 
+    }
 
     [HttpPut]
     [Route("UpdateUsuario")]
@@ -74,27 +76,29 @@ public class UsuariosController : ControllerBase
         var identity = HttpContext.User.Identity as ClaimsIdentity;
         var rToken = Jwt.validarToken(identity);
 
-        if (rToken.success){
+        if (rToken.success)
+        {
             try
+            {
+                var result = UsuariosServicios.UpdateUsuarios(usuarios);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+        else
         {
-            var result = UsuariosServicios.UpdateUsuarios(usuarios);
-            return Ok(result);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, ex.Message);
-        }
-        }
-        else{
             return StatusCode(500, "No autenticado");
         }
-        
+
     }
 
-    
+
     [HttpDelete]
     [Route("DeleteUsuario")]
-    public IActionResult DeleteUsuario([FromQuery]int id)
+    public IActionResult DeleteUsuario([FromQuery] int id)
     {
         try
         {

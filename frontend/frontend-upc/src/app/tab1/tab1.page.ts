@@ -59,7 +59,7 @@ export class Tab1Page implements OnInit {
     const modal = this.modalCtrl.create({
       component: IniciaSecionPage,
       componentProps: {
-        // idNinio: id
+        // idNinio: id.... Se puede traer un o varios datos de model
       },
     });
 

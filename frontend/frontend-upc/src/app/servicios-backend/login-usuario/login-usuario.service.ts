@@ -47,21 +47,6 @@ export class LoginUsuarioService {
     return this.httpClient.post<any>(url, body, { observe: 'response' });
   }
 
-  // public async changePassword(oldPass: string, newPass: string, tt:any): Promise<Observable<HttpResponse<any>>>{
-  //   const url = `${this.URL_CHANGE_PASS}`;
-  //   let params = new HttpParams();
-  //   params = params.set('oldPass', oldPass);
-  //   params = params.set('newPass', newPass);
-  //   let headers = new HttpHeaders();
-  //   headers = headers.set("Token", tt);
-  //   alert(headers);
-
-  //   const body = { oldPass: oldPass, newPass: newPass };
-    
-  //   return this.httpClient
-  //     .post<any>(url, body, {headers: headers, observe: 'response'})
-  //     .pipe();
-  // }
 
   public changePasswordxxx(oldPass: string, newPass: string, tt: string): Observable<HttpResponse<any>> {
     const url = `${this.URL_CHANGE_PASS}`;
@@ -76,15 +61,5 @@ export class LoginUsuarioService {
       .pipe();
   }
 
-  // public async changePasswordxx(oldPass: string, newPass: string): Promise<any> {
-  //   const url = `${this.URL_CHANGE_PASS}`;
-  //   const headers = new HttpHeaders().set('Content-Type', 'application/json');
-  //   const token = await this.storage.get('token');
-  //   headers = headers.set('Authorization', `Bearer ${token}`);
-  
-  //   const body = { oldPass: oldPass, newPass: newPass };
-  
-  //   return this.httpClient.post<any>(url, body, { headers: headers });
-  // }
 }
 

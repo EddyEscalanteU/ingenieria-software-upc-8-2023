@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { RolesUsuarios } from 'src/app/entidades/roles-usuarios';
+import {Storage} from '@ionic/storage-angular';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,21 @@ export class RolUsuarioService {
   URL_UPDATE = this.PATH_BACKEND + "/api/RolesUsuarios/UpdateRolesUsuario";
   URL_DELETE = this.PATH_BACKEND + "/api/RolesUsuarios/DeleteRolesUsuario";
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private storage: Storage) {
+    this.storage.create();
+  }
+
+  public async isAuth():Promise<boolean> {
+    let id: string = await this.storage.get('idUserStorage')+'';
+    
+    if(id === "30"){
+      alert(id);
+      return true;
+    }
+    else{
+      alert(id);
+      return false;
+    }
   }
 
   public GetAll(): Observable<HttpResponse<any>> {

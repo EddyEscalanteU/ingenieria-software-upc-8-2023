@@ -250,9 +250,43 @@ export class Tab3Page {
             },
         });
     }
+
+    // Método para verificar si existe el ID de producto
+    public existeIdProducto(idProducto: number): boolean {
+        return this.listaProducto.some((producto) => producto.id === idProducto);
+    }
+
+    // Método para validar el ID de Producto
+    private validarIdProducto(): boolean {
+        if (!this.existeIdProducto(this.id)) {
+        Notiflix.Notify.failure(`El ID de Producto ${this.id} ingresado no existe`);
+        return false;
+        }
+        return true;
+    }
+
+
+
+
+
     // metodo para actualizar un Producto
     public updateProducto(id: number, nombre: string, idCategoria: number) {
-        this.updateProductoFromBackend(id, nombre, idCategoria)
+        //this.updateProductoFromBackend(id, nombre, idCategoria)
+        const validacionIdProducto = this.validarIdProducto();
+        const validacionNombre = this.validarNombreProducto();
+        const validacionIdCategoria = this.validarIdCategoria();
+    
+        if (validacionIdProducto && !validacionNombre && validacionIdCategoria) {
+            Notiflix.Confirm.show(
+                'Confirmar',
+                '¿Estás seguro de que deseas agregar este Producto?',
+                'Sí',
+                'No',
+                () => {
+                    this.updateProductoFromBackend(id, nombre, idCategoria);
+                }
+            );
+        }
     }
     // este método actualiza una categoría de producto en la API.   
     private updateProductoFromBackend(id: number, nombre: string, idCategoria: number) {

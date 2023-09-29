@@ -73,7 +73,7 @@ public class UsuarioAuthenticationController : ControllerBase
                     jwt.Issuer,
                     jwt.Audience,
                     claims,
-                    expires: DateTime.Now.AddMinutes(2),
+                    expires: DateTime.Now.AddMinutes(60),
                     signingCredentials: credentials
                 );
 
@@ -98,7 +98,7 @@ public class UsuarioAuthenticationController : ControllerBase
     public dynamic cambiarContrasenia([FromQuery] string oldPass, [FromQuery] string newPass)
     {
         var identity = HttpContext.User.Identity as ClaimsIdentity;
-        var rToken = Jwt.validarToken(identity);
+        var rToken = Jwt.validarToken2(identity);
 
         if (!rToken.success)
         {
@@ -146,6 +146,17 @@ public class UsuarioAuthenticationController : ControllerBase
                 error = StatusCode(500, "Contrasenia no modificada")
             };
         };
+    }
+
+    [HttpGet]
+    [Route("atenticacionToken")]
+    // [Authorize]
+    public dynamic autendicarToken()
+    {
+        var identity = HttpContext.User.Identity as ClaimsIdentity;
+        var rToken = Jwt.validarToken2(identity);
+
+        return rToken;
     }
 
     [HttpGet]

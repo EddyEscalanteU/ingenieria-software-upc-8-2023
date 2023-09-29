@@ -11,6 +11,7 @@ export class LoginUsuarioService {
   PATH_BACKEND = "http://localhost:" + "5163/";
   URL_LOGIN = this.PATH_BACKEND + "api/UsuarioAuthentication/UserLogin";
   URL_CHANGE_PASS = this.PATH_BACKEND + "api/UsuarioAuthentication/CambiarContrasenia";
+  URL_AUTENTICACIONI= this.PATH_BACKEND +"api/UsuarioAuthentication/atenticacionToken";
 
   constructor(private httpClient: HttpClient) { 
 
@@ -40,26 +41,15 @@ export class LoginUsuarioService {
       .pipe();
   }
 
-  public changePasswordx(oldPass: string, newPass: string): Observable<HttpResponse<any>> {
-    const url = `${this.URL_CHANGE_PASS}`;
-    const body = { oldPass: oldPass, newPass: newPass };
-  
-    return this.httpClient.post<any>(url, body, { observe: 'response' });
-  }
-
-
-  public changePasswordxxx(oldPass: string, newPass: string, tt: string): Observable<HttpResponse<any>> {
-    const url = `${this.URL_CHANGE_PASS}`;
-    const headers = new HttpHeaders().set("Token", tt);
-    const body = {
-      oldPass: oldPass,
-      newPass: newPass
-    };
-  
+  public autenticarToken():Observable<HttpResponse<any>>{
+    var parametros = new HttpParams();
+    const url = `${this.URL_AUTENTICACIONI}`;
+    
     return this.httpClient
-      .post<any>(url, body, { headers: headers, observe: 'response' })
+      .get<any>(url, {params:parametros, observe: 'response'})
       .pipe();
   }
+
 
 }
 

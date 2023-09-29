@@ -17,28 +17,23 @@ export class Tab1Page implements OnInit {
   fontSize: number=16; // Tamaño Fuente predeterminada
   fuenteSeleccionada: string = 'Arial, sans-serif'; // Fuente predeterminada
   darkMode = false; //Modo oscuro
-  public loginNombreCopleto = '';
 
   public nombreCompleto = '';
   public userName = '';
   public password = '';
 
-  public enableLogin = true;
-
   public listaUsuarios: Usuarios[] = [];
 
   constructor(
     private usuariosService: UsuariosService,
-    private modalCtrl: ModalController,
     private storage: Storage
   ) {
     this.obtenerTamanoFuente();
     this.checkFont();
 
-    // this.getUsuariosFromBackend();
+    this.getUsuariosFromBackend();
     this.storage.create();
-    this.stadoVentana();
-    this.obtenerTema();
+    this.checkFont();
   }
 
   obtenerTamanoFuente(){
@@ -68,41 +63,9 @@ export class Tab1Page implements OnInit {
 
 
   ngOnInit() {
-    this.stadoVentana();
   }
 
-  /* Inicio secion de modo modal */
-  public async modalIniciaSecion() {
-    const modal = this.modalCtrl.create({
-      component: IniciaSecionPage,
-      componentProps: {
-        // idNinio: id
-      },
-    });
-
-    (await modal).present();
-    // Llama a la función para obtener los datos actualizados
-    const stateWin = (await (await modal).onDidDismiss()).data;
-    console.log(stateWin);
-    if (stateWin) {
-    }
-    this.stadoVentana();
-    location.reload();
-  }
-
-  /** Actualiza el DOM */
-  public async stadoVentana() {
-    var token = await this.storage.get('token');
-    if (token != null) {
-      this.enableLogin = false;
-      this.getUsuariosFromBackend();
-      this.loginNombreCopleto = await this.storage.get('nameUserStorage');
-    }
-    else {
-
-    }
-  }
-
+  
   private getUsuariosFromBackend() {
     this.usuariosService.GetUsuarios().subscribe({
       next: (response: HttpResponse<any>) => {
@@ -116,12 +79,6 @@ export class Tab1Page implements OnInit {
         //console.log('complete - this.getUsuarios()');
       },
     });
-  }
-
-  public async serrarSesion() {
-    await this.storage.clear();
-    location.reload();
-    this.stadoVentana();
   }
 
   public addUsuario() {

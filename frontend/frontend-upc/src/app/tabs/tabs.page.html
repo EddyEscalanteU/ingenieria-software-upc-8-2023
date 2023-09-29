@@ -1,6 +1,13 @@
-<ion-header>
-  <ion-button>asdf</ion-button>
-  <ion-label>inicio de secion</ion-label>
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Usuarios
+    </ion-title>
+    <ion-button *ngIf="enableLogin" (click)="modalIniciaSecion()">Inicio sesion</ion-button>
+    <ion-button *ngIf="!enableLogin" (click)="serrarSesion()">Cerrar sesion</ion-button>
+    <ion-label *ngIf="!enableLogin"> Usuario: {{loginNombreCopleto}} </ion-label>
+    <ion-button *ngIf="!enableLogin" color="warning" [routerLink]="['/editar-user']">Editar</ion-button>
+  </ion-toolbar>
 </ion-header>
 <ion-tabs>
 

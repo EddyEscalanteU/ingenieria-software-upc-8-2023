@@ -26,8 +26,8 @@ export class IniciaSecionPage implements OnInit {
       next: (response: HttpResponse<any>) => {
         console.log(response.body);
         if (response.body.success) {
-          alert(JSON.stringify(response.body.result));
-          alert('se inicio secion :)');
+          // alert(JSON.stringify(response.body.result));
+          // alert('se inicio secion :)');
           this.storage.set("token",response.body.result);
           this.storage.set("nameUserStorage",response.body.user.nombreCompleto);
           this.storage.set("idUserStorage",response.body.user.id);

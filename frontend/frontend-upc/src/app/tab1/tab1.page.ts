@@ -33,7 +33,7 @@ export class Tab1Page implements OnInit {
 
     this.getUsuariosFromBackend();
     this.storage.create();
-    this.checkFont();
+    this.obtenerTema();
   }
 
   obtenerTamanoFuente(){

@@ -29,7 +29,7 @@
       <ion-card-title class="ion-text-center">Agregar o Actualizar Producto</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <form (ngSubmit)="updateProducto(id, nombre, idCategoria)">
+      <form >
         <ion-item>
           <ion-label  [style.font-family]="fuenteSeleccionada" position="floating">ID del Producto</ion-label>
           <ion-input class="cambiar-fuente" type="number" [(ngModel)]="id" name="id"></ion-input>
@@ -42,7 +42,7 @@
           <ion-label  [style.font-family]="fuenteSeleccionada" position="floating">ID de la Categoría</ion-label>
           <ion-input class="cambiar-fuente" type="number" [(ngModel)]="idCategoria" name="idCategoria"></ion-input>
         </ion-item>
-        <ion-button expand="full" color="primary" type="submit" shape="round">Actualizar Producto</ion-button>
+        <ion-button expand="full" color="primary" type="submit" (click)="updateProducto(id, nombre, idCategoria)" shape="round">Actualizar Producto</ion-button>
         <ion-button expand="full" color="primary" (click)="addProducto()" shape="round">Agregar Producto</ion-button>
       </form>
     </ion-card-content>

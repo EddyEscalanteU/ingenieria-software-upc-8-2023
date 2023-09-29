@@ -14,9 +14,10 @@ namespace backend.servicios
         } 
         public static IEnumerable<Bitacora> FiltrarFecha(Bitacora bitacora)
         {
-            const string sql = "SELECT * FROM BITACORA WHERE CONVERT(DATE, FECHA_HORA) = CONVERT(DATE, @FECHA_HORA)";            
+            const string sql = "SELECT * FROM BITACORA WHERE CONVERT(DATE, FECHA_HORA) >= CONVERT(DATE, @FECHA_HORA) AND CONVERT(DATE, FECHA_HORA) <= CONVERT(DATE, @FECHA_HORA_FINAL)";            
             var parameters = new DynamicParameters();
             parameters.Add("FECHA_HORA", bitacora.FechaHora, DbType.DateTime);
+            parameters.Add("FECHA_HORA_FINAL", bitacora.FechaHoraFinal, DbType.DateTime);
 
             return BDManager.GetInstance.GetDataWithParameters<Bitacora>(sql, parameters);
         }

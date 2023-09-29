@@ -15,6 +15,7 @@ import { ConfiguracionService } from '../servicios-backend/configuracion/configu
 })
 export class Tab1Page implements OnInit {
   fuenteSeleccionada: string = 'Arial, sans-serif'; // Fuente predeterminada
+  darkMode = false; //Modo oscuro
   public loginNombreCopleto = '';
 
   public nombreCompleto = '';
@@ -33,20 +34,27 @@ export class Tab1Page implements OnInit {
     private storage: Storage
   ) {
     this.checkFont();
-    
+
     // this.getUsuariosFromBackend();
     this.storage.create();
     this.stadoVentana();
+    this.checkFont();
   }
   checkFont() {
     const savedFontFamily = localStorage.getItem('fuente');
     if (savedFontFamily) {
       this.fuenteSeleccionada = savedFontFamily;
+      document.documentElement.style.setProperty('--fuente-seleccionada', this.fuenteSeleccionada);
     }
   }
-  // Método para llamar a un método de tab2
-  callMethod() {
-    this.configuracionServie.checkFont();
+
+  //Obtener el tema de preferencia
+  checkAppMode() {
+    const checkIsDarkMode = localStorage.getItem('darkModeActivaded');
+    checkIsDarkMode == 'true'
+      ? (this.darkMode = true)
+      : (this.darkMode = false)
+    document.body.classList.toggle('dark', this.darkMode);
   }
 
 
@@ -72,7 +80,7 @@ export class Tab1Page implements OnInit {
     this.stadoVentana();
     location.reload();
   }
-  
+
   /** Actualiza el DOM */
   public async stadoVentana() {
     var token = await this.storage.get('token');

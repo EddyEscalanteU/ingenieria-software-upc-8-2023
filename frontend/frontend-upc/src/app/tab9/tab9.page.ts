@@ -8,12 +8,21 @@ import { HttpResponse } from '@angular/common/http';
 })
 export class Tab9Page {
 
-  
+  fuenteSeleccionada: string = 'Arial, sans-serif'; // Fuente predeterminada
   constructor(
    
-  ) {}
+  ) {
+    this.obtenerFuente();
+  }
 
- 
+   // Método para llamar obterner fuente
+   obtenerFuente() {
+    const savedFontFamily = localStorage.getItem('fuente');
+    if (savedFontFamily) {
+      this.fuenteSeleccionada = savedFontFamily;
+      document.documentElement.style.setProperty('--fuente-seleccionada', this.fuenteSeleccionada);
+    }
+  }
   
  
 

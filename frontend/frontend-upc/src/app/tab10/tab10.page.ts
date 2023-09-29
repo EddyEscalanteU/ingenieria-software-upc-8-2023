@@ -10,15 +10,25 @@ import { Usuarios } from '../entidades/usuarios';
   styleUrls: ['./tab10.page.scss'],
 })
 export class Tab10Page  implements OnInit {
-
+  fuenteSeleccionada: string = 'Arial, sans-serif'; // Fuente predeterminada
   public fechaHora = "";
   public idUsuario : any;
   public listaBitacora: Bitacora[] = [];
   public listaUsuario: Usuarios[] = [];
   // public fecha = "";
   constructor(private bitacoraService: BitacoraService, private usuariosService: UsuariosService) {
+    this.obtenerFuente();
     this.getAllBitacoraFromBackend();
     this.getAllUsuarioFromBackend();
+  }
+
+   // Método para llamar obterner fuente
+   obtenerFuente() {
+    const savedFontFamily = localStorage.getItem('fuente');
+    if (savedFontFamily) {
+      this.fuenteSeleccionada = savedFontFamily;
+      document.documentElement.style.setProperty('--fuente-seleccionada', this.fuenteSeleccionada);
+    }
   }
 
   private getAllUsuarioFromBackend(){

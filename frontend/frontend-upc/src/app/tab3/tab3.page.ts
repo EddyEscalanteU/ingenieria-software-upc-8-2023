@@ -30,6 +30,8 @@ export class Tab3Page {
     public listaCategoria: CategoriaProducto[] = []
     public categoriaProducto: CategoriaProducto | null = null;
 
+
+
     constructor(
         private productoService: ProductoService, 
         private categoriaProductoService: CategoriaProductoService,
@@ -46,6 +48,7 @@ export class Tab3Page {
         const savedFontFamily = localStorage.getItem('fuente');
         if (savedFontFamily) {
             this.fuenteSeleccionada = savedFontFamily;
+            document.documentElement.style.setProperty('--fuente-seleccionada', this.fuenteSeleccionada);
         }
     }
 
@@ -194,7 +197,7 @@ export class Tab3Page {
     // Método para validar el ID de la categoría
     private validarIdCategoria(): boolean {
         if (!this.verificarIdCategoria(this.idCategoria)) {
-            Notiflix.Notify.failure("El nombre de categoría ingresado no existe");
+            Notiflix.Notify.failure("El ID de categoría ingresado no existe");
             return false;
         }
             return true;
@@ -229,10 +232,42 @@ export class Tab3Page {
             },
         });
     }
+
+     // Método para verificar si existe el ID de producto
+    public existeIdProducto(idProducto: number): boolean {
+        return this.listaProducto.some((producto) => producto.id === idProducto);
+    }
+
+    // Método para validar el ID de Producto
+    private validarIdProducto(): boolean {
+        if (!this.existeIdProducto(this.id)) {
+        Notiflix.Notify.failure(`El ID de Producto ${this.id} ingresado no existe`);
+        return false;
+        }
+        return true;
+    }
+
     // metodo para actualizar un Producto
     public updateProducto(id: number, nombre: string, idCategoria: number) {
-        this.updateProductoFromBackend(id, nombre, idCategoria)
+        
+        const validacionIdProducto = this.validarIdProducto();
+        const validacionNombre = this.validarNombreProducto();
+        const validacionIdCategoria = this.validarIdCategoria();
+    
+        if (validacionIdProducto && !validacionNombre && validacionIdCategoria) {
+        Notiflix.Confirm.show(
+            'Confirmar',
+            '¿Estás seguro de que deseas agregar este Producto?',
+            'Sí',
+            'No',
+            () => {
+                this.updateProductoFromBackend(id, nombre, idCategoria);
+            }
+        );
+        }
+
     }
+
     // este método actualiza una categoría de producto en la API.   
     private updateProductoFromBackend(id: number, nombre: string, idCategoria: number) {
         var productoEntidad = new Producto();

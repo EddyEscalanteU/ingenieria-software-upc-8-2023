@@ -81,6 +81,7 @@ export class Tab4Page {
     const savedFontFamily = localStorage.getItem('fuente');
     if (savedFontFamily) {
       this.fuenteSeleccionada = savedFontFamily;
+      document.documentElement.style.setProperty('--fuente-seleccionada', this.fuenteSeleccionada);
     }
   }
 
@@ -241,16 +242,9 @@ export class Tab4Page {
       return true;
   }
 
-  /*// Agregar Carrito de compras
-  public addCarrito() {
-    this.AddCarritoFromBackend(this.fecha, this.idUsuario)
-
-  }*/
-
   // Metodo para Agregar Carrito de Compra
   public addCarrito() {  
     const validacionIdUsuario = this.validarIdUsuario();  
-    console.log(validacionIdUsuario) ;
     if (validacionIdUsuario) {
       Notiflix.Confirm.show(
         'Confirmar',
@@ -292,10 +286,36 @@ export class Tab4Page {
     });
   }
 
+  // Método para verificar si existe el ID de Detalle
+  public existeIdDetalle(idDetalle: number): boolean {
+    return this.listaDetalle.some((detalleCarrito) => detalleCarrito.id === idDetalle);
+  }
+    
+  // Método para validar el ID de Detalle
+  private validarIdDetalle(): boolean {
+    if (!this.existeIdDetalle(this.idDetalle)) {
+      Notiflix.Notify.failure(`El ID de Detalle Carrito ${this.idDetalle} ingresado no existe`);
+      return false;
+    }
+      return true;
+  }
+
 
   // Actualizar Carrito de Compra
-  public updateCarrito(id: number, fecha: Date, idUsuario: number) {
-    this.updateCarritoFromBackend(id, fecha, idUsuario)
+  public updateCarrito(id: number, fecha: Date, idUsuario: number) { 
+    const validacionIdCarrito = this.validarIdCarrito(); 
+    const validacionIdUsuario = this.validarIdUsuario();  
+    if (validacionIdUsuario && validacionIdCarrito ) {
+      Notiflix.Confirm.show(
+        'Confirmar',
+        '¿Estás seguro de que deseas actualizar este Carrito?',
+        'Sí',
+        'No',
+        () => {
+          this.updateCarritoFromBackend(id, fecha, idUsuario);
+        }
+      );
+    }	
   }
 
   //Metodo para actualizar el carrito de compras desde la API
@@ -427,9 +447,7 @@ export class Tab4Page {
   //Agregar Detalle de Carrito
   public addDetalleCarrito() {
     const validacionIdCarrito = this.validarIdCarrito(); 
-    const validacionIdProducto = this.validarIdProducto();   
-    console.log(validacionIdCarrito);
-    console.log(validacionIdProducto);
+    const validacionIdProducto = this.validarIdProducto();
     if (validacionIdCarrito && validacionIdProducto) {
       Notiflix.Confirm.show(
         'Confirmar',
@@ -477,8 +495,22 @@ export class Tab4Page {
 
 
   // Actualizar Detalle de Carrito de Compra
-  public updateDetalle() {
-    this.updateDetalleFromBackend(this.idDetalle, this.cantidad, this.idProducto, this.idCarritoCompra)
+  public updateDetalle() {  
+    const validacionIdDetalle = this.validarIdDetalle();  
+    const validacionIdCarrito = this.validarIdCarrito(); 
+    const validacionIdProducto = this.validarIdProducto(); 
+    if (validacionIdCarrito && validacionIdProducto && validacionIdDetalle) {
+      Notiflix.Confirm.show(
+        'Confirmar',
+        '¿Estás seguro de que deseas agregar este Detalle?',
+        'Sí',
+        'No',
+        () => {
+          this.updateDetalleFromBackend(this.idDetalle, this.cantidad, this.idProducto, this.idCarritoCompra);
+        }
+      );
+    }	
+  
   }
   private updateDetalleFromBackend(idDetalle: number, cantidad: number, idProducto: number, idCarritoCompra: number) {
     var detalleEntidad = new DetalleCarrito();

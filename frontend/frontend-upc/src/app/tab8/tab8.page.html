@@ -147,22 +147,22 @@
 <!-- Campo de búsqueda por ID de Usuario -->
 <ion-item>
   <ion-label>Buscar Usuario por ID</ion-label>
-  <ion-searchbar [(ngModel)]="busquedaUsuario" (ionChange)="buscarUsuario()" placeholder="Buscar por ID de Usuario"></ion-searchbar>
+  <ion-searchbar class="cambiar-fuente" [(ngModel)]="busquedaUsuario" (ionChange)="buscarUsuario()" placeholder="Buscar por ID de Usuario"></ion-searchbar>
   <ion-button (click)="buscarUsuario()" slot="end">Buscar</ion-button>
 </ion-item>
 
 <!-- Lista desplegable de Usuarios -->
 <ion-item>
-  <ion-label>Seleccionar Usuario</ion-label>
-  <ion-select [(ngModel)]="usuarioSeleccionado" label="Seleccionar Usuario">
-    <ion-select-option *ngFor="let usuario of listaUsuarios" [value]="usuario.id">{{ usuario.nombreCompleto }}</ion-select-option>
+  <ion-label >Seleccionar Usuario</ion-label>
+  <ion-select  [(ngModel)]="usuarioSeleccionado" label="Seleccionar Usuario">
+    <ion-select-option class="cambiar-fuente" *ngFor="let usuario of listaUsuarios" [value]="usuario.id">{{ usuario.nombreCompleto }}</ion-select-option>
   </ion-select>
 </ion-item>
 
 <!-- Lista desplegable de Roles de Usuario -->
 <ion-item>
   <ion-select label="Seleccionar Rol de Usuario" [(ngModel)]="rolUsuarioSeleccionado">
-    <ion-select-option *ngFor="let rol of listaRolesUsuarios" [value]="rol.id">{{ rol.nombrE_ROL }}</ion-select-option>
+    <ion-select-option class="cambiar-fuente"*ngFor="let rol of listaRolesUsuarios" [value]="rol.id">{{ rol.nombrE_ROL }}</ion-select-option>
   </ion-select>
 </ion-item>
 
@@ -223,7 +223,7 @@
   <ion-item>
       <ion-label>Seleccionar Rol de Usuario</ion-label>
       <ion-select label="Seleccionar Rol de Usuario" [(ngModel)]="rolUsuarioSeleccionado">
-        <ion-select-option *ngFor="let rol of listaRolesUsuarios" [value]="rol.id">{{ rol.nombrE_ROL }}</ion-select-option>
+        <ion-select-option class="cambiar-fuente" *ngFor="let rol of listaRolesUsuarios" [value]="rol.id">{{ rol.nombrE_ROL }}</ion-select-option>
       </ion-select>
   </ion-item>
 
@@ -231,7 +231,7 @@
   <ion-item>
       <ion-label>Seleccionar Funcionalidad</ion-label>
       <ion-select label="Seleccionar Funcionalidad" [(ngModel)]="funcionalidadSeleccionada">
-        <ion-select-option *ngFor="let funcionalidad of listaFuncionalidades" [value]="funcionalidad.id">{{ funcionalidad.nombre }}</ion-select-option>
+        <ion-select-option class="cambiar-fuente" *ngFor="let funcionalidad of listaFuncionalidades" [value]="funcionalidad.id">{{ funcionalidad.nombre }}</ion-select-option>
       </ion-select>
   </ion-item>
 <div class="ion-padding">

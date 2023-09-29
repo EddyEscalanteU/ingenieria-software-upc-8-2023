@@ -43,7 +43,7 @@ export class IniciaSecionPage implements OnInit {
       },
       complete: () => {
         console.log('Finished...  - this.incio sesion :)');
-      },
+      }
     });
   }
 

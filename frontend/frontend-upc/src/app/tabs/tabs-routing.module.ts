@@ -1,3 +1,4 @@
+
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
@@ -6,9 +7,13 @@ import { PermissionGuard } from '../guards/permisoauth.guard';
 import { RolesService } from '../servicios-backend/roles/roles.service';
 
 const routes: Routes = [
-  {
-    path: 'admin',
-    component: RolesService,
+  { 
+    path: 'tabs',
+    component: TabsPage,
+
+    // path: 'admin',
+    // component: RolesService,
+    
     canActivate: [PermissionGuard],
     data: { expectedRoles: ['admin'] }, // Define los roles esperados para esta ruta
     children: [
@@ -61,15 +66,21 @@ const routes: Routes = [
         data: { expectedRoles: ['admin', 'user'] },
       },
       {
+        path: 'inicio',
+        loadChildren: () => import('../inicio/inicio.module').then(m => m.InicioPageModule),
+        canActivate: [PermissionGuard],
+        data: { expectedRoles: ['admin', 'user'] },
+      },
+      {
         path: '',
-        redirectTo: '/tabs/tab1',
+        redirectTo: '/tabs/inicio',
         pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/tab1',
+    redirectTo: '/tabs/inicio',
     pathMatch: 'full'
   }
 ];

@@ -12,6 +12,7 @@ import { Usuarios } from '../entidades/usuarios';
 export class Tab10Page  implements OnInit {
   fuenteSeleccionada: string = 'Arial, sans-serif'; // Fuente predeterminada
   public fechaHora = "";
+  public fechaHoraFinal = "";
   public idUsuario : any;
   public listaBitacora: Bitacora[] = [];
   public listaUsuario: Usuarios[] = [];
@@ -65,8 +66,10 @@ export class Tab10Page  implements OnInit {
 
   filtrarFecha(event: Event) {
       var bitacora = new Bitacora();
-      const input = event.target as HTMLInputElement;
-      bitacora.fechaHora = input.value;
+      // const input = event.target as HTMLInputElement;
+      bitacora.fechaHora = this.fechaHora;
+      bitacora.fechaHoraFinal = this.fechaHoraFinal;
+      console.log(bitacora);
       this.bitacoraService.FiltrarFecha(bitacora).subscribe({
         next: (response: HttpResponse<any>) => {
             this.listaBitacora = [];
@@ -81,6 +84,27 @@ export class Tab10Page  implements OnInit {
         },
     });
   }
+
+  filtrarFechaFinal(event: Event) {
+    var bitacora = new Bitacora();
+    // const input = event.target as HTMLInputElement;
+    bitacora.fechaHora = this.fechaHora;
+    bitacora.fechaHoraFinal = this.fechaHoraFinal;
+
+    this.bitacoraService.FiltrarFecha(bitacora).subscribe({
+      next: (response: HttpResponse<any>) => {
+          this.listaBitacora = [];
+          this.listaBitacora = response.body;
+      },
+      error: (error: any) => {
+          // console.log(error);
+          // Notiflix.Notify.failure("Error al obtener CATEGORIA PRODUCTO")
+      },
+      complete: () => {
+          //console.log('complete - this.getCategoria()');
+      },
+  });
+}
 
   filtrarUsuario(event: any) {
     // Accede al valor seleccionado directamente desde idUsuario

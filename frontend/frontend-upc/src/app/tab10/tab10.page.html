@@ -18,8 +18,18 @@
       <ion-item>
         <div class="input-container">
           
-          <label for="fechaInput">Buscar</label>
-          <input type="date" class="date" id="fechaInput" [(ngModel)]="fechaHora" (change)="filtrarFecha($event)">
+          <!-- <label for="fechaInput">Buscar</label> -->
+          <ion-item>
+            <ion-label>Fecha de Inicio </ion-label>
+            
+            <input type="date" class="date" id="fechaInput" [(ngModel)]="fechaHora" (change)="filtrarFecha($event)">
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Fecha de fin </ion-label>
+            <input type="date" class="date" id="fechaInputRango" [(ngModel)]="fechaHoraFinal" (change)="filtrarFechaFinal($event)">
+          </ion-item>
+          <!-- <input type="date" class="date" id="fechaInput" [(ngModel)]="fechaHora" (change)="filtrarFecha($event)"> -->
           <!-- <input type="date" class="date" id="fechaInput" [(ngModel)]="fechaHora" (change)="filtrarFecha($event)"> -->
           <ion-item>
             <ion-label class="label-left">Usuario</ion-label>

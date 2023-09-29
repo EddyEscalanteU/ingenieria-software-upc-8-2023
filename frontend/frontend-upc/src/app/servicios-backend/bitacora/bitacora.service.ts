@@ -31,6 +31,14 @@ export class BitacoraService {
         { observe: 'response' })
       .pipe();
   }
+
+  public FiltrarFechaRango(entidad: Bitacora): Observable<HttpResponse<any>> {
+    return this.httpClient
+      .post<any>(this.URL_FILTRO_FECHA, entidad,
+        { observe: 'response' })
+      .pipe();
+  }
+
   public FiltrarUsuario(id: any): Observable<HttpResponse<any>> {
     const url = `${this.URL_FILTRO_USUARIO}?id=${id}`;  // Construye la URL con el parámetro
     // Realiza una solicitud GET en lugar de POST, y observa la respuesta

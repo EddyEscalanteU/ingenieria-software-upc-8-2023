@@ -7,10 +7,14 @@ import { RolUsuarioService } from '../servicios-backend/roles-usuarios/roles-usu
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
+  private userRoles: string[] = ['user'];
   constructor(
     private rolUsuarioService: RolUsuarioService
   ){
 
+  }
+    getUserRoles(): string[] {
+    return this.userRoles;
   }
   async canActivate(): Promise<boolean> {
     try {

@@ -17,6 +17,12 @@ export class LoginUsuarioService {
 
   }
 
+  getUserRoles(): Observable<string[]> {
+    // Realiza la solicitud HTTP para obtener los roles del usuario
+    // Esto podría ser una llamada a tu API backend
+    return this.httpClient.get<string[]>('/api/obtenerRolesDelUsuario');
+  }
+
   public inisiarSesion(inUser: string, inPass: string):Observable<HttpResponse<any>>{
     var parametros = new HttpParams();
     parametros = parametros.set('inUser', inUser);

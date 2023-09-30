@@ -24,7 +24,7 @@ export class RolUsuarioService {
   public async isAuth():Promise<boolean> {
     let id: string = await this.storage.get('idUserStorage')+'';
     
-    if(id === "30"){
+    if(id === "30, 31, 34"){
       alert(id);
       return true;
     }

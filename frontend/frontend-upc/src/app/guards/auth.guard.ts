@@ -7,21 +7,17 @@ import { RolUsuarioService } from '../servicios-backend/roles-usuarios/roles-usu
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-  private userRoles: string[] = ['user'];
   constructor(
     private rolUsuarioService: RolUsuarioService
   ){
 
-  }
-    getUserRoles(): string[] {
-    return this.userRoles;
   }
   async canActivate(): Promise<boolean> {
     try {
       const isAuthorized = await this.rolUsuarioService.isAuth();
   
       if (!isAuthorized) {
-        alert('capturado por el guardian');
+        alert('Acceso denegado');
         return false;
       }
   
